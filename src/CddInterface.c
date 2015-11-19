@@ -3,18 +3,19 @@
  */
 
 #include "src/compiled.h"          /* GAP headers */
+#include "local/pkg/CddInterface/src/nothing.c"
+#include "local/pkg/CddInterface/src/cdd.c"
 
 
-Obj TestCommand(Obj self)
-{
-    return INTOBJ_INT(42);
-}
 
 Obj TestCommandWithParams(Obj self, Obj param, Obj param2)
 {
     /* simply return the first parameter */
     return param;
 }
+ 
+ 
+ 
 
 Obj TestCommand_max( Obj self, Obj param1, Obj param2 )
 {
@@ -22,8 +23,43 @@ Obj TestCommand_max( Obj self, Obj param1, Obj param2 )
   a= INT_INTOBJ( param1 );
   b= INT_INTOBJ( param2 );
   
-  if (a>b) return param1; else return param2;
+  return INTOBJ_INT( TestKemoSum( a,b ) );
+//   if (a>b) return param1; else return param2;
 }
+
+
+
+static Obj MpzToGAP(const mpz_t x)
+{
+    Obj res;
+    Int size = x->_mp_size;
+    int sign;
+    if (size == 0) {
+        return INTOBJ_INT(0);
+    } else if (size < 0) {
+        size = -size;
+        sign = -1;
+    } else {
+        sign = +1;
+    }
+#ifdef SYS_IS_64_BIT
+    if (size == 1) {
+        if (sign > 0)
+            return ObjInt_UInt(x->_mp_d[0]);
+        else
+            return AInvInt(ObjInt_UInt(x->_mp_d[0]));
+    }
+#endif
+    size = sizeof(mp_limb_t) * size;
+    if (sign > 0)
+        res = NewBag(T_INTPOS, size);
+    else
+        res = NewBag(T_INTNEG, size);
+    memcpy(ADDR_INT(res), x->_mp_d, size);
+    return res;
+}
+
+
 
 
 typedef Obj (* GVarFunc)(/*arguments*/);
@@ -36,14 +72,14 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs [] = {
-    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", TestCommand, 0, ""),
+  
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", TestCommandWithParams, 2, "param, param2"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", TestCommand_max, 2, "param1, param2"),
 
 	{ 0 } /* Finish with an empty entry */
 
 };
-
+ 
 /******************************************************************************
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */

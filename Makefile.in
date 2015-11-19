@@ -354,9 +354,10 @@ BINARCHDIR = bin/$(GAPARCH)
 GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/CddInterface.so
 lib_LTLIBRARIES = CddInterface.la
 CddInterface_la_SOURCES = src/CddInterface.c
-CddInterface_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
+CddInterface_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H -DGMPRATIONAL 
 # Note that the latter is only for GAP 4.4.12
-CddInterface_la_LDFLAGS = -module -avoid-version $(am__append_1)
+CddInterface_la_LDFLAGS = -module -avoid-version -lcddgmp -lgmp \
+	$(am__append_1)
 all: all-am
 
 .SUFFIXES:

@@ -67,7 +67,21 @@ src/CddInterface_la-CddInterface.lo: src/CddInterface.c \
  /usr/local/lib/gap4r5/src/funcs.h /usr/local/lib/gap4r5/src/intrprtr.h \
  /usr/local/lib/gap4r5/src/compiler.h \
  /usr/local/lib/gap4r5/src/compstat.h /usr/local/lib/gap4r5/src/streams.h \
- /usr/local/lib/gap4r5/src/sysfiles.h /usr/local/lib/gap4r5/src/weakptr.h
+ /usr/local/lib/gap4r5/src/sysfiles.h /usr/local/lib/gap4r5/src/weakptr.h \
+ /usr/local/lib/gap4r5/local/pkg/CddInterface/src/nothing.c \
+ /usr/local/lib/gap4r5/local/pkg/CddInterface/src/cdd.c \
+ /usr/local/include/setoper.h /usr/local/include/cdd.h \
+ /usr/local/include/cddmp.h /usr/local/include/cddtypes.h \
+ /usr/include/x86_64-linux-gnu/bits/timex.h /usr/local/include/cdd_f.h \
+ /usr/local/include/cddmp_f.h /usr/local/include/cddtypes_f.h \
+ /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/huge_val.h \
+ /usr/include/x86_64-linux-gnu/bits/huge_valf.h \
+ /usr/include/x86_64-linux-gnu/bits/huge_vall.h \
+ /usr/include/x86_64-linux-gnu/bits/inf.h \
+ /usr/include/x86_64-linux-gnu/bits/nan.h \
+ /usr/include/x86_64-linux-gnu/bits/mathdef.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+ /usr/include/x86_64-linux-gnu/bits/mathinline.h
 
 /usr/include/stdc-predef.h:
 
@@ -274,3 +288,41 @@ src/CddInterface_la-CddInterface.lo: src/CddInterface.c \
 /usr/local/lib/gap4r5/src/sysfiles.h:
 
 /usr/local/lib/gap4r5/src/weakptr.h:
+
+/usr/local/lib/gap4r5/local/pkg/CddInterface/src/nothing.c:
+
+/usr/local/lib/gap4r5/local/pkg/CddInterface/src/cdd.c:
+
+/usr/local/include/setoper.h:
+
+/usr/local/include/cdd.h:
+
+/usr/local/include/cddmp.h:
+
+/usr/local/include/cddtypes.h:
+
+/usr/include/x86_64-linux-gnu/bits/timex.h:
+
+/usr/local/include/cdd_f.h:
+
+/usr/local/include/cddmp_f.h:
+
+/usr/local/include/cddtypes_f.h:
+
+/usr/include/math.h:
+
+/usr/include/x86_64-linux-gnu/bits/huge_val.h:
+
+/usr/include/x86_64-linux-gnu/bits/huge_valf.h:
+
+/usr/include/x86_64-linux-gnu/bits/huge_vall.h:
+
+/usr/include/x86_64-linux-gnu/bits/inf.h:
+
+/usr/include/x86_64-linux-gnu/bits/nan.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathdef.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathinline.h:
