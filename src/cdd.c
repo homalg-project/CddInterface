@@ -150,6 +150,7 @@ dd_MatrixPtr M=NULL;
 
 
 
+
 dd_LPSolutionPtr ddG_LPSolutionPtr( dd_MatrixPtr M )
 {
   static dd_ErrorType err=dd_NoError;
@@ -255,7 +256,8 @@ long int * ddG_RowVecPtr( dd_MatrixPtr M )
 
 
 
-/*
+
+
 
 long int * ddG_AmatrixPtr( dd_MatrixPtr M )
 {
@@ -275,8 +277,8 @@ long int * ddG_AmatrixPtr( dd_MatrixPtr M )
    for(i=0;i<r;i++)
      for(j=0;j<s;j++)
      {
-       mpq_set(u, mpq_numref( Ma[i][j] ) );
-       mpq_set(v, mpq_denref( Ma[i][j] ) );
+       mpq_get_num(u,  *(*(Ma+i)+j)  );
+       mpq_get_den(v,  *(*(Ma+i)+j)  );
          z1=mpz_get_si( u );
          z2=mpz_get_si( v );
         Amatrix_array[2*(i*s+j)]=z1;
@@ -286,7 +288,7 @@ long int * ddG_AmatrixPtr( dd_MatrixPtr M )
   
 }
 
-*/
+
 
 
 
