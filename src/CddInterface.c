@@ -12,9 +12,9 @@
 * 
 * ********************************************************/
 
-static long int* iwjeiwjojdowije( int n )
+static  int* iwjeiwjojdowije( int n )
 {
- static long int r[100];
+ static  int r[100];
   int i;
   
   for( i=0;i<n;i++)
@@ -22,8 +22,48 @@ static long int* iwjeiwjojdowije( int n )
   return r;
 }
 
-/*
-dd_MatrixPtr GapInputToMatrixPtr( Obj rep, Obj numtype, Obj linearity, Obj rowrange, Obj colrange,
+static int * kemo( int m )
+{
+  static int a[100];
+  int i;
+  
+  for( i=0;i<m;i++)
+    a[i]=i*i;
+  
+  return a;
+}
+
+static char * PLIST_STR( Obj list )
+{
+  static char s1[dd_linelenmax],s[dd_linelenmax]= " ";
+  int i,n, current;
+  Obj current_obj;
+  
+  if (!IS_PLIST( list ) ){
+   ErrorMayQuit( "not a plain list", 0,0 );
+   return NULL;
+  }
+  
+  n= LEN_PLIST( list );
+  
+  for(i=0;i<n;i++)
+  {
+    current_obj= ELM_PLIST( list, i+1 );
+    if( !IS_INTOBJ( current_obj ) ) {
+      ErrorMayQuit( "no integer entries", 0, 0 );
+      return NULL;
+    }
+    current= INT_INTOBJ( current_obj );
+    sprintf(s1, "%d", current );
+    strcat(s,s1);
+    strcat(s, " ");
+  }
+  
+  return s;
+}
+
+
+static dd_MatrixPtr GapInputToMatrixPtr( Obj rep, Obj numtype, Obj linearity, Obj rowrange, Obj colrange,
                                   Obj linearity_array, Obj matrix, Obj LPobject, Obj rowvec )
 
 {
@@ -35,6 +75,20 @@ dd_MatrixPtr GapInputToMatrixPtr( Obj rep, Obj numtype, Obj linearity, Obj rowra
   k_linearity= INT_INTOBJ( linearity );
   k_rowrange= INT_INTOBJ( rowrange );
   k_colrange= INT_INTOBJ( colrange );
+  
+  
+   strcpy( k_linearity_array, PLIST_STR(linearity_array) );
+   strcpy( k_matrix, PLIST_STR(matrix) );
+   strcpy( k_rowvec, PLIST_STR(rowvec) );
+   
+
+  return ddG_PolyInput2Matrix( k_rep,k_numtype,k_linearity, k_rowrange, k_colrange, 
+  k_linearity_array, k_matrix, k_LPobject , k_rowvec );
+  
+}       
+  
+  
+  
   
 
 
@@ -61,11 +115,11 @@ Obj MPQ_TO_GAPOBJ( mpq_t x )
   return QUO( MPZ_TO_GAPOBJ(num), MPZ_TO_GAPOBJ(den) );
 }
 
-Obj CLONGINTLISTPtr_TOGAPPLIST( long int *list, size_t n )
+Obj CINTLISTPtr_TOGAPPLIST(  int *list, size_t n )
 {
   size_t i;
   Obj M;
-  long int r;
+   int r;
   M = NEW_PLIST(T_PLIST_CYC, n);
    SET_LEN_PLIST(M, n);
   for ( i = 0; i < n; i++) {
@@ -76,9 +130,9 @@ Obj CLONGINTLISTPtr_TOGAPPLIST( long int *list, size_t n )
   return M;
 }
 
-static long int* GAPPLIST_TOLONGINTPtr( Obj list )
+static  int* GAPPLIST_TOINTPtr( Obj list )
 {
-  static long int array[100];
+  static  int array[100];
   int i, len;
   Obj current_obj;
   if (! IS_PLIST( list ) ) {
@@ -108,9 +162,24 @@ static long int* GAPPLIST_TOLONGINTPtr( Obj list )
 * 
 * ********************************************************/
 
+static Obj CddInterface_Matrix( Obj self, Obj rep, Obj numtype, Obj linearity, Obj rowrange, Obj colrange,
+                                  Obj linearity_array, Obj matrix, Obj LPobject, Obj rowvec )
+{
+  dd_MatrixPtr M,A;
+  dd_ErrorType err=dd_NoError;
+ dd_PolyhedraPtr poly;
+ 
+  M= GapInputToMatrixPtr(rep, numtype,linearity, rowrange, colrange, linearity_array, matrix, LPobject, rowvec );
+  
+  poly=dd_DDMatrix2Poly(M, &err);
+  
+  A= dd_CopyInequalities(poly);
+  return CINTLISTPtr_TOGAPPLIST( ddG_LinearityPtr( A ), INT_INTOBJ( rowrange) );
+}
+
 Obj take_it_and_give_it_back( Obj self, Obj list )
 {
-  return CLONGINTLISTPtr_TOGAPPLIST( GAPPLIST_TOLONGINTPtr(list), LEN_PLIST( list)  );
+  return CINTLISTPtr_TOGAPPLIST( GAPPLIST_TOINTPtr(list), LEN_PLIST( list)  );
 }
 
 
@@ -135,10 +204,10 @@ Obj TestCommand_max( Obj self, Obj param1, Obj param2 )
 Obj testkamalove( Obj self )
 {
   
-//   long int array[100]={5,8,9,3,45,3};
+//    int array[100]={5,8,9,3,45,3};
 //   size_t i=6;
   
-//   static long int * r;
+//   static  int * r;
 //   r= iwjeiwjojdowije(6);
  /* 
   
@@ -148,7 +217,7 @@ Obj testkamalove( Obj self )
   }
   */
 //   return CLIST_TOGAPPLIST( array, i );
-return CLONGINTLISTPtr_TOGAPPLIST( iwjeiwjojdowije( 3 ), 3 );
+return CINTLISTPtr_TOGAPPLIST( iwjeiwjojdowije( 3 ), 3 );
 }
 
 
@@ -181,9 +250,10 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", TestCommand_max, 2, "param1, param2"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", testkamalove, 0, ""),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_it_and_give_it_back, 1, "list"),
+    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Matrix, 9, "rep, numtype,linearity, rowrange, colrange, linearity_array, matrix, LPobject, rowvec"),
 
     
-	{ 0 } /* Finish with an empty entry */
+    { 0 } /* Finish with an empty entry */
 
 };
  

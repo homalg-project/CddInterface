@@ -13,13 +13,14 @@
 
 
 
-const char* A2String(int n[dd_linelenmax], int size)
+char* A2String(int *n, int size)
 {
         static char s1[dd_linelenmax],s[dd_linelenmax]= "";
         int i;
+        strcat(s, " ");
         for( i=0;i<size;i++)
            {
-           sprintf(s1, "%d", n[i] );
+           sprintf(s1, "%d", *(n+i) );
            strcat(s,s1);
            strcat(s, " ");
            } 
@@ -205,12 +206,12 @@ int ddG_LinearitySize( dd_MatrixPtr M )
 }
   
 
-long int * ddG_LinearityPtr(dd_MatrixPtr M )
+int * ddG_LinearityPtr(dd_MatrixPtr M )
 {
   dd_rowrange r;
   dd_rowset s;
   int i,u;
-  static long int lin_array[100];
+  static int lin_array[100];
   
   r= ddG_RowSize( M );
   s= ddG_RowSet( M );
