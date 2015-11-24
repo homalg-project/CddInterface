@@ -3,6 +3,7 @@ InstallGlobalFunction( NumberOfDigitsOfTheNumber,
 return Length( String( a ) );
 end);
 
+# this functions prints a matrix in good form
 InstallMethod( PTM,
                [ IsMatrix ],
                
@@ -66,6 +67,29 @@ InstallMethod( PTM,
         
      od;
 
-
- 
 end);
+
+# this function takes [-2/3, 5/7, 5, 0] and returns [-2,3,5,7,5,1,0,1]
+
+InstallMethod( ConvertRatListToIntList, 
+                     [IsList],
+function( list )
+   local i, res;
+
+    res:= [];
+    
+    for i in [1..Length( list ) ] do
+  
+       Add( res, NumeratorRat(   list[i] ) );
+     
+       Add( res, DenominatorRat( list[i] ) );
+     
+    od;
+
+   return res;
+
+end );
+
+
+
+

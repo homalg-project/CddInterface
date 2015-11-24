@@ -11,7 +11,6 @@
 *    Auxiliary functions to be used inside C 
 * 
 * ********************************************************/
-
 static  int* iwjeiwjojdowije( int n )
 {
  static  int r[100];
@@ -33,14 +32,52 @@ static int * kemo( int m )
   return a;
 }
 
+
+static char * RATPLIST_STR( Obj list )
+{
+ static char s[dd_linelenmax];
+ char s1[dd_linelenmax];
+  int i,n,m, current;
+  Obj current_num, current_den;
+  
+  strcpy( s, " " );
+  
+  if (!IS_PLIST( list ) ){
+   ErrorMayQuit( "The argument is not a list", 0,0 );
+   return NULL;
+  }
+  
+  n= LEN_PLIST( list );
+  m= n/2;
+  
+  for(i=0;i<m;i++)
+  {
+    current_num = ELM_PLIST( list, 2*i+1 );
+    current_den = ELM_PLIST( list, 2*i+2 );
+    
+    if( !IS_INTOBJ( current_num ) || !IS_INTOBJ( current_den ) ) {
+      ErrorMayQuit( "no integer entries", 0, 0 );
+      return NULL;
+    }
+//     current= INT_INTOBJ( current_num );
+    sprintf(s1, "%ld/%ld", INT_INTOBJ(current_num), INT_INTOBJ(current_den) );
+    strcat(s,s1);
+    strcat(s, " ");
+  }
+  
+  return s;
+}
+
 static char * PLIST_STR( Obj list )
 {
-  static char s1[dd_linelenmax],s[dd_linelenmax]= " ";
+ static char s[dd_linelenmax];
+ char s1[dd_linelenmax];
   int i,n, current;
   Obj current_obj;
   
+  strcpy( s, " " );
   if (!IS_PLIST( list ) ){
-   ErrorMayQuit( "not a plain list", 0,0 );
+   ErrorMayQuit( "not a plain list kemo", 0,0 );
    return NULL;
   }
   
@@ -63,34 +100,40 @@ static char * PLIST_STR( Obj list )
 }
 
 
-static dd_MatrixPtr GapInputToMatrixPtr( Obj rep, Obj numtype, Obj linearity, Obj rowrange, Obj colrange,
-                                  Obj linearity_array, Obj matrix, Obj LPobject, Obj rowvec )
+static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
+
+// Obj rep, Obj numtype, Obj linearity, Obj rowrange, Obj colrange, Obj linearity_array, Obj matrix, Obj LPobject, Obj rowvec )
 
 {
+  
   int k_rep,k_numtype,k_linearity, k_rowrange, k_colrange, k_LPobject;
-  char k_linearity_array[100], k_matrix[100],k_rowvec[100];
+   char k_linearity_array[100], k_matrix[100],k_rowvec[100];
   
-  k_rep= INT_INTOBJ( rep );
-  k_numtype= INT_INTOBJ( numtype );
-  k_linearity= INT_INTOBJ( linearity );
-  k_rowrange= INT_INTOBJ( rowrange );
-  k_colrange= INT_INTOBJ( colrange );
+  dd_set_global_constants();
   
+   k_rep=       INT_INTOBJ( ELM_PLIST( input , 1 ) );
+   k_numtype=   INT_INTOBJ( ELM_PLIST( input , 2 ) );
+   k_linearity= INT_INTOBJ( ELM_PLIST( input , 3 ) );
+   k_rowrange=  INT_INTOBJ( ELM_PLIST( input , 4 ) );
+   k_colrange=  INT_INTOBJ( ELM_PLIST( input , 5 ) );
+   k_LPobject=  INT_INTOBJ( ELM_PLIST( input , 8 ) );
   
-   strcpy( k_linearity_array, PLIST_STR(linearity_array) );
-   strcpy( k_matrix, PLIST_STR(matrix) );
-   strcpy( k_rowvec, PLIST_STR(rowvec) );
-   
+  if (k_numtype==3) 
+   strcpy( k_matrix,          PLIST_STR( ELM_PLIST( input , 7 ) ) );
+  else 
+   strcpy( k_matrix,          RATPLIST_STR( ELM_PLIST( input , 7 ) ) );
+    
+    strcpy( k_linearity_array, PLIST_STR( ELM_PLIST( input , 6 ) ) );
+    strcpy( k_rowvec,          RATPLIST_STR( ELM_PLIST( input , 9 ) ) );
+    
+//     ErrorMayQuit( k_matrix, 0,0 );
+//     return NULL;
+//    return ddG_PolyInput2Matrix( k_rep,k_numtype,k_linearity, k_rowrange, k_colrange, 
+//    k_linearity_array, k_matrix, k_LPobject , k_rowvec );
+  
 
-  return ddG_PolyInput2Matrix( k_rep,k_numtype,k_linearity, k_rowrange, k_colrange, 
-  k_linearity_array, k_matrix, k_LPobject , k_rowvec );
-  
+  return ddG_PolyInput2Matrix( k_rep , k_numtype, k_linearity, k_rowrange, k_colrange, k_linearity_array, k_matrix , k_LPobject, k_rowvec  );
 }       
-  
-  
-  
-  
-
 
 
 /**********************************************************
@@ -136,7 +179,7 @@ static  int* GAPPLIST_TOINTPtr( Obj list )
   int i, len;
   Obj current_obj;
   if (! IS_PLIST( list ) ) {
-    ErrorMayQuit( "not a plain list", 0,0 );
+    ErrorMayQuit( "not a plain list saleh", 0,0 );
     return NULL;
   }
   
@@ -158,23 +201,23 @@ static  int* GAPPLIST_TOINTPtr( Obj list )
 
 /**********************************************************
 *
-*    testing functions to be called from Gap 
+*    functions to be called from Gap 
 * 
 * ********************************************************/
 
-static Obj CddInterface_Matrix( Obj self, Obj rep, Obj numtype, Obj linearity, Obj rowrange, Obj colrange,
-                                  Obj linearity_array, Obj matrix, Obj LPobject, Obj rowvec )
+static Obj CddInterface_Matrix( Obj self,Obj main )
 {
   dd_MatrixPtr M,A;
-  dd_ErrorType err=dd_NoError;
- dd_PolyhedraPtr poly;
+  char d[100];
+  Obj linearity_array;
+//   dd_ErrorType err=dd_NoError;
+//  dd_PolyhedraPtr poly;
  
-  M= GapInputToMatrixPtr(rep, numtype,linearity, rowrange, colrange, linearity_array, matrix, LPobject, rowvec );
+   M= GapInputToMatrixPtr( main );
   
-  poly=dd_DDMatrix2Poly(M, &err);
-  
-  A= dd_CopyInequalities(poly);
-  return CINTLISTPtr_TOGAPPLIST( ddG_LinearityPtr( A ), INT_INTOBJ( rowrange) );
+//   linearity_array = ELM_PLIST( main, 4 );
+//   strcpy( d, PLIST_STR(linearity_array) );
+  return INTOBJ_INT( 3 );
 }
 
 Obj take_it_and_give_it_back( Obj self, Obj list )
@@ -250,7 +293,7 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", TestCommand_max, 2, "param1, param2"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", testkamalove, 0, ""),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_it_and_give_it_back, 1, "list"),
-    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Matrix, 9, "rep, numtype,linearity, rowrange, colrange, linearity_array, matrix, LPobject, rowvec"),
+    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Matrix, 1, "main"),
 
     
     { 0 } /* Finish with an empty entry */
