@@ -100,6 +100,88 @@ static char * PLIST_STR( Obj list )
 }
 
 
+static Obj MatrixPtrToGapObj( dd_MatrixPtr M )
+{
+  Obj current, result;
+  
+  result= NEW_PLIST( T_PLIST_CYC, 7);
+  SET_LEN_PLIST(result, 7);
+  
+  current= INTOBJ_INT( ddG_RepresentationType( M ) );
+  SET_ELM_PLIST(result, 1, current  ); 
+  CHANGED_BAG( result );
+  
+  current= INTOBJ_INT( ddG_NumberType( M ) );
+  SET_ELM_PLIST(result, 2, current  );
+  CHANGED_BAG( result );
+  
+  
+  if ( ddG_LinearitySize( M ) == 0) SET_ELM_PLIST(result, 3, INTOBJ_INT( 0 )  );
+  else SET_ELM_PLIST(result, 3, INTOBJ_INT( 1 )  );
+  CHANGED_BAG( result );
+  
+  current= INTOBJ_INT( ddG_RowSize( M ) );
+  SET_ELM_PLIST(result, 4, current  );
+  CHANGED_BAG( result );
+  
+   
+  
+  current= INTOBJ_INT( ddG_ColSize( M ) );
+  SET_ELM_PLIST(result, 5, current  );
+  CHANGED_BAG( result );
+  
+//   ErrorMayQuit( A2String( ddG_LinearityPtr( M ), 2 ), 0, 0);
+//   return NULL;
+  
+   size_t i1, size1;
+   int i, size;
+   int * lin;
+   
+   lin =  ddG_LinearityPtr( M );
+   size = ddG_LinearitySize( M );
+   size1=size;
+   
+   current= NEW_PLIST(T_PLIST_CYC, size1 );
+   SET_LEN_PLIST( current, size1 );
+ 
+   for(i=0;i<size;i++){
+     i1=i;
+     SET_ELM_PLIST( current, i1+1, INTOBJ_INT( *(lin +i ) ) );
+     CHANGED_BAG( current );
+   }
+   
+  SET_ELM_PLIST(result, 6, current  );
+  CHANGED_BAG( result );
+  
+   long int *matrix;
+  
+   matrix= ddG_AmatrixPtr( M );
+   size= 2*ddG_ColSize( M )*ddG_RowSize( M );
+   size1= size;
+  
+   current= NEW_PLIST(T_PLIST_CYC, size1 );
+   SET_LEN_PLIST( current, size1 );
+ 
+   for(i=0;i<size;i++){
+     i1=i;
+     SET_ELM_PLIST( current, i1+1, INTOBJ_INT( *(matrix + i ) ) );
+     CHANGED_BAG( current );
+   }
+   
+  SET_ELM_PLIST(result, 7, current  );
+  CHANGED_BAG( result );
+  
+   
+  
+//   current= NEW_PLIST(T_PLIST_CYC, size1 );
+//   SET_LEN_PLIST( current, size1 );
+
+   
+  
+  
+  return result;
+}
+
 static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
 
 // Obj rep, Obj numtype, Obj linearity, Obj rowrange, Obj colrange, Obj linearity_array, Obj matrix, Obj LPobject, Obj rowvec )
@@ -158,11 +240,12 @@ Obj MPQ_TO_GAPOBJ( mpq_t x )
   return QUO( MPZ_TO_GAPOBJ(num), MPZ_TO_GAPOBJ(den) );
 }
 
-Obj CINTLISTPtr_TOGAPPLIST(  int *list, size_t n )
+Obj CINTLISTPtr_TOGAPPLIST(  int *list, int n1 )
 {
-  size_t i;
+  size_t i,n;
   Obj M;
    int r;
+   n=n1;
   M = NEW_PLIST(T_PLIST_CYC, n);
    SET_LEN_PLIST(M, n);
   for ( i = 0; i < n; i++) {
@@ -217,7 +300,7 @@ static Obj CddInterface_Matrix( Obj self,Obj main )
   
 //   linearity_array = ELM_PLIST( main, 4 );
 //   strcpy( d, PLIST_STR(linearity_array) );
-  return INTOBJ_INT( 3 );
+  return MatrixPtrToGapObj( M );
 }
 
 Obj take_it_and_give_it_back( Obj self, Obj list )
