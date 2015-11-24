@@ -244,6 +244,14 @@ function( poly, obj, rowvec )
    return r;
 end );
 
+# 
+# 
+# InstallMethod( Cdd_PolyhedraFromList,
+#               [ IsList ],
+#  function( list )
+#  
+#  local 
+#  
 
 ##################################
 ##

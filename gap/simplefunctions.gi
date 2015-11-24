@@ -23,17 +23,20 @@ InstallMethod( PTM,
     
       for  j in [1..Length(matrix[1])] do
     
-      if m<NumberOfDigitsOfTheNumber(matrix[i][j]) then m:=NumberOfDigitsOfTheNumber(matrix[i][j]);fi;
+        if m<NumberOfDigitsOfTheNumber(matrix[i][j]) then m:=NumberOfDigitsOfTheNumber(matrix[i][j]);fi;
       
       od;
+      
     od;
 
     Print("   ");
 
-     for i in [1..Length(matrix[1])*(m+2)-2] do
+    for i in [1..Length(matrix[1])*(m+2)-2] do
 
          Print(" ");
-     od;
+         
+    od;
+    
     Print("  ","\n");
  
     for i in [1..Length(matrix)] do
@@ -67,9 +70,9 @@ InstallMethod( PTM,
         
      od;
 
-end);
+  end );
 
-# this function takes [-2/3, 5/7, 5, 0] and returns [-2,3,5,7,5,1,0,1]
+# this function takes [-2/3, 5/7, 5, 0] and returns [-2,3,5,7,5,1,0,1].
 
 InstallMethod( ConvertRatListToIntList, 
                      [IsList],
@@ -91,5 +94,14 @@ function( list )
 end );
 
 
+# this function takes [-2,3,5,7,5,1,0,1] and returns [-2/3, 5/7, 5, 0]. 
+
+InstallMethod( ConvertIntListToRatList,
+                      [ IsList ],
+function( list )
+   
+return List( [1..Length( list )/2 ], i-> list[2*i-1]/list[2*i] );
+
+end );
 
 
