@@ -41,6 +41,8 @@ DeclareCategory( "IsCddLinearProgram", IsObject );
 
 DeclareGlobalFunction( "Cdd_PolyhedraByInequalities" );
 DeclareGlobalFunction( "Cdd_PolyhedraByGenerators" );
+DeclareOperation( "Cdd_ListToPoly", [ IsList ] );
+DeclareOperation( "Cdd_PolyToList", [ IsCddPolyhedra ] );
 DeclareOperation( "Cdd_LinearProgram", [IsCddPolyhedra, IsString, IsList] );
 # DeclareOperation( "Display",[ IsCddPolyhedra ] );
 # DeclareOperation( "ViewObj", [IsCddPolyhedra] );

@@ -49,7 +49,7 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
                "constructor for polyhedra by inequalities",
 #              [IsMatrix, IsString],
    function( arg )
-   local poly, i;
+   local poly, i, temp;
    
    if Length( arg )= 0 then Error( "inappropriate input" );
    
@@ -96,6 +96,18 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    poly, TheTypeCddPolyhedra
    );
    
+   if arg[2]= "integer" then 
+   
+       temp:= ConvertListOfVectorsToList( arg[1] );
+       
+       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
+       
+           return Error("All entries in the generators should be integers");
+           
+       fi;
+       
+   fi;
+   
    return  poly;
     
    elif Length( arg )= 3 and IsMatrix( arg[1] ) and IsList( arg[2] ) 
@@ -116,6 +128,18 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    poly, TheTypeCddPolyhedra
    );
    
+   if arg[3]= "integer" then 
+   
+       temp:= ConvertListOfVectorsToList( arg[1] );
+       
+       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
+       
+           return Error("All entries in the generators should be integers");
+           
+       fi;
+       
+   fi;
+   
    return  poly;
    
    fi;
@@ -125,9 +149,8 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
 ###
 InstallGlobalFunction( Cdd_PolyhedraByGenerators,
                "constructor for polyhedra by generators",
-#              [IsMatrix, IsString],
    function( arg )
-   local poly,i;
+   local poly,i, temp;
    
    if Length( arg )= 0 then Error( "inappropriate input" );
    
@@ -165,6 +188,18 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
    ObjectifyWithAttributes( 
    poly, TheTypeCddPolyhedra
    );
+   
+   if arg[2]= "integer" then 
+   
+       temp:= ConvertListOfVectorsToList( arg[1] );
+       
+       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
+       
+           return Error("All entries in the generators should be integers");
+           
+       fi;
+       
+   fi;
    
    return  poly;
    
@@ -215,6 +250,18 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
    poly, TheTypeCddPolyhedra
    );
    
+   if arg[3]= "integer" then 
+   
+       temp:= ConvertListOfVectorsToList( arg[1] );
+       
+       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
+       
+           return Error("All entries in the generators should be integers");
+           
+       fi;
+       
+   fi;
+   
    return  poly;
    
    fi;
@@ -238,10 +285,13 @@ function( poly, obj, rowvec )
    r:= rec( polyhedra:= poly, objective:= obj, rowvector:= rowvec );
    
    ObjectifyWithAttributes(
+   
    r, TheTypeCddLinearProgram
+   
    );
    
    return r;
+   
 end );
 
 # 
@@ -275,6 +325,131 @@ else
 fi;
 
 end );
+
+##################################
+##
+##  Operations
+##
+##################################
+
+InstallMethod( Cdd_ListToPoly, 
+               [ IsList ],
+function( list )
+
+local numtype, matrix;
+
+if not IsCompatiblePolyhedraList( list ) then return Error( "The given list is not compatible" ); fi;
+
+if list[2]= 3 then numtype:= "integer";
+
+   elif list[2]=2 then numtype:= "rational";
+
+     elif list[2]=1 then numtype:= "real"; 
+      
+        else numtype:= "unknown"; 
+      
+fi;
+
+matrix:= ConvertListToListOfVectors( list[7], list[5] );
+
+ if list[1]=2 then 
+
+       if list[3]=0 then return Cdd_PolyhedraByGenerators( matrix, numtype );
+       
+          else return Cdd_PolyhedraByGenerators( matrix , list[6], numtype );
+          
+       fi;
+ else 
+ 
+      if list[3]=0 then return Cdd_PolyhedraByInequalities( matrix, numtype );
+       
+          else return Cdd_PolyhedraByInequalities( matrix , list[6], numtype );
+       
+      fi;
+      
+ fi;
+
+end );
+
+
+InstallMethod( Cdd_PolyToList,
+
+               [ IsCddPolyhedra ],
+               
+function( poly )
+
+local L, matrix, lin, temp;
+
+L:= [];
+
+if (poly!.rep_type= "H-rep" ) then 
+
+     Add( L, 1 );
+   
+else 
+
+    Add( L, 2 ) ;
+    
+fi;
+
+if poly!.number_type = "real" then 
+
+     Add( L, 1 );
+     
+elif poly!.number_type= "rational" then
+
+     Add( L, 2 );
+     
+elif poly!.number_type= "integer" then
+
+     Add( L, 3 );
+     
+elif poly!.number_type= "unknown" then 
+
+     Add( L, 4 );
+     
+else return Error( "The number type is not recognized" );
+
+fi;
+
+if Length( poly!.linearity) = 0  then 
+
+     Add( L, 0 );
+    
+else 
+
+     Add( L, 1 );
+     
+fi;
+
+
+if (poly!.rep_type= "H-rep" ) then 
+
+     matrix:= poly!.poly_inequalities;
+   
+else 
+
+    matrix:= poly!.poly_generators ;
+    
+fi;
+
+Add(L, Length( matrix    )  );
+Add(L, Length( matrix[1] )  );
+
+lin := poly!.linearity;
+
+temp:= [ Length( lin ) ];
+
+Append( temp, lin );
+
+Add( L, temp );
+
+Add( L, ConvertListOfVectorsToList( matrix ) );
+
+return L;
+
+end );
+
 
 
 ##################################
@@ -319,11 +494,13 @@ Print( "Begin \n" );
 if poly!.rep_type= "H-rep" then 
   
   Print("   ", Length( poly!.poly_inequalities)," X ", Length( poly!.poly_inequalities[1] ), "  ", poly!.number_type, "\n" );
+  
   PTM( poly!.poly_inequalities );
   
 else
 
   Print("   ", Length( poly!.poly_generators)," X ", Length( poly!.poly_generators[1] ), "  ", poly!.number_type, "\n" );
+  
   PTM( poly!.poly_generators );
 
 fi;
@@ -335,10 +512,12 @@ end );
 ###
 InstallMethod( Display,
                [IsCddLinearProgram],
-function( poly )
+ function( poly )
 
-Print( "Linear program given by its " );
-Display( poly!.polyhedra );
-Print( poly!.objective, "  ",poly!.rowvector );
+ Print( "Linear program given by its " );
+
+ Display( poly!.polyhedra );
+
+ Print( poly!.objective, "  ",poly!.rowvector );
 
 end );

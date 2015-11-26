@@ -288,19 +288,35 @@ static  int* GAPPLIST_TOINTPtr( Obj list )
 * 
 * ********************************************************/
 
-static Obj CddInterface_Matrix( Obj self,Obj main )
+static Obj CddInterface_Canonicalize( Obj self,Obj main )
 {
-  dd_MatrixPtr M,A;
+  static dd_MatrixPtr M,A;
   char d[100];
   Obj linearity_array;
 //   dd_ErrorType err=dd_NoError;
 //  dd_PolyhedraPtr poly;
- 
-   M= GapInputToMatrixPtr( main );
+  dd_set_global_constants();
+//   M =ddG_PolyInput2Matrix(2, 3, 1, 3, 3, " 2 1 3 " , " 1 1 1 0 1 1 0 2 2 ", 1, " 4 7 8 " );
+  M= GapInputToMatrixPtr( main );
   
+  
+  
+  dd_rowset impl_linset, redset;
+  dd_rowindex newpos;
+  dd_ErrorType err;
+  dd_MatrixCanonicalize(&M, &impl_linset, &redset, &newpos, &err);
+  dd_free_global_constants();
+//   return MatrixPtrToGapObj( M );
+  
+  
+  
+  
+  return INTOBJ_INT( 3 );
+//     M= GapInputToMatrixPtr( main );
+//   M= ddG_CanonicalizeMatrix( M );
 //   linearity_array = ELM_PLIST( main, 4 );
 //   strcpy( d, PLIST_STR(linearity_array) );
-  return MatrixPtrToGapObj( M );
+  
 }
 
 Obj take_it_and_give_it_back( Obj self, Obj list )
@@ -376,7 +392,7 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", TestCommand_max, 2, "param1, param2"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", testkamalove, 0, ""),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_it_and_give_it_back, 1, "list"),
-    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Matrix, 1, "main"),
+    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Canonicalize, 1, "main"),
 
     
     { 0 } /* Finish with an empty entry */
