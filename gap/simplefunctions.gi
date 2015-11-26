@@ -91,7 +91,7 @@ fi;
 
 if not( IsList( list[6]) and IsList( list[7] ) ) then return Error( "The last two arguments should be lists" );fi;
 
-if not ( Length( list[ 7 ]  )=list[ 4 ]*list[ 5 ] ) then return Error( "The matrix is not compatible" );fi;
+if not ( Length( list[ 7 ]  )=2*list[ 4 ]*list[ 5 ] ) then return Error( "The matrix is not compatible" );fi;
 
 for i in list[6] do
 

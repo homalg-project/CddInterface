@@ -141,7 +141,7 @@ static Obj MatrixPtrToGapObj( dd_MatrixPtr M )
    size = ddG_LinearitySize( M );
    size1=size;
    
-   current= NEW_PLIST(T_PLIST_CYC, size1 );
+   current= NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
    SET_LEN_PLIST( current, size1 );
  
    for(i=0;i<size;i++){
@@ -205,8 +205,8 @@ static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
   else 
    strcpy( k_matrix,          RATPLIST_STR( ELM_PLIST( input , 7 ) ) );
     
-    strcpy( k_linearity_array, PLIST_STR( ELM_PLIST( input , 6 ) ) );
-    strcpy( k_rowvec,          RATPLIST_STR( ELM_PLIST( input , 9 ) ) );
+  strcpy( k_linearity_array, PLIST_STR( ELM_PLIST( input , 6 ) ) );
+  strcpy( k_rowvec,          RATPLIST_STR( ELM_PLIST( input , 9 ) ) );
     
 //     ErrorMayQuit( k_matrix, 0,0 );
 //     return NULL;
@@ -306,17 +306,52 @@ static Obj CddInterface_Canonicalize( Obj self,Obj main )
   dd_ErrorType err;
   dd_MatrixCanonicalize(&M, &impl_linset, &redset, &newpos, &err);
   dd_free_global_constants();
-//   return MatrixPtrToGapObj( M );
+  return MatrixPtrToGapObj( M );
   
-  
-  
-  
-  return INTOBJ_INT( 3 );
+//   return INTOBJ_INT( 3 );
 //     M= GapInputToMatrixPtr( main );
 //   M= ddG_CanonicalizeMatrix( M );
 //   linearity_array = ELM_PLIST( main, 4 );
 //   strcpy( d, PLIST_STR(linearity_array) );
   
+}
+
+static Obj CddInterface_Compute_H_rep( Obj self, Obj main )
+{
+  static dd_MatrixPtr M, A;
+  dd_PolyhedraPtr poly;
+  dd_ErrorType err;
+   dd_set_global_constants();
+   err=dd_NoError;
+   M= GapInputToMatrixPtr( main );
+   poly=dd_DDMatrix2Poly(M, &err);
+   A= A=dd_CopyInequalities(poly);
+   dd_free_global_constants();
+   return MatrixPtrToGapObj( A );
+}
+
+static Obj CddInterface_Compute_V_rep( Obj self, Obj main )
+{
+  static dd_MatrixPtr M, A;
+  dd_PolyhedraPtr poly;
+  dd_ErrorType err;
+   dd_set_global_constants();
+   err=dd_NoError;
+   M= GapInputToMatrixPtr( main );
+   poly=dd_DDMatrix2Poly(M, &err);
+   A= A=dd_CopyGenerators(poly);
+   dd_free_global_constants();
+   return MatrixPtrToGapObj( A );
+}
+
+
+Obj take_poly_and_give_it_back( Obj self, Obj list )
+{
+  dd_MatrixPtr M;
+  
+  M= GapInputToMatrixPtr( list );
+  
+  return  MatrixPtrToGapObj( M ) ;
 }
 
 Obj take_it_and_give_it_back( Obj self, Obj list )
@@ -346,6 +381,15 @@ Obj TestCommand_max( Obj self, Obj param1, Obj param2 )
 Obj testkamalove( Obj self )
 {
   
+  Obj L;
+  size_t n=0;
+  
+  L = NEW_PLIST((n > 0) ? T_PLIST_CYC : T_PLIST, n);
+  SET_LEN_PLIST(L, n);
+  SET_ELM_PLIST( L, n+1, INTOBJ_INT( 4 ) );
+//   L:= NEW_PLIST(T_PLIST_CYC, 1 );
+//   SET_LEN_PLIST( L, 1 );
+  
 //    int array[100]={5,8,9,3,45,3};
 //   size_t i=6;
   
@@ -359,7 +403,8 @@ Obj testkamalove( Obj self )
   }
   */
 //   return CLIST_TOGAPPLIST( array, i );
-return CINTLISTPtr_TOGAPPLIST( iwjeiwjojdowije( 3 ), 3 );
+// return CINTLISTPtr_TOGAPPLIST( iwjeiwjojdowije( 3 ), 3 );
+return L;
 }
 
 
@@ -393,7 +438,9 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", testkamalove, 0, ""),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_it_and_give_it_back, 1, "list"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Canonicalize, 1, "main"),
-
+    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Compute_H_rep, 1, "main"),
+    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Compute_V_rep, 1, "main"),
+    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_poly_and_give_it_back, 1, "list"),
     
     { 0 } /* Finish with an empty entry */
 

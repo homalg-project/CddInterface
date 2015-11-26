@@ -55,6 +55,12 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    
    elif Length( arg )= 1 and IsMatrix( arg[1] ) then
    
+   if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
+   
+       return Error( "inappropriate input" );
+       
+   fi;
+   
    poly := rec( poly_inequalities:= arg[1],
                 linearity:= [],
                 number_type:= "rational",
@@ -68,6 +74,24 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    
    elif Length( arg )= 2 and IsMatrix( arg[1] ) and IsString( arg[2] ) then
    
+   if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
+   
+       return Error( "inappropriate input" );
+       
+   fi;
+   
+   if arg[2]= "integer" then 
+   
+       temp:= ConvertListOfVectorsToList( arg[1] );
+       
+       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
+       
+           return Error("All entries in the generators should be integers");
+           
+       fi;
+       
+   fi;
+   
    poly := rec( poly_inequalities:= arg[1],
                 linearity:= [],
                 number_type:= arg[2],
@@ -80,6 +104,12 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    return  poly;
    
    elif Length( arg )= 2 and IsMatrix( arg[1] ) and IsInt( arg[2][1] ) then
+   
+   if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
+   
+       return Error( "inappropriate input" );
+       
+   fi;
    
    for i in [1..Length( arg[2] ) ] do
     
@@ -96,22 +126,16 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    poly, TheTypeCddPolyhedra
    );
    
-   if arg[2]= "integer" then 
-   
-       temp:= ConvertListOfVectorsToList( arg[1] );
-       
-       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
-       
-           return Error("All entries in the generators should be integers");
-           
-       fi;
-       
-   fi;
-   
-   return  poly;
+    return  poly;
     
    elif Length( arg )= 3 and IsMatrix( arg[1] ) and IsList( arg[2] ) 
                             and IsString( arg[3] ) then
+                            
+           if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
+   
+                return Error( "inappropriate input" );
+       
+           fi;                
    
            for i in [1..Length( arg[2] ) ] do
     
@@ -180,6 +204,19 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
      if not ( arg[1][i][1] in [0,1] ) then Error("The first column of the matrix should be only 1's or 0's");fi;
    
    od;
+   
+     if arg[2]= "integer" then 
+   
+       temp:= ConvertListOfVectorsToList( arg[1] );
+       
+       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
+       
+           return Error("All entries in the generators should be integers");
+           
+       fi;
+       
+   fi;
+   
    poly := rec( poly_generators:= arg[1],
                 linearity:= [],
                 number_type:= arg[2],
@@ -332,11 +369,27 @@ end );
 ##
 ##################################
 
+
+InstallMethod( Cdd_Canonicalize,
+               [ IsCddPolyhedra],
+ function( poly )
+ 
+ local L1, L2;
+ 
+ L1:= Cdd_PolyToList( poly );
+ 
+ L2:= CddInterface_Canonicalize( L1 );
+ 
+ return Cdd_ListToPoly( L2 );
+ 
+ end );
+ 
+
 InstallMethod( Cdd_ListToPoly, 
                [ IsList ],
 function( list )
 
-local numtype, matrix;
+local numtype, matrix, temp;
 
 if not IsCompatiblePolyhedraList( list ) then return Error( "The given list is not compatible" ); fi;
 
@@ -350,7 +403,9 @@ if list[2]= 3 then numtype:= "integer";
       
 fi;
 
-matrix:= ConvertListToListOfVectors( list[7], list[5] );
+temp:= ConvertIntListToRatList( list[7] );
+
+matrix:= ConvertListToListOfVectors( temp, list[5] );
 
  if list[1]=2 then 
 
@@ -444,7 +499,17 @@ Append( temp, lin );
 
 Add( L, temp );
 
-Add( L, ConvertListOfVectorsToList( matrix ) );
+if poly!.number_type= "integer" then 
+
+     Add( L, ConvertListOfVectorsToList( matrix ) );
+     
+else 
+
+     Add( L, ConvertRatListToIntList( ConvertListOfVectorsToList( matrix ) ) );
+     
+fi;
+
+Append( L, [ 0, [] ] );
 
 return L;
 
@@ -485,7 +550,7 @@ InstallMethod( Display,
 function( poly )
 
 
-Print("\n", poly!.rep_type, "resentation \n" );
+Print( poly!.rep_type, "resentation \n" );
 
 if Length( poly!.linearity) <> 0 then Print( "Linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
 
