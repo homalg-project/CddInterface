@@ -44,11 +44,11 @@ dd_MatrixPtr ddG_CanonicalizeMatrix( dd_MatrixPtr M)
 
 
 dd_MatrixPtr ddG_PolyInput2Matrix (int k_rep, int k_numtype,int k_linearity, dd_rowrange k_rowrange, 
-                         dd_colrange k_colrange,char k_linearity_array[100],char k_matrix[100],
-                         int k_LPobject, char k_rowvec[100])
+                         dd_colrange k_colrange,char k_linearity_array[50000],char k_matrix[50000],
+                         int k_LPobject, char k_rowvec[50000])
                                   
 {
-char numbtype[100], k_value[100], k_matrixx[100],k_linearity_arrayx[100], k_rowvecx[100];
+char numbtype[50000], k_value[50000], k_matrixx[50000],k_linearity_arrayx[50000], k_rowvecx[50000];
 dd_MatrixPtr M=NULL;
  dd_rowrange m_input,i;
  dd_colrange d_input,j;
@@ -211,7 +211,7 @@ int * ddG_LinearityPtr(dd_MatrixPtr M )
   dd_rowrange r;
   dd_rowset s;
   int i,u;
-  static int lin_array[100];
+  static int lin_array[50000];
   
   r= ddG_RowSize( M );
   s= ddG_RowSet( M );
@@ -230,7 +230,7 @@ int * ddG_LinearityPtr(dd_MatrixPtr M )
 
 long int * ddG_RowVecPtr( dd_MatrixPtr M )
 {
-  static long int RowVec_array[100];
+  static long int RowVec_array[50000];
   static mpz_t u,v;
   int i,z1,z2;
   dd_Arow row_vector;
@@ -262,7 +262,7 @@ long int * ddG_RowVecPtr( dd_MatrixPtr M )
 
 long int * ddG_AmatrixPtr( dd_MatrixPtr M )
 {
-  static long int Amatrix_array[100];
+  static long int Amatrix_array[50000];
   dd_rowrange r;
   dd_colrange s;
   dd_Amatrix Ma;
@@ -324,7 +324,7 @@ int ddG_IsOptimal( dd_MatrixPtr M )
 long int * ddG_SolutionVector( dd_MatrixPtr M )
 {
   
- static long int sol_vec[100];
+ static long int sol_vec[50000];
  static dd_LPSolutionPtr lps;
  static mpz_t u,v;
  static dd_colrange j;

@@ -13,7 +13,7 @@
 * ********************************************************/
 static  int* iwjeiwjojdowije( int n )
 {
- static  int r[100];
+ static  int r[50000];
   int i;
   
   for( i=0;i<n;i++)
@@ -23,7 +23,7 @@ static  int* iwjeiwjojdowije( int n )
 
 static int * kemo( int m )
 {
-  static int a[100];
+  static int a[50000];
   int i;
   
   for( i=0;i<m;i++)
@@ -189,7 +189,7 @@ static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
 {
   
   int k_rep,k_numtype,k_linearity, k_rowrange, k_colrange, k_LPobject;
-   char k_linearity_array[100], k_matrix[100],k_rowvec[100];
+   char k_linearity_array[50000], k_matrix[50000],k_rowvec[50000];
   
   dd_set_global_constants();
   
@@ -258,7 +258,7 @@ Obj CINTLISTPtr_TOGAPPLIST(  int *list, int n1 )
 
 static  int* GAPPLIST_TOINTPtr( Obj list )
 {
-  static  int array[100];
+  static  int array[50000];
   int i, len;
   Obj current_obj;
   if (! IS_PLIST( list ) ) {
@@ -291,7 +291,7 @@ static  int* GAPPLIST_TOINTPtr( Obj list )
 static Obj CddInterface_Canonicalize( Obj self,Obj main )
 {
   static dd_MatrixPtr M,A;
-  char d[100];
+  char d[50000];
   Obj linearity_array;
 //   dd_ErrorType err=dd_NoError;
 //  dd_PolyhedraPtr poly;
@@ -351,7 +351,9 @@ Obj take_poly_and_give_it_back( Obj self, Obj list )
   
   M= GapInputToMatrixPtr( list );
   
-  return  MatrixPtrToGapObj( M ) ;
+   return  MatrixPtrToGapObj( M ) ;
+  
+//   return INTOBJ_INT( 2 );
 }
 
 Obj take_it_and_give_it_back( Obj self, Obj list )
@@ -390,7 +392,7 @@ Obj testkamalove( Obj self )
 //   L:= NEW_PLIST(T_PLIST_CYC, 1 );
 //   SET_LEN_PLIST( L, 1 );
   
-//    int array[100]={5,8,9,3,45,3};
+//    int array[50000]={5,8,9,3,45,3};
 //   size_t i=6;
   
 //   static  int * r;

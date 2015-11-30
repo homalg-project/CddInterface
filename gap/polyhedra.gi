@@ -72,36 +72,6 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    
    return  poly;
    
-   elif Length( arg )= 2 and IsMatrix( arg[1] ) and IsString( arg[2] ) then
-   
-   if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
-   
-       return Error( "inappropriate input" );
-       
-   fi;
-   
-   if arg[2]= "integer" then 
-   
-       temp:= ConvertListOfVectorsToList( arg[1] );
-       
-       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
-       
-           return Error("All entries in the generators should be integers");
-           
-       fi;
-       
-   fi;
-   
-   poly := rec( poly_inequalities:= arg[1],
-                linearity:= [],
-                number_type:= arg[2],
-                rep_type := "H-rep" );
-   
-   ObjectifyWithAttributes( 
-   poly, TheTypeCddPolyhedra
-   );
-   
-   return  poly;
    
    elif Length( arg )= 2 and IsMatrix( arg[1] ) and IsInt( arg[2][1] ) then
    
@@ -128,44 +98,7 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    
     return  poly;
     
-   elif Length( arg )= 3 and IsMatrix( arg[1] ) and IsList( arg[2] ) 
-                            and IsString( arg[3] ) then
-                            
-           if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
-   
-                return Error( "inappropriate input" );
-       
-           fi;                
-   
-           for i in [1..Length( arg[2] ) ] do
     
-               if arg[2][i]> Length( arg[1] ) or arg[2][i]<0 then Error("The linearity is not combatible");fi;
-   
-           od; 
-           
-           poly := rec( poly_inequalities:= arg[1],
-                linearity:= arg[2],
-                number_type:= arg[3],
-                rep_type := "H-rep" );
-   
-   ObjectifyWithAttributes( 
-   poly, TheTypeCddPolyhedra
-   );
-   
-   if arg[3]= "integer" then 
-   
-       temp:= ConvertListOfVectorsToList( arg[1] );
-       
-       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
-       
-           return Error("All entries in the generators should be integers");
-           
-       fi;
-       
-   fi;
-   
-   return  poly;
-   
    fi;
    
    end );   
@@ -197,49 +130,6 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
    
    return  poly;
    
-   elif Length( arg )= 2 and IsMatrix( arg[1] ) and IsString( arg[2] ) then
-   
-   for i in [1..Length( arg[1]) ] do
-   
-     if not ( arg[1][i][1] in [0,1] ) then Error("The first column of the matrix should be only 1's or 0's");fi;
-   
-   od;
-   
-     if arg[2]= "integer" then 
-   
-       temp:= ConvertListOfVectorsToList( arg[1] );
-       
-       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
-       
-           return Error("All entries in the generators should be integers");
-           
-       fi;
-       
-   fi;
-   
-   poly := rec( poly_generators:= arg[1],
-                linearity:= [],
-                number_type:= arg[2],
-                rep_type := "V-rep" );
-   
-   ObjectifyWithAttributes( 
-   poly, TheTypeCddPolyhedra
-   );
-   
-   if arg[2]= "integer" then 
-   
-       temp:= ConvertListOfVectorsToList( arg[1] );
-       
-       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
-       
-           return Error("All entries in the generators should be integers");
-           
-       fi;
-       
-   fi;
-   
-   return  poly;
-   
    elif Length( arg )= 2 and IsMatrix( arg[1] ) and IsInt( arg[2][1] ) then
    
    for i in [1..Length( arg[1]) ] do
@@ -250,7 +140,7 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
    
    for i in [1..Length( arg[2] ) ] do
     
-               if arg[2][i]> Length( arg[1] ) or arg[2][i]<0 then Error("The linearity is not combatible");fi;
+               if arg[2][i]> Length( arg[1] ) or arg[2][i]<0 then Error("The linearity is not compatible");fi;
    
    od;
    poly := rec( poly_generators:= arg[1],
@@ -264,43 +154,6 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
    
    return  poly;
     
-   elif Length( arg )= 3 and IsMatrix( arg[1] ) and IsList( arg[2] ) 
-                            and IsString( arg[3] ) then
-           for i in [1..Length( arg[2] ) ] do
-    
-               if arg[2][i]> Length( arg[1] ) or arg[2][i]<0 then Error("The linearity is not combatible");fi;
-   
-           od;
-           
-           for i in [1..Length( arg[1]) ] do
-   
-               if not ( arg[1][i][1] in [0,1] ) then Error("The first column of the matrix should be only 1's or 0's");fi;
-   
-           od;
-           
-           poly := rec( poly_generators:= arg[1],
-                linearity:= arg[2],
-                number_type:= arg[3],
-                rep_type := "V-rep" );
-   
-   ObjectifyWithAttributes( 
-   poly, TheTypeCddPolyhedra
-   );
-   
-   if arg[3]= "integer" then 
-   
-       temp:= ConvertListOfVectorsToList( arg[1] );
-       
-       if false in List( [ 1..Length( temp ) ],i-> IsInt( temp[i] ) ) then 
-       
-           return Error("All entries in the generators should be integers");
-           
-       fi;
-       
-   fi;
-   
-   return  poly;
-   
    fi;
    
    end );           
@@ -376,146 +229,50 @@ InstallMethod( Cdd_Canonicalize,
  
  local L1, L2;
  
- L1:= Cdd_PolyToList( poly );
+ L1:= PolyToList( poly );
  
  L2:= CddInterface_Canonicalize( L1 );
  
- return Cdd_ListToPoly( L2 );
+ return ListToPoly( L2 );
  
  end );
  
 
-InstallMethod( Cdd_ListToPoly, 
-               [ IsList ],
-function( list )
-
-local numtype, matrix, temp;
-
-if not IsCompatiblePolyhedraList( list ) then return Error( "The given list is not compatible" ); fi;
-
-if list[2]= 3 then numtype:= "integer";
-
-   elif list[2]=2 then numtype:= "rational";
-
-     elif list[2]=1 then numtype:= "real"; 
-      
-        else numtype:= "unknown"; 
-      
-fi;
-
-temp:= ConvertIntListToRatList( list[7] );
-
-matrix:= ConvertListToListOfVectors( temp, list[5] );
-
- if list[1]=2 then 
-
-       if list[3]=0 then return Cdd_PolyhedraByGenerators( matrix, numtype );
-       
-          else return Cdd_PolyhedraByGenerators( matrix , list[6], numtype );
-          
-       fi;
+InstallMethod( Cdd_V_Rep, 
+               [ IsCddPolyhedra ],
+ function( poly )
+ 
+ local L, p;
+ 
+ if poly!.rep_type = "V-rep" then 
+ 
+    return Cdd_Canonicalize( poly );
+    
  else 
  
-      if list[3]=0 then return Cdd_PolyhedraByInequalities( matrix, numtype );
-       
-          else return Cdd_PolyhedraByInequalities( matrix , list[6], numtype );
-       
-      fi;
-      
+    return ListToPoly( CddInterface_Compute_V_rep( PolyToList( poly ) ) );
+    
  fi;
-
+    
 end );
 
-
-InstallMethod( Cdd_PolyToList,
-
+InstallMethod( Cdd_H_Rep, 
                [ IsCddPolyhedra ],
-               
-function( poly )
-
-local L, matrix, lin, temp;
-
-L:= [];
-
-if (poly!.rep_type= "H-rep" ) then 
-
-     Add( L, 1 );
-   
-else 
-
-    Add( L, 2 ) ;
+ function( poly )
+ 
+ local L, p;
+ 
+ if poly!.rep_type = "H-rep" then 
+ 
+    return Cdd_Canonicalize( poly );
     
-fi;
-
-if poly!.number_type = "real" then 
-
-     Add( L, 1 );
-     
-elif poly!.number_type= "rational" then
-
-     Add( L, 2 );
-     
-elif poly!.number_type= "integer" then
-
-     Add( L, 3 );
-     
-elif poly!.number_type= "unknown" then 
-
-     Add( L, 4 );
-     
-else return Error( "The number type is not recognized" );
-
-fi;
-
-if Length( poly!.linearity) = 0  then 
-
-     Add( L, 0 );
+ else 
+ 
+    return ListToPoly( CddInterface_Compute_H_rep( PolyToList( poly ) ) );
     
-else 
-
-     Add( L, 1 );
-     
-fi;
-
-
-if (poly!.rep_type= "H-rep" ) then 
-
-     matrix:= poly!.poly_inequalities;
-   
-else 
-
-    matrix:= poly!.poly_generators ;
+ fi;
     
-fi;
-
-Add(L, Length( matrix    )  );
-Add(L, Length( matrix[1] )  );
-
-lin := poly!.linearity;
-
-temp:= [ Length( lin ) ];
-
-Append( temp, lin );
-
-Add( L, temp );
-
-if poly!.number_type= "integer" then 
-
-     Add( L, ConvertListOfVectorsToList( matrix ) );
-     
-else 
-
-     Add( L, ConvertRatListToIntList( ConvertListOfVectorsToList( matrix ) ) );
-     
-fi;
-
-Append( L, [ 0, [] ] );
-
-return L;
-
 end );
-
-
 
 ##################################
 ##

@@ -45,7 +45,7 @@ InstallMethod( PTM,
       
         for j in [1..Length(matrix[1])] do
              
-              Print(matrix[i][j]);
+             
               
                   if j=1 then 
                            
@@ -62,7 +62,7 @@ InstallMethod( PTM,
                            od;
                   fi;
          
-             if j=1 then Print("|  ");fi;   
+                  Print(matrix[i][j]); 
              
          od;
        
@@ -178,6 +178,161 @@ return L;
 
 end );
 
+## this function gives back Lcm of integers in a list
+InstallMethod( LcmOfDenominatorRatInList,
+               [ IsList ],
+               
+function( list )
 
+  local res, i, L;
+
+  L:= List( [ 1..Length( list ) ], i-> DenominatorRat( list[i] ) );
+  
+  res:= 1;
+
+  for i in L do
+
+     res:= LcmInt( res, i );
+    
+  od;
+
+  return res;
+
+end );
+
+## 
+InstallMethod( ListToPoly, 
+               [ IsList ],
+function( list )
+
+local numtype, matrix, temp;
+
+if not IsCompatiblePolyhedraList( list ) then return Error( "The given list is not compatible" ); fi;
+
+temp:= ConvertIntListToRatList( list[7] );
+
+matrix:= ConvertListToListOfVectors( temp, list[5] );
+
+matrix:= CanonicalizeList( matrix, list[1] );
+
+ if list[1]=2 then 
+
+       if list[3]=0 then return Cdd_PolyhedraByGenerators( matrix );
+       
+          else return Cdd_PolyhedraByGenerators( matrix , list[6] );
+          
+       fi;
+ else 
  
+      if list[3]=0 then return Cdd_PolyhedraByInequalities( matrix );
+       
+          else return Cdd_PolyhedraByInequalities( matrix , list[6] );
+       
+      fi;
+      
+ fi;
+
+end );
+
+
+InstallMethod( PolyToList,
+
+               [ IsCddPolyhedra ],
+               
+function( poly )
+
+local L, matrix, lin, temp;
+
+L:= [];
+
+if (poly!.rep_type= "H-rep" ) then 
+
+     Add( L, 1 );
+   
+else 
+
+    Add( L, 2 ) ;
+    
+fi;
+
+# this functions in c should be changned so that this can be delated
+Add( L, 2 );
+
+
+if Length( poly!.linearity) = 0  then 
+
+     Add( L, 0 );
+    
+else 
+
+     Add( L, 1 );
+     
+fi;
+
+
+if (poly!.rep_type= "H-rep" ) then 
+
+     matrix:= poly!.poly_inequalities;
+   
+else 
+
+    matrix:= poly!.poly_generators ;
+    
+fi;
+
+Add(L, Length( matrix    )  );
+Add(L, Length( matrix[1] )  );
+
+lin := poly!.linearity;
+
+temp:= [ Length( lin ) ];
+
+Append( temp, lin );
+
+Add( L, temp );
+
+Add( L, ConvertRatListToIntList( ConvertListOfVectorsToList( matrix ) ) );
+
+Append( L, [ 0, [] ] );
+
+return L;
+
+end );
+
+InstallMethod( CanonicalizeList, 
+               [ IsList, IsInt ],
+               
+function( matrix, rep )
+
+ local res, i;
  
+ if rep = 1 then 
+ 
+       res:= List( [ 1.. Length( matrix ) ], i->LcmOfDenominatorRatInList( matrix[ i ] )*matrix[ i ] ) ;
+       
+       return res;
+       
+ fi;
+ 
+ res:= List( [ 1.. Length( matrix ) ], i->0 );
+ 
+ for i in [ 1.. Length( matrix ) ] do
+    
+      if matrix[i][1]=0 then 
+           
+            res[i]:= LcmOfDenominatorRatInList( matrix[i] )* matrix[i];
+            
+      else 
+        
+      res[i]:= matrix[i];
+            
+      fi;
+        
+  od;
+
+    return res;
+ 
+end );
+ 
+
+
