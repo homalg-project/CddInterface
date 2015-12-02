@@ -1,0 +1,36 @@
+  
+  
+                                 [1X CddInterface [101X
+  
+  
+                         [1X Gap interface to Cdd package [101X
+  
+  
+                                      0.1
+  
+  
+                                   18/11/2015
+  
+  
+                                  Kamal Saleh
+  
+  
+  
+  Kamal Saleh
+      Email:    [7Xmailto:kamal.saleh@rwth-aachen.de[107X
+      Homepage: [7X[107X
+      Address:  [33X[0;14YTemplergraben[133X
+  
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (CddInterface)[101X
+  
+  1 [33X[0;0YFunctions and Methods[133X
+    1.1 [33X[0;0YCreating a polyhedra[133X
+      1.1-1 Cdd_PolyhedraByInequalities
+  
+  
+  [32X

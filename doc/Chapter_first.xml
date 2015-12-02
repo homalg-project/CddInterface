@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_first">
+<Heading>first</Heading>
+
+<Section Label="Chapter_first_Section_Basic_functions_and_Methods">
+<Heading>Basic functions and Methods</Heading>
+
+<ManSection>
+  <Func Arg="are bla bla" Name="Cdd_PolyhedraByInequalities" />
+ <Returns>a Cdd Polyhedra
+</Returns>
+ <Description>
+bla bla
+Creats a polyhedra
+of the object <A>conv</A>.file
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

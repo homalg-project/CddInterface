@@ -1,0 +1,4 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Functions and Methods}}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Creating a polyhedra}}{3}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }Cdd{\textunderscore }PolyhedraByInequalities}}{3}{subsection.1.1.1}
+\contentsline {chapter}{Index}{4}{section*.2}

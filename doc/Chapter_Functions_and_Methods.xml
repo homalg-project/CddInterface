@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Functions_and_Methods">
+<Heading>Functions and Methods</Heading>
+
+<Section Label="Chapter_Functions_and_Methods_Section_Creating_a_polyhedra">
+<Heading>Creating a polyhedra</Heading>
+
+<ManSection>
+  <Func Arg="arg" Name="Cdd_PolyhedraByInequalities" />
+ <Returns>a CddPolyhedra Object
+</Returns>
+ <Description>
+The function takes a list in which every entry represents an inequality( or equality).
+In case we want some entries to represent equalities we should refer to their indices
+in a second list.
+ </Description>
+</ManSection>
+
+
+<Example><![CDATA[
+gap>  A:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 3 ], [ 0, 4, 8 ] ] );
+< Polyhedra given by its H-representation >
+gap>  Display( A ) ;
+H-representation 
+Begin 
+  2 X 3  rational
+           
+  0  1  3 
+  0  4  8 
+End
+gap>  B:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 3 ], [ 0, 4, 8 ] ], [2] );
+< Polyhedra given by its H-representation >
+gap>  Display( B ) ;
+H-representation 
+Linearity 1, [ 2 ]
+Begin 
+  2 X 3  rational
+           
+  0  1  3 
+  0  4  8 
+End
+]]></Example>
+
+
+</Section>
+
+
+</Chapter>
+

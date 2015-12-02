@@ -51,29 +51,44 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    function( arg )
    local poly, i, temp;
    
-   if Length( arg )= 0 then Error( "inappropriate input" );
+   if Length( arg )= 0 then 
    
-   elif Length( arg )= 1 and IsMatrix( arg[1] ) then
+       Error( "inappropriate input" );
+       
+#    elif Length( arg )= 1 and arg[1]= [] then 
+#        
+#        poly := rec( poly_inequalities:= arg[1],
+#                 linearity:= [],
+#                 number_type:= "rational",
+#                 rep_type := "H-rep" );
+#    
+#        ObjectifyWithAttributes( 
+#        poly, TheTypeCddPolyhedra
+#        );
+#    
+#        return  poly;
+   
+   elif Length( arg )= 1 and IsList( arg[1] ) then
    
    if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
    
-       return Error( "inappropriate input" );
+      return Error( "inappropriate input" );
        
    fi;
    
-   poly := rec( poly_inequalities:= arg[1],
+      poly := rec( poly_inequalities:= arg[1],
                 linearity:= [],
                 number_type:= "rational",
                 rep_type := "H-rep" );
    
-   ObjectifyWithAttributes( 
-   poly, TheTypeCddPolyhedra
-   );
+      ObjectifyWithAttributes( 
+      poly, TheTypeCddPolyhedra
+      );
    
-   return  poly;
+      return  poly;
    
    
-   elif Length( arg )= 2 and IsMatrix( arg[1] ) and IsInt( arg[2][1] ) then
+   elif Length( arg )= 2 and IsList( arg[1] ) and IsInt( arg[2][1] ) then
    
    if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
    
@@ -112,7 +127,7 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
    if Length( arg )= 0 then Error( "inappropriate input" );
    
    
-   elif Length( arg )= 1 and IsMatrix( arg[1] ) then
+   elif Length( arg )= 1 and IsList( arg[1] ) then
    
    for i in [1..Length( arg[1]) ] do
    
@@ -130,7 +145,7 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
    
    return  poly;
    
-   elif Length( arg )= 2 and IsMatrix( arg[1] ) and IsInt( arg[2][1] ) then
+   elif Length( arg )= 2 and IsList( arg[1] ) and IsInt( arg[2][1] ) then
    
    for i in [1..Length( arg[1]) ] do
    
@@ -306,28 +321,50 @@ InstallMethod( Display,
 
 function( poly )
 
-
-Print( poly!.rep_type, "resentation \n" );
-
-if Length( poly!.linearity) <> 0 then Print( "Linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
-
-Print( "Begin \n" );
-
 if poly!.rep_type= "H-rep" then 
   
-  Print("   ", Length( poly!.poly_inequalities)," X ", Length( poly!.poly_inequalities[1] ), "  ", poly!.number_type, "\n" );
+    if  poly!.poly_inequalities= [] then 
+    
+         Print( "The empty polyhedra" );
+         
+    else 
+    
+      Print( poly!.rep_type, "resentation \n" );
   
-  PTM( poly!.poly_inequalities );
-  
-else
+      if Length( poly!.linearity) <> 0 then Print( "Linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
 
-  Print("   ", Length( poly!.poly_generators)," X ", Length( poly!.poly_generators[1] ), "  ", poly!.number_type, "\n" );
+      Print( "Begin \n" );
   
-  PTM( poly!.poly_generators );
+      Print("   ", Length( poly!.poly_inequalities)," X ", Length( poly!.poly_inequalities[1] ), "  ", poly!.number_type, "\n" );
+  
+      PTM( poly!.poly_inequalities );
+  
+      Print( "End\n" );
+      
+     fi; 
+else
+ 
+    if  poly!.poly_generators= [] then 
+    
+         Print( "The empty polyhedra" );
+         
+    else
+    
+      Print( poly!.rep_type, "resentation \n" );
+
+      if Length( poly!.linearity) <> 0 then Print( "Linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
+ 
+      Print( "Begin \n" );
+
+      Print("   ", Length( poly!.poly_generators)," X ", Length( poly!.poly_generators[1] ), "  ", poly!.number_type, "\n" );
+  
+      PTM( poly!.poly_generators );
+  
+      Print( "End\n" );
+
+      fi;
 
 fi;
-
-Print( "End\n" );
 
 end );
 

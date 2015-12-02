@@ -1,0 +1,9 @@
+  
+  
+  [1XIndex[101X
+  
+  [2XCdd_PolyhedraByInequalities[102X  1.1-1
+  [5XCddInterface[105X  .-1
+  
+  
+  -------------------------------------------------------
