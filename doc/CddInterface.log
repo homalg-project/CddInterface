@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.28)  3 DEC 2015 19:36
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.28)  3 DEC 2015 20:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -790,34 +790,38 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 158.
 [3
 
-] [4] [5] (./CddInterface.ind
+] [4] [5]
+Chapter 2.
+[6
+
+] (./CddInterface.ind
 LaTeX Font Info:    Try loading font information for T1+phv on input line 3.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
-) [6
+) [7
 
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 350.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 350.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 397.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 397.
 
 (./CddInterface.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 350.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 350.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 397.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 397.
 Package rerunfilecheck Info: File `CddInterface.out' has not changed.
-(rerunfilecheck)             Checksum: DFC7ED00E95EECA487CEA239B48CFF67;238.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 350.
+(rerunfilecheck)             Checksum: 34E11CA4DAACD102433DF8326A514A4F;378.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 397.
  ) 
 Here is how much of TeX's memory you used:
- 7150 strings out of 493304
- 104220 string characters out of 6139871
- 185468 words of memory out of 5000000
- 10466 multiletter control sequences out of 15000+600000
+ 7162 strings out of 493304
+ 104539 string characters out of 6139871
+ 185708 words of memory out of 5000000
+ 10471 multiletter control sequences out of 15000+600000
  61306 words of font info for 77 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 32i,6n,28p,263b,401s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,7n,28p,297b,422s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
 fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf/fonts/type1/public/cm-supe
@@ -826,10 +830,10 @@ r/sfst1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb></usr
 -dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
 /utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on CddInterface.pdf (6 pages, 138964 bytes).
+Output written on CddInterface.pdf (7 pages, 144008 bytes).
 PDF statistics:
- 115 PDF objects out of 1000 (max. 8388607)
- 98 compressed objects within 1 object stream
- 26 named destinations out of 1000 (max. 500000)
- 33 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 138 PDF objects out of 1000 (max. 8388607)
+ 119 compressed objects within 2 object streams
+ 33 named destinations out of 1000 (max. 500000)
+ 49 words of extra memory for PDF output out of 10000 (max. 10000000)
 

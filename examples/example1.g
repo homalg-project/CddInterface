@@ -113,3 +113,24 @@ Display( last );
 #! End
 #! @EndExample
 #! @EndChunk
+
+
+#! @Chunk Example5
+#! @Example
+A:= Cdd_PolyhedraByInequalities( [ [ 1, 1, 1 ], [ 3, 5, 5 ],
+[ 4, 2, -3/4 ] ] );
+#! < Polyhedra given by its H-representation >
+L:= Cdd_LinearProgram( A, "max", [0, 2, 4 ] );
+#! < Linear program >
+Display( L );
+#! Linear program given by H-represented polyhedra  
+#! Begin 
+#!    3 X 3  rational
+#!                     
+#!    1     1     1 
+#!    3     5     5 
+#!    4     2  -3/4 
+#! End
+#! max  [ 0, 2, 4 ]
+#! @EndExample
+#! @EndChunk

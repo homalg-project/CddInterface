@@ -373,9 +373,12 @@ InstallMethod( Display,
                [IsCddLinearProgram],
  function( poly )
 
- Print( "Linear program given by its " );
+ Print( "Linear program given by " );
 
  Display( poly!.polyhedra );
+ 
+ Print( "resented polyhedra " );
+
 
  Print( poly!.objective, "  ",poly!.rowvector );
 

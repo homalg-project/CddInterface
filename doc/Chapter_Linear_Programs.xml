@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Linear_Programs">
+<Heading>Linear Programs</Heading>
+
+<Section Label="Chapter_Linear_Programs_Section_Creating_a_linear_program">
+<Heading>Creating a linear program</Heading>
+
+<ManSection>
+  <Oper Arg="poly, str, obj" Name="Cdd_LinearProgram" Label="for IsCddPolyhedra, IsString, IsList"/>
+ <Returns>a <Math>\texttt{CddLinearProgram}</Math> Object
+</Returns>
+ <Description>
+The function takes three variables. The first is a polyhedra <Math>\texttt{poly}</Math>, the second <Math>\texttt{str}</Math> should be max or min and the third <Math>\texttt{obj}</Math> is the objective.
+ </Description>
+</ManSection>
+
+
+<Example><![CDATA[
+gap> A:= Cdd_PolyhedraByInequalities( [ [ 1, 1, 1 ], [ 3, 5, 5 ],
+> [ 4, 2, -3/4 ] ] );
+< Polyhedra given by its H-representation >
+gap> L:= Cdd_LinearProgram( A, "max", [0, 2, 4 ] );
+< Linear program >
+gap> Display( L );
+Linear program given by H-represented polyhedra  
+Begin 
+   3 X 3  rational
+                    
+   1     1     1 
+   3     5     5 
+   4     2  -3/4 
+End
+max  [ 0, 2, 4 ]
+]]></Example>
+
+
+
+</Section>
+
+
+</Chapter>
+

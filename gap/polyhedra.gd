@@ -10,7 +10,6 @@
 ##
 #################################
 
-
 DeclareGlobalVariable( "CddPolyhedraCalculations" );
 
 
@@ -35,7 +34,7 @@ DeclareCategory( "IsCddLinearProgram", IsObject );
 # to activate the documentation press gap makedoc.g
 
 
-#! @Chapter Functions and Methods
+#! @Chapter Creating polyhedras and their Operations
 #! @Section Creating a polyhedra
 
 
@@ -82,8 +81,15 @@ DeclareOperation( "Cdd_V_Rep", [ IsCddPolyhedra ] );
 DeclareOperation( "Cdd_H_Rep", [ IsCddPolyhedra ] );
 #! @InsertChunk Example4
 
+#! @Chapter Linear Programs
+#! @Section Creating a linear program
 
+#! @Arguments poly, str, obj
+#! @Returns a $\texttt{CddLinearProgram}$ Object
+#! @Description 
+#! The function takes three variables. The first is a polyhedra $\texttt{poly}$, the second $\texttt{str}$ should be max or min and the third $\texttt{obj}$ is the objective. 
 DeclareOperation( "Cdd_LinearProgram", [IsCddPolyhedra, IsString, IsList] );
+#! @InsertChunk Example5
 
 
 

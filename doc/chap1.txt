@@ -1,5 +1,5 @@
   
-  [1X1 [33X[0;0YFunctions and Methods[133X[101X
+  [1X1 [33X[0;0YCreating polyhedras and their Operations[133X[101X
   
   
   [1X1.1 [33X[0;0YCreating a polyhedra[133X[101X

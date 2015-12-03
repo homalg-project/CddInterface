@@ -8,11 +8,13 @@
     \subitem for IsCddPolyhedra, \hyperpage{4}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {H{\textunderscore }Rep}
     \subitem for IsCddPolyhedra, \hyperpage{5}
+  \item \texttt  {Cdd{\textunderscore }LinearProgram}
+    \subitem for IsCddPolyhedra, IsString, IsList, \hyperpage{6}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Generators}, 
-		\hyperpage{3}
+		\hyperpage{4}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Inequalities}, 
 		\hyperpage{3}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {V{\textunderscore }Rep}
-    \subitem for IsCddPolyhedra, \hyperpage{4}
+    \subitem for IsCddPolyhedra, \hyperpage{5}
 
 \end{theindex}

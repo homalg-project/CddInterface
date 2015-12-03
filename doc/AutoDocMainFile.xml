@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- This is an automatically generated file. -->
-<#Include SYSTEM "Chapter_Functions_and_Methods.xml">
+<#Include SYSTEM "Chapter_Creating_polyhedras_and_their_Operations.xml">
+<#Include SYSTEM "Chapter_Linear_Programs.xml">
