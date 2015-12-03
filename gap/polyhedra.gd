@@ -40,40 +40,49 @@ DeclareCategory( "IsCddLinearProgram", IsObject );
 
 
 #! @Arguments arg 
-#! @Returns a CddPolyhedra Object
+#! @Returns a $\texttt{CddPolyhedra}$ Object
 #! @Description  
 #! The function takes a list in which every entry represents an inequality( or equality).
-#! In case we want some entries to represent equalities we should refer to their indices 
-#! in a second list.
+#! In case we want some entries to represent equalities we should refer  
+#! in a second list to their indices.
 DeclareGlobalFunction( "Cdd_PolyhedraByInequalities" );
-#! @Example
- A:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 3 ], [ 0, 4, 8 ] ] );
-#! < Polyhedra given by its H-representation >
- Display( A ) ;
-#! H-representation 
-#! Begin 
-#!   2 X 3  rational
-#!            
-#!   0  1  3 
-#!   0  4  8 
-#! End
- B:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 3 ], [ 0, 4, 8 ] ], [ 2 ] );
-#! < Polyhedra given by its H-representation >
- Display( B ) ;
-#! H-representation 
-#! Linearity 1, [ 2 ]
-#! Begin 
-#!   2 X 3  rational
-#!            
-#!   0  1  3 
-#!   0  4  8 
-#! End
-#! @EndExample
+#! @InsertChunk Example1
 
+#! @Arguments arg 
+#! @Returns a $\texttt{CddPolyhedra}$ Object
+#! @Description  
+#! The function takes a list in which every entry represents a vertex in the ambient vector space.
+#! In case we want some vertices to be free( the vertex and its negative belong to the polyhedra) we should refer 
+#! in a second list to their indices . 
 DeclareGlobalFunction( "Cdd_PolyhedraByGenerators" );
+#! @InsertChunk Example2
+
+#! @Section Some operations on polyhedras
+
+#! @Arguments poly
+#! @Returns a $\texttt{CddPolyhedra}$ Object
+#! @Description 
+#! The function takes a polyhedra and reduces its defining inequalities ( generators set) by deleting all redundant inequalities ( generators ). 
 DeclareOperation( "Cdd_Canonicalize", [ IsCddPolyhedra ] );
+#! @InsertChunk Example3
+
+
+#! @Arguments poly
+#! @Returns a $\texttt{CddPolyhedra}$ Object
+#! @Description 
+#! The function takes a polyhedra and returns its reduced V-representation. 
 DeclareOperation( "Cdd_V_Rep", [ IsCddPolyhedra ] );
+
+
+
+#! @Arguments poly
+#! @Returns a $\texttt{CddPolyhedra}$ Object
+#! @Description 
+#! The function takes a polyhedra and returns its reduced H-representation. 
 DeclareOperation( "Cdd_H_Rep", [ IsCddPolyhedra ] );
+#! @InsertChunk Example4
+
+
 DeclareOperation( "Cdd_LinearProgram", [IsCddPolyhedra, IsString, IsList] );
 
 

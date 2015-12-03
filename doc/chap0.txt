@@ -31,6 +31,11 @@
   1 [33X[0;0YFunctions and Methods[133X
     1.1 [33X[0;0YCreating a polyhedra[133X
       1.1-1 Cdd_PolyhedraByInequalities
+      1.1-2 Cdd_PolyhedraByGenerators
+    1.2 [33X[0;0YSome operations on polyhedras[133X
+      1.2-1 Cdd_Canonicalize
+      1.2-2 Cdd_V_Rep
+      1.2-3 Cdd_H_Rep
   
   
   [32X

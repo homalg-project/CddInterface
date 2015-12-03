@@ -1,4 +1,9 @@
 \contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Functions and Methods}}{3}{chapter.1}
 \contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Creating a polyhedra}}{3}{section.1.1}
 \contentsline {subsection}{\numberline {1.1.1}\leavevmode {\color {Chapter }Cdd{\textunderscore }PolyhedraByInequalities}}{3}{subsection.1.1.1}
-\contentsline {chapter}{Index}{4}{section*.2}
+\contentsline {subsection}{\numberline {1.1.2}\leavevmode {\color {Chapter }Cdd{\textunderscore }PolyhedraByGenerators}}{3}{subsection.1.1.2}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Some operations on polyhedras}}{4}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}\leavevmode {\color {Chapter }Cdd{\textunderscore }Canonicalize (for IsCddPolyhedra)}}{4}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}\leavevmode {\color {Chapter }Cdd{\textunderscore }V{\textunderscore }Rep (for IsCddPolyhedra)}}{4}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}\leavevmode {\color {Chapter }Cdd{\textunderscore }H{\textunderscore }Rep (for IsCddPolyhedra)}}{5}{subsection.1.2.3}
+\contentsline {chapter}{Index}{6}{section*.2}

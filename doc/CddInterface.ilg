@@ -1,6 +1,6 @@
 This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
-Scanning input file CddInterface.idx....done (2 entries accepted, 0 rejected).
-Sorting entries....done (2 comparisons).
-Generating output file CddInterface.ind....done (10 lines written, 0 warnings).
+Scanning input file CddInterface.idx....done (6 entries accepted, 0 rejected).
+Sorting entries....done (20 comparisons).
+Generating output file CddInterface.ind....done (18 lines written, 0 warnings).
 Output written in CddInterface.ind.
 Transcript written in CddInterface.ilg.
