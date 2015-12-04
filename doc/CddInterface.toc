@@ -1,5 +1,6 @@
 \contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{3}{chapter.1}
-\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }H-representation and V-representation of polyhedra}}{3}{section.1.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Why CddInterface}}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }H-representation and V-representation of polyhedra}}{3}{section.1.2}
 \contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Creating polyhedras and their Operations}}{5}{chapter.2}
 \contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Creating a polyhedra}}{5}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }Cdd{\textunderscore }PolyhedraByInequalities}}{5}{subsection.2.1.1}

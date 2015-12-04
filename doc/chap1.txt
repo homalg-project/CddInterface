@@ -2,29 +2,67 @@
   [1X1 [33X[0;0YIntroduction[133X[101X
   
   
-  [1X1.1 [33X[0;0YH-representation and V-representation of polyhedra[133X[101X
+  [1X1.1 [33X[0;0YWhy CddInterface[133X[101X
   
-  [33X[0;0YEvery  convex polyhedron has two representations, one as the intersection of
-  finite  halfspaces  and  the  other  as  Minkowski sum of the convex hull of
-  finite  points  and  the  nonnegative  hull  of finite directions. These are
-  called  H-representation and V-representation, respectively. [23X\newline[123X Let us
-  start  by  introducing  the H-representation. Let [23XA[123X be [23Xm \times d[123X matrix and
-  let  [23Xb[123X  be a column [23Xm[123X-vector. The H-representation of the polyhedron defined
-  by   the   system  [23Xb+Ax  \geq  0[123X  of  [23Xm[123X  inequalities  and  [23Xd[123X  variables  [23Xx=
-  (x_1,\dots,x_d)[123X  is  as follows: [23X\newline \newline \textbf{H-representation}[123X
-  [23X\newline    \textbf{linearity}\;t,\;\;[i_1,    i_2,    \dots,i_t][123X   [23X\newline
-  \textbf{begin}[123X    [23X\newline    m   \times   (d+1)[123X   numbertype   [23X\newline   b
-  \;\;\;\;\;\;\;\;\;\;\;  A[123X  [23X\newline \textbf{end}[123X [23X\newline[123X The linearity line
-  is  added  when  we  want  to  specify that some rows of the system [23Xb+Ax[123X are
-  equalities.  That  is,  [23Xu\in \{i_1, i_2, \dots,i_t\}[123X means that the row [23Xu[123X of
-  the   system   [23Xb+Ax[123X   is   specified   to  be  equality.  For  example,  the
-  H-representation of the polyhedron defined by the following system: [23X\newline
-  \newline  4-3x_1+6x_2-5x_4  =  0[123X  [23X\newline  1+2x_1-2x_2-7x_3 \geq 0[123X [23X\newline
-  -3x_2+5x_4     =     0\newline\newline[123X     is     as    follows:    [23X\newline
-  \textbf{H-representation}[123X [23X\newline \textbf{linearity}\;2,\;\;[1, 3][123X [23X\newline
-  \textbf{begin}[123X     [23X\newline     3     \times     5[123X     rational     [23X\newline
+  [33X[0;0YWe  know  that  every  convex polyhedron has two representations, one as the
+  intersection  of  finite  halfspaces  and  the other as Minkowski sum of the
+  convex  hull of finite points and the nonnegative hull of finite directions.
+  These   are  called  H-representation  and  V-representation,  respectively.
+  [23X\newline[123X  CddInterface  is  basicly  written  to translate between these two
+  representations.[133X
+  
+  
+  [1X1.2 [33X[0;0YH-representation and V-representation of polyhedra[133X[101X
+  
+  [33X[0;0YLet us start by introducing the H-representation. Let [23XA[123X be [23Xm \times d[123X matrix
+  and  let  [23Xb[123X  be  a  column  [23Xm[123X-vector. The H-representation of the polyhedron
+  defined  by  the  system  [23Xb+Ax  \geq  0[123X of [23Xm[123X inequalities and [23Xd[123X variables [23Xx=
+  (x_1,\dots,x_d)[123X  is as follows: [23X \newline \textbf{H-representation}[123X [23X\newline
+  \textbf{linearity}\;t,\;\;[i_1,   i_2,  \dots,i_t][123X  [23X\newline  \textbf{begin}[123X
+  [23X\newline  m  \times  (d+1)[123X  numbertype  [23X\newline  b \;\;\;\;\;\;\;\;\;\;\; A[123X
+  [23X\newline  \textbf{end}[123X  [23X\newline[123X The linearity line is added when we want to
+  specify  that  some  rows  of  the system [23Xb+Ax[123X are equalities. That is, [23Xk\in
+  \{i_1, i_2, \dots,i_t\}[123X means that the row [23Xk[123X of the system [23Xb+Ax[123X is specified
+  to  be equality. For example, the H-representation of the polyhedron defined
+  by   the   following   system:   [23X\newline   4-3x_1+6x_2-5x_4  =  0[123X  [23X\newline
+  1+2x_1-2x_2-7x_3  \geq  0[123X  [23X\newline  -3x_2+5x_4  =  0\newline[123X is as follows:
+  [23X\newline \textbf{H-representation}[123X [23X\newline \textbf{linearity}\;2,\;\;[1, 3][123X
+  [23X\newline    \textbf{begin}[123X   [23X\newline   3   \times   5[123X   rational   [23X\newline
   4\;\;\;-3\;\;\;\;\;\;\;\;\;6\;\;\;\;\;\;\;\;\;0\;\;\;\;-5[123X           [23X\newline
   1\;\;\;\;\;\;\;\;2\;\;\;\;-2\;\;\;\;-7\;\;\;\;\;\;\;\;\;0[123X           [23X\newline
   0\;\;\;\;\;\;\;\;0\;\;\;\;-3\;\;\;\;\;\;\;\;\;0\;\;\;\;\;\;\;\;\;5[123X  [23X\newline
-  \textbf{end}[123X [23X\newline[123X[133X
+  \textbf{end}[123X  [23X\newline  \newline[123X Next we define Polyhedra V-format. Let [23XP[123X be
+  represented by [23Xn[123X gerating points and [23Xs[123X generating directions (rays) as[133X
+  
+  
+        [33X[1;6Y[24X[33X[0;0YP = conv(v_1 , \dots , v_n ) + nonneg(r_{n+1} , \dots , r_{n+s} ).[133X [124X[133X
+  
+  
+  [33X[0;0YThen   the   Polyhedra   V-format   is   for   [23XP[123X   is:   [23X\newline   \newline
+  \textbf{V-representation}[123X   [23X\newline   \textbf{linearity}\;t,\;\;[i_1,  i_2,
+  \dots,i_t][123X  [23X\newline  \textbf{begin}[123X  [23X\newline (n+s) \times (d+1)[123X numbertype
+  [23X\newline      1      \;\;\;\;\;\;\;\;\;\;\;      v_1[123X     [23X\newline     \vdots
+  \;\;\;\;\;\;\;\;\;\;\;\;\;  \vdots[123X  [23X\newline  1  \;\;\;\;\;\;\;\;\;\;\;  v_n[123X
+  [23X\newline     0     \;\;\;\;\;\;\;\;\;\;\;     r_{n+1}[123X     [23X\newline    \vdots
+  \;\;\;\;\;\;\;\;\;\;\;\;\;  \vdots[123X [23X\newline 0 \;\;\;\;\;\;\;\;\;\;\; r_{n+s}[123X
+  [23X\newline \textbf{end}[123X [23X\newline[123X In the above format the generating points and
+  generating   rays  may  appear  mixed  in  arbitrary  order.  Linearity  for
+  V-representation  specifies  a  subset  of generators whose coefficients are
+  relaxed  to  be  free. That is, [23Xk \in \{i_1 , i_2 , . . . , i_t \}[123X specifies
+  that  the [23Xk[123X-th generator is specified to be free. This means for each such a
+  ray  [23Xr_k[123X , the line generated by [23Xr_k[123X is in the polyhedron, and for each such
+  a  vertex  [23Xv_k[123X  ,  its  coefficient  is  no longer nonnegative but still the
+  coefficients  for  all  [23Xv_i[123X’s  must  sum up to one. [23X\newline[123X For example the
+  V-representation of the polyhedron defined as[133X
+  
+  
+        [33X[1;6Y[24X[33X[0;0YP:= conv( (2,3), (-2,-3), (3,5) ) + nonneg(\; (1,2) , (-1,-2),
+        (2,11)\;)[133X [124X[133X
+  
+  
+  [33X[0;0Y[23X \newline \textbf{V-representation}[123X [23X\newline \textbf{linearity}\;2,\;\;[ 1,3
+  ][123X  [23X\newline  \textbf{begin}[123X  [23X\newline  4  \times  3[123X  numbertype  [23X\newline  1
+  \;\;\;\;\;\;\;\;   2   \;\;\;\;\;\;   3   [123X  [23X\newline  1  \;\;\;\;\;\;\;\;  3
+  \;\;\;\;\;\;  5  [123X  [23X\newline  0 \;\;\;\;\;\;\;\; 1 \;\;\;\;\;\; 2 [123X [23X\newline 0
+  \;\;\;\;\;\;\;\; 2 \;\;\;\;\;\; 11 [123X [23X\newline \textbf{end}[123X [23X\newline[123X[133X
   
