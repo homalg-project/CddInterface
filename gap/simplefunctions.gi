@@ -255,7 +255,7 @@ else
     
 fi;
 
-# this functions in c should be changned so that this can be delated
+# the functions in c should be changned so that this can be deleted
 Add( L, 2 );
 
 

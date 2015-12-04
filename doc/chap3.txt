@@ -1,0 +1,33 @@
+  
+  [1X3 [33X[0;0YLinear Programs[133X[101X
+  
+  
+  [1X3.1 [33X[0;0YCreating a linear program[133X[101X
+  
+  [1X3.1-1 Cdd_LinearProgram[101X
+  
+  [29X[2XCdd_LinearProgram[102X( [3Xpoly[103X, [3Xstr[103X, [3Xobj[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya [23X\texttt{CddLinearProgram}[123X Object[133X
+  
+  [33X[0;0YThe  function takes three variables. The first is a polyhedra [23X\texttt{poly}[123X,
+  the  second  [23X\texttt{str}[123X should be max or min and the third [23X\texttt{obj}[123X is
+  the objective.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:= Cdd_PolyhedraByInequalities( [ [ 1, 1, 1 ], [ 3, 5, 5 ],[127X[104X
+    [4X[25X>[125X [27X[ 4, 2, -3/4 ] ] );[127X[104X
+    [4X[28X< Polyhedra given by its H-representation >[128X[104X
+    [4X[25Xgap>[125X [27XL:= Cdd_LinearProgram( A, "max", [0, 2, 4 ] );[127X[104X
+    [4X[28X< Linear program >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( L );[127X[104X
+    [4X[28XLinear program given by H-represented polyhedra  [128X[104X
+    [4X[28XBegin [128X[104X
+    [4X[28X   3 X 3  rational[128X[104X
+    [4X[28X                    [128X[104X
+    [4X[28X   1     1     1 [128X[104X
+    [4X[28X   3     5     5 [128X[104X
+    [4X[28X   4     2  -3/4 [128X[104X
+    [4X[28XEnd[128X[104X
+    [4X[28Xmax  [ 0, 2, 4 ][128X[104X
+  [4X[32X[104X
+  

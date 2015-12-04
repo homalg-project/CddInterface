@@ -28,17 +28,19 @@
   
   [1XContents (CddInterface)[101X
   
-  1 [33X[0;0YCreating polyhedras and their Operations[133X
-    1.1 [33X[0;0YCreating a polyhedra[133X
-      1.1-1 Cdd_PolyhedraByInequalities
-      1.1-2 Cdd_PolyhedraByGenerators
-    1.2 [33X[0;0YSome operations on polyhedras[133X
-      1.2-1 Cdd_Canonicalize
-      1.2-2 Cdd_V_Rep
-      1.2-3 Cdd_H_Rep
-  2 [33X[0;0YLinear Programs[133X
-    2.1 [33X[0;0YCreating a linear program[133X
-      2.1-1 Cdd_LinearProgram
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YH-representation and V-representation of polyhedra[133X
+  2 [33X[0;0YCreating polyhedras and their Operations[133X
+    2.1 [33X[0;0YCreating a polyhedra[133X
+      2.1-1 Cdd_PolyhedraByInequalities
+      2.1-2 Cdd_PolyhedraByGenerators
+    2.2 [33X[0;0YSome operations on polyhedras[133X
+      2.2-1 Cdd_Canonicalize
+      2.2-2 Cdd_V_Rep
+      2.2-3 Cdd_H_Rep
+  3 [33X[0;0YLinear Programs[133X
+    3.1 [33X[0;0YCreating a linear program[133X
+      3.1-1 Cdd_LinearProgram
   
   
   [32X

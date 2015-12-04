@@ -1,7 +1,7 @@
 \indexentry{\textsf{CddInterface}|hyperpage}{3}
-\indexentry{CddPolyhedraByInequalities@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Inequalities}|hyperpage}{3}
-\indexentry{CddPolyhedraByGenerators@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Generators}|hyperpage}{4}
-\indexentry{CddCanonicalize@\texttt  {Cdd{\textunderscore }Canonicalize}!for IsCddPolyhedra|hyperpage}{4}
-\indexentry{CddVRep@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {V{\textunderscore }Rep}!for IsCddPolyhedra|hyperpage}{5}
-\indexentry{CddHRep@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {H{\textunderscore }Rep}!for IsCddPolyhedra|hyperpage}{5}
-\indexentry{CddLinearProgram@\texttt  {Cdd{\textunderscore }LinearProgram}!for IsCddPolyhedra, IsString, IsList|hyperpage}{6}
+\indexentry{CddPolyhedraByInequalities@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Inequalities}|hyperpage}{5}
+\indexentry{CddPolyhedraByGenerators@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Generators}|hyperpage}{6}
+\indexentry{CddCanonicalize@\texttt  {Cdd{\textunderscore }Canonicalize}!for IsCddPolyhedra|hyperpage}{6}
+\indexentry{CddVRep@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {V{\textunderscore }Rep}!for IsCddPolyhedra|hyperpage}{7}
+\indexentry{CddHRep@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {H{\textunderscore }Rep}!for IsCddPolyhedra|hyperpage}{7}
+\indexentry{CddLinearProgram@\texttt  {Cdd{\textunderscore }LinearProgram}!for IsCddPolyhedra, IsString, IsList|hyperpage}{8}

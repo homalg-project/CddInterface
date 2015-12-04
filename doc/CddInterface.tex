@@ -127,19 +127,38 @@
 \newpage
 
  \index{\textsf{CddInterface}}     
-\chapter{\textcolor{Chapter }{Creating polyhedras and their Operations}}\label{Chapter_Creating_polyhedras_and_their_Operations}
+\chapter{\textcolor{Chapter }{Introduction}}\label{Chapter_Introduction}
 \logpage{[ 1, 0, 0 ]}
+\hyperdef{L}{X7DFB63A97E67C0A1}{}
+{
+  
+\section{\textcolor{Chapter }{H-representation and V-representation of polyhedra}}\label{Chapter_Introduction_Section_H-representation_and_V-representation_of_polyhedra}
+\logpage{[ 1, 1, 0 ]}
+\hyperdef{L}{X811322537C6ADBBE}{}
+{
+  Every convex polyhedron has two representations, one as the intersection of
+finite halfspaces and the other as Minkowski sum of the convex hull of finite
+points and the nonnegative hull of finite directions. These are called
+H-representation and V-representation, respectively. $\newline$ Let us start by introducing the H-representation. Let $A$ be $m \times d$ matrix and let $b$ be a column $m$-vector. The H-representation of the polyhedron defined by the system $b+Ax \geq 0$ of $m$ inequalities and $d$ variables $x= (x_1,\dots,x_d)$ is as follows: $\newline \newline \textbf{H-representation}$ $\newline \textbf{linearity}\;t,\;\;[i_1, i_2, \dots,i_t]$ $\newline \textbf{begin}$ $\newline m \times (d+1)$ numbertype $\newline b \;\;\;\;\;\;\;\;\;\;\; A$ $\newline \textbf{end}$ $\newline$ The linearity line is added when we want to specify that some rows of the
+system $b+Ax$ are equalities. That is, $u\in \{i_1, i_2, \dots,i_t\}$ means that the row $u$ of the system $b+Ax$ is specified to be equality. For example, the H-representation of the
+polyhedron defined by the following system: $\newline \newline 4-3x_1+6x_2-5x_4 = 0$ $\newline 1+2x_1-2x_2-7x_3 \geq 0$ $\newline -3x_2+5x_4 = 0\newline\newline$ is as follows: $\newline \textbf{H-representation}$ $\newline \textbf{linearity}\;2,\;\;[1, 3]$ $\newline \textbf{begin}$ $\newline 3 \times 5$ rational $\newline 4\;\;\;-3\;\;\;\;\;\;\;\;\;6\;\;\;\;\;\;\;\;\;0\;\;\;\;-5$ $\newline 1\;\;\;\;\;\;\;\;2\;\;\;\;-2\;\;\;\;-7\;\;\;\;\;\;\;\;\;0$ $\newline 0\;\;\;\;\;\;\;\;0\;\;\;\;-3\;\;\;\;\;\;\;\;\;0\;\;\;\;\;\;\;\;\;5$ $\newline \textbf{end}$ $\newline$ }
+
+ }
+
+   
+\chapter{\textcolor{Chapter }{Creating polyhedras and their Operations}}\label{Chapter_Creating_polyhedras_and_their_Operations}
+\logpage{[ 2, 0, 0 ]}
 \hyperdef{L}{X80681BCE79BDBAC8}{}
 {
   
 \section{\textcolor{Chapter }{Creating a polyhedra}}\label{Chapter_Creating_polyhedras_and_their_Operations_Section_Creating_a_polyhedra}
-\logpage{[ 1, 1, 0 ]}
+\logpage{[ 2, 1, 0 ]}
 \hyperdef{L}{X7C86A67078A71BA7}{}
 {
   
 
 \subsection{\textcolor{Chapter }{Cdd{\textunderscore}PolyhedraByInequalities}}
-\logpage{[ 1, 1, 1 ]}\nobreak
+\logpage{[ 2, 1, 1 ]}\nobreak
 \hyperdef{L}{X7BEFA7A37C66FA20}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Cdd{\textunderscore}PolyhedraByInequalities({\mdseries\slshape arg})\index{CddPolyhedraByInequalities@\texttt{Cdd{\textunderscore}}\-\texttt{Polyhedra}\-\texttt{By}\-\texttt{Inequalities}}
 \label{CddPolyhedraByInequalities}
@@ -180,7 +199,7 @@ refer in a second list to their indices. }
  
 
 \subsection{\textcolor{Chapter }{Cdd{\textunderscore}PolyhedraByGenerators}}
-\logpage{[ 1, 1, 2 ]}\nobreak
+\logpage{[ 2, 1, 2 ]}\nobreak
 \hyperdef{L}{X7CBB524D81D0C0EE}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Cdd{\textunderscore}PolyhedraByGenerators({\mdseries\slshape arg})\index{CddPolyhedraByGenerators@\texttt{Cdd{\textunderscore}}\-\texttt{Polyhedra}\-\texttt{By}\-\texttt{Generators}}
 \label{CddPolyhedraByGenerators}
@@ -222,13 +241,13 @@ their indices . }
 
  
 \section{\textcolor{Chapter }{Some operations on polyhedras}}\label{Chapter_Creating_polyhedras_and_their_Operations_Section_Some_operations_on_polyhedras}
-\logpage{[ 1, 2, 0 ]}
+\logpage{[ 2, 2, 0 ]}
 \hyperdef{L}{X7BF4D7BC8541CFCB}{}
 {
   
 
 \subsection{\textcolor{Chapter }{Cdd{\textunderscore}Canonicalize (for IsCddPolyhedra)}}
-\logpage{[ 1, 2, 1 ]}\nobreak
+\logpage{[ 2, 2, 1 ]}\nobreak
 \hyperdef{L}{X860134CC7A9A000B}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Cdd{\textunderscore}Canonicalize({\mdseries\slshape poly})\index{CddCanonicalize@\texttt{Cdd{\textunderscore}Canonicalize}!for IsCddPolyhedra}
 \label{CddCanonicalize:for IsCddPolyhedra}
@@ -259,7 +278,7 @@ generators set) by deleting all redundant inequalities ( generators ). }
  
 
 \subsection{\textcolor{Chapter }{Cdd{\textunderscore}V{\textunderscore}Rep (for IsCddPolyhedra)}}
-\logpage{[ 1, 2, 2 ]}\nobreak
+\logpage{[ 2, 2, 2 ]}\nobreak
 \hyperdef{L}{X7B1CDB8184EDF5C8}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Cdd{\textunderscore}V{\textunderscore}Rep({\mdseries\slshape poly})\index{CddVRep@\texttt{Cdd{\textunderscore}}\-\texttt{V{\textunderscore}Rep}!for IsCddPolyhedra}
 \label{CddVRep:for IsCddPolyhedra}
@@ -274,7 +293,7 @@ a $\texttt{CddPolyhedra}$ Object
  
 
 \subsection{\textcolor{Chapter }{Cdd{\textunderscore}H{\textunderscore}Rep (for IsCddPolyhedra)}}
-\logpage{[ 1, 2, 3 ]}\nobreak
+\logpage{[ 2, 2, 3 ]}\nobreak
 \hyperdef{L}{X7AC96A9C7910F756}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Cdd{\textunderscore}H{\textunderscore}Rep({\mdseries\slshape poly})\index{CddHRep@\texttt{Cdd{\textunderscore}}\-\texttt{H{\textunderscore}Rep}!for IsCddPolyhedra}
 \label{CddHRep:for IsCddPolyhedra}
@@ -335,18 +354,18 @@ a $\texttt{CddPolyhedra}$ Object
 
    
 \chapter{\textcolor{Chapter }{Linear Programs}}\label{Chapter_Linear_Programs}
-\logpage{[ 2, 0, 0 ]}
+\logpage{[ 3, 0, 0 ]}
 \hyperdef{L}{X825271797BE64406}{}
 {
   
 \section{\textcolor{Chapter }{Creating a linear program}}\label{Chapter_Linear_Programs_Section_Creating_a_linear_program}
-\logpage{[ 2, 1, 0 ]}
+\logpage{[ 3, 1, 0 ]}
 \hyperdef{L}{X8674A791858813B0}{}
 {
   
 
 \subsection{\textcolor{Chapter }{Cdd{\textunderscore}LinearProgram (for IsCddPolyhedra, IsString, IsList)}}
-\logpage{[ 2, 1, 1 ]}\nobreak
+\logpage{[ 3, 1, 1 ]}\nobreak
 \hyperdef{L}{X8186ADB179F58746}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Cdd{\textunderscore}LinearProgram({\mdseries\slshape poly, str, obj})\index{CddLinearProgram@\texttt{Cdd{\textunderscore}LinearProgram}!for IsCddPolyhedra, IsString, IsList}
 \label{CddLinearProgram:for IsCddPolyhedra, IsString, IsList}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_H-representation_and_V-representation_of_polyhedras">
+<Heading>H-representation and V-representation of polyhedras</Heading>
+
+Every convex polyhedron has two representations, one as the intersection of finite halfspaces and the other as Minkowski sum of the convex hull of
+finite points and the nonnegative hull of finite directions. These are called H-representation and V-representation, respectively.
+</Chapter>
+

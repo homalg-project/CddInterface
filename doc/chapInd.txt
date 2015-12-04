@@ -2,12 +2,12 @@
   
   [1XIndex[101X
   
-  [2XCdd_Canonicalize[102X (for IsCddPolyhedra)  1.2-1
-  [2XCdd_H_Rep[102X (for IsCddPolyhedra)  1.2-3
-  [2XCdd_LinearProgram[102X (for IsCddPolyhedra, IsString, IsList)  2.1-1
-  [2XCdd_PolyhedraByGenerators[102X  1.1-2
-  [2XCdd_PolyhedraByInequalities[102X  1.1-1
-  [2XCdd_V_Rep[102X (for IsCddPolyhedra)  1.2-2
+  [2XCdd_Canonicalize[102X (for IsCddPolyhedra)  2.2-1
+  [2XCdd_H_Rep[102X (for IsCddPolyhedra)  2.2-3
+  [2XCdd_LinearProgram[102X (for IsCddPolyhedra, IsString, IsList)  3.1-1
+  [2XCdd_PolyhedraByGenerators[102X  2.1-2
+  [2XCdd_PolyhedraByInequalities[102X  2.1-1
+  [2XCdd_V_Rep[102X (for IsCddPolyhedra)  2.2-2
   [5XCddInterface[105X  .-1
   
   

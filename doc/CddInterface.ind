@@ -5,16 +5,16 @@
   \indexspace
 
   \item \texttt  {Cdd{\textunderscore }Canonicalize}
-    \subitem for IsCddPolyhedra, \hyperpage{4}
+    \subitem for IsCddPolyhedra, \hyperpage{6}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {H{\textunderscore }Rep}
-    \subitem for IsCddPolyhedra, \hyperpage{5}
+    \subitem for IsCddPolyhedra, \hyperpage{7}
   \item \texttt  {Cdd{\textunderscore }LinearProgram}
-    \subitem for IsCddPolyhedra, IsString, IsList, \hyperpage{6}
+    \subitem for IsCddPolyhedra, IsString, IsList, \hyperpage{8}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Generators}, 
-		\hyperpage{4}
+		\hyperpage{6}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Inequalities}, 
-		\hyperpage{3}
+		\hyperpage{5}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {V{\textunderscore }Rep}
-    \subitem for IsCddPolyhedra, \hyperpage{5}
+    \subitem for IsCddPolyhedra, \hyperpage{7}
 
 \end{theindex}
