@@ -42,6 +42,7 @@
   3 [33X[0;0YLinear Programs[133X
     3.1 [33X[0;0YCreating a linear program[133X
       3.1-1 Cdd_LinearProgram
+      3.1-2 Cdd_SolveLinearProgram
   
   
   [32X

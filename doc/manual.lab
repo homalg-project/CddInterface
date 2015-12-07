@@ -17,3 +17,4 @@
 \makelabel{cddinterface:CddVRep (for IsCddPolyhedra)}{2.2.2}{X7B1CDB8184EDF5C8}
 \makelabel{cddinterface:CddHRep (for IsCddPolyhedra)}{2.2.3}{X7AC96A9C7910F756}
 \makelabel{cddinterface:CddLinearProgram (for IsCddPolyhedra, IsString, IsList)}{3.1.1}{X8186ADB179F58746}
+\makelabel{cddinterface:CddSolveLinearProgram (for IsCddLinearProgram)}{3.1.2}{X79EB266A8289CE29}

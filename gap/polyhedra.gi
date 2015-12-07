@@ -187,7 +187,7 @@ function( poly, obj, rowvec )
        
    fi;
    
-   r:= rec( polyhedra:= poly, objective:= obj, rowvector:= rowvec );
+   r:= rec( polyhedra:=  poly , objective:= obj, rowvector:= rowvec );
    
    ObjectifyWithAttributes(
    
@@ -289,6 +289,21 @@ InstallMethod( Cdd_H_Rep,
     
 end );
 
+
+InstallMethod( Cdd_SolveLinearProgram,
+               [IsCddLinearProgram],
+               
+function( lp )
+
+local temp;
+
+temp:= LinearProgramToList( lp );
+
+return CddInterface_LpSolution( temp );
+
+end );
+
+
 ##################################
 ##
 ## Display Methods
@@ -333,13 +348,13 @@ if poly!.rep_type= "H-rep" then
   
       if Length( poly!.linearity) <> 0 then Print( "Linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
 
-      Print( "Begin \n" );
+      Print( "begin \n" );
   
       Print("   ", Length( poly!.poly_inequalities)," X ", Length( poly!.poly_inequalities[1] ), "  ", poly!.number_type, "\n" );
   
       PTM( poly!.poly_inequalities );
   
-      Print( "End\n" );
+      Print( "end\n" );
       
      fi; 
 else
@@ -354,13 +369,13 @@ else
 
       if Length( poly!.linearity) <> 0 then Print( "Linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
  
-      Print( "Begin \n" );
+      Print( "begin \n" );
 
       Print("   ", Length( poly!.poly_generators)," X ", Length( poly!.poly_generators[1] ), "  ", poly!.number_type, "\n" );
   
       PTM( poly!.poly_generators );
   
-      Print( "End\n" );
+      Print( "end\n" );
 
       fi;
 
@@ -373,12 +388,9 @@ InstallMethod( Display,
                [IsCddLinearProgram],
  function( poly )
 
- Print( "Linear program given by " );
+ Print( "Linear program given by: \n" );
 
  Display( poly!.polyhedra );
- 
- Print( "resented polyhedra " );
-
 
  Print( poly!.objective, "  ",poly!.rowvector );
 

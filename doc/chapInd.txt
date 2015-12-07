@@ -7,6 +7,7 @@
   [2XCdd_LinearProgram[102X (for IsCddPolyhedra, IsString, IsList)  3.1-1
   [2XCdd_PolyhedraByGenerators[102X  2.1-2
   [2XCdd_PolyhedraByInequalities[102X  2.1-1
+  [2XCdd_SolveLinearProgram[102X (for IsCddLinearProgram)  3.1-2
   [2XCdd_V_Rep[102X (for IsCddPolyhedra)  2.2-2
   [5XCddInterface[105X  .-1
   

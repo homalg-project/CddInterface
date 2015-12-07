@@ -335,4 +335,29 @@ function( matrix, rep )
 end );
  
 
+InstallMethod( LinearProgramToList,
+               [IsCddLinearProgram ],
+               
+function( lp )
+ local result;
+
+ result:= PolyToList( Cdd_H_Rep( lp!.polyhedra ) );
+ 
+ if lp!.objective="max" then 
+
+     result[8]:= 1;
+     
+ else 
+
+     result[8]:= 2;
+     
+ fi;
+
+result[9]:= ConvertRatListToIntList( lp!.rowvector );
+
+return result;
+
+end );
+
+
 

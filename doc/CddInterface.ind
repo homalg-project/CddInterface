@@ -14,6 +14,8 @@
 		\hyperpage{6}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Inequalities}, 
 		\hyperpage{5}
+  \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Solve}\discretionary {-}{}{}\texttt  {Linear}\discretionary {-}{}{}\texttt  {Program}
+    \subitem for IsCddLinearProgram, \hyperpage{8}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {V{\textunderscore }Rep}
     \subitem for IsCddPolyhedra, \hyperpage{7}
 

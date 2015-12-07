@@ -10,11 +10,12 @@ entries :=
       "creating polyhedras and their operations", "X80681BCE79BDBAC8" ], [ "\033[1X\033[33X\033[0;-2YCreating a polyhedra\033[133X\033[101X", "2.1", [ 2, 1, 0 ], 4, 5, "creating a polyhedra", 
       "X7C86A67078A71BA7" ], [ "\033[1X\033[33X\033[0;-2YSome operations on polyhedras\033[133X\033[101X", "2.2", [ 2, 2, 0 ], 73, 6, "some operations on polyhedras", "X7BF4D7BC8541CFCB" ], 
   [ "\033[1X\033[33X\033[0;-2YLinear Programs\033[133X\033[101X", "3", [ 3, 0, 0 ], 1, 8, "linear programs", "X825271797BE64406" ], [ "\033[1X\033[33X\033[0;-2YCreating a linear program\033[133X\033[101X", 
-      "3.1", [ 3, 1, 0 ], 4, 8, "creating a linear program", "X8674A791858813B0" ], [ "Index", "ind", [ "Ind", 0, 0 ], 1, 9, "index", "X83A0356F839C696F" ], 
+      "3.1", [ 3, 1, 0 ], 4, 8, "creating a linear program", "X8674A791858813B0" ], [ "Index", "ind", [ "Ind", 0, 0 ], 1, 10, "index", "X83A0356F839C696F" ], 
   [ "\033[5XCddInterface\033[105X", ".-1", [ 0, 0, 1 ], 27, 2, "cddinterface", "X8537FEB07AF2BEC8" ], [ "\033[2XCdd_PolyhedraByInequalities\033[102X", "2.1-1", [ 2, 1, 1 ], 7, 5, "cdd_polyhedrabyinequalities", 
       "X7BEFA7A37C66FA20" ], [ "\033[2XCdd_PolyhedraByGenerators\033[102X", "2.1-2", [ 2, 1, 2 ], 40, 6, "cdd_polyhedrabygenerators", "X7CBB524D81D0C0EE" ], 
   [ "\033[2XCdd_Canonicalize\033[102X (for IsCddPolyhedra)", "2.2-1", [ 2, 2, 1 ], 76, 6, "cdd_canonicalize for iscddpolyhedra", "X860134CC7A9A000B" ], 
   [ "\033[2XCdd_V_Rep\033[102X (for IsCddPolyhedra)", "2.2-2", [ 2, 2, 2 ], 99, 7, "cdd_v_rep for iscddpolyhedra", "X7B1CDB8184EDF5C8" ], 
   [ "\033[2XCdd_H_Rep\033[102X (for IsCddPolyhedra)", "2.2-3", [ 2, 2, 3 ], 106, 7, "cdd_h_rep for iscddpolyhedra", "X7AC96A9C7910F756" ], 
-  [ "\033[2XCdd_LinearProgram\033[102X (for IsCddPolyhedra, IsString, IsList)", "3.1-1", [ 3, 1, 1 ], 7, 8, "cdd_linearprogram for iscddpolyhedra isstring islist", "X8186ADB179F58746" ] ]
+  [ "\033[2XCdd_LinearProgram\033[102X (for IsCddPolyhedra, IsString, IsList)", "3.1-1", [ 3, 1, 1 ], 7, 8, "cdd_linearprogram for iscddpolyhedra isstring islist", "X8186ADB179F58746" ], 
+  [ "\033[2XCdd_SolveLinearProgram\033[102X (for IsCddLinearProgram)", "3.1-2", [ 3, 1, 2 ], 16, 8, "cdd_solvelinearprogram for iscddlinearprogram", "X79EB266A8289CE29" ] ]
 );

@@ -12,4 +12,5 @@
 \contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Linear Programs}}{8}{chapter.3}
 \contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Creating a linear program}}{8}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }Cdd{\textunderscore }LinearProgram (for IsCddPolyhedra, IsString, IsList)}}{8}{subsection.3.1.1}
-\contentsline {chapter}{Index}{9}{section*.2}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }Cdd{\textunderscore }SolveLinearProgram (for IsCddLinearProgram)}}{8}{subsection.3.1.2}
+\contentsline {chapter}{Index}{10}{section*.2}

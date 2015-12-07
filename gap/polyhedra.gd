@@ -89,9 +89,15 @@ DeclareOperation( "Cdd_H_Rep", [ IsCddPolyhedra ] );
 #! @Description 
 #! The function takes three variables. The first is a polyhedra $\texttt{poly}$, the second $\texttt{str}$ should be max or min and the third $\texttt{obj}$ is the objective. 
 DeclareOperation( "Cdd_LinearProgram", [IsCddPolyhedra, IsString, IsList] );
+
+#! @Arguments lp
+#! @Returns a list if the program is optimal, otherwise returns the value 0
+#! @Description 
+#! The function takes a linear program. If the program is optimal, the function returns a list of two
+#! entries: the solution vector and the optimal value of the objective, otherwise it returns the 
+#! value 0.
+DeclareOperation( "Cdd_SolveLinearProgram", [IsCddLinearProgram] );
 #! @InsertChunk Example5
-
-
 
 ##################################
 ##

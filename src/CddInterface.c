@@ -345,6 +345,59 @@ static Obj CddInterface_Compute_V_rep( Obj self, Obj main )
 }
 
 
+static Obj CddInterface_LpSolution( Obj self, Obj main )
+{
+  static dd_MatrixPtr M;
+  mpz_t u,v;
+  long int z1,z2;
+  dd_ErrorType err;
+  static dd_LPPtr lp;   
+  dd_LPSolutionPtr lps;
+  dd_LPSolverType solver;
+  size_t n,i;
+  dd_colrange j;
+  dd_set_global_constants();
+  solver=dd_DualSimplex;
+  err=dd_NoError;
+  Obj current, res;
+  
+  M= GapInputToMatrixPtr( main );
+  lp=dd_Matrix2LP(M, &err);
+  
+  dd_LPSolve(lp, solver, &err);
+  lps=dd_CopyLPSolution(lp);
+  
+  if ( lps->LPS==dd_Optimal ) {
+   
+   n= lps->d -1;
+   res= NEW_PLIST(T_PLIST_CYC, 2 );
+   SET_LEN_PLIST( res , 2 );  
+   
+   current  = NEW_PLIST( T_PLIST_CYC, n );
+   SET_LEN_PLIST( current , n );  
+   
+   
+   for (j=1; j<=n; j++) {
+     i=j;
+     SET_ELM_PLIST( current, i , MPQ_TO_GAPOBJ( lps->sol[j] ) );
+     }
+    
+    SET_ELM_PLIST( res, 1, current );
+    SET_ELM_PLIST( res, 2, MPQ_TO_GAPOBJ( lps-> optvalue ) );
+    
+    return res;
+  }
+    
+  else 
+    
+    return INTOBJ_INT( 0 ); 
+   
+}
+  
+
+
+
+
 Obj take_poly_and_give_it_back( Obj self, Obj list )
 {
   dd_MatrixPtr M;
@@ -442,6 +495,7 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Canonicalize, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Compute_H_rep, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Compute_V_rep, 1, "main"),
+    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_LpSolution, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_poly_and_give_it_back, 1, "list"),
     
     { 0 } /* Finish with an empty entry */

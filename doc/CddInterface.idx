@@ -5,3 +5,4 @@
 \indexentry{CddVRep@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {V{\textunderscore }Rep}!for IsCddPolyhedra|hyperpage}{7}
 \indexentry{CddHRep@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {H{\textunderscore }Rep}!for IsCddPolyhedra|hyperpage}{7}
 \indexentry{CddLinearProgram@\texttt  {Cdd{\textunderscore }LinearProgram}!for IsCddPolyhedra, IsString, IsList|hyperpage}{8}
+\indexentry{CddSolveLinearProgram@\texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Solve}\discretionary {-}{}{}\texttt  {Linear}\discretionary {-}{}{}\texttt  {Program}!for IsCddLinearProgram|hyperpage}{8}

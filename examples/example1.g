@@ -1,4 +1,4 @@
-
+LoadPackage("CddInterface");
 
 #! @Chunk Example1
 #! @Example
@@ -116,21 +116,53 @@ Display( last );
 
 
 #! @Chunk Example5
+#! $\newline$
+#! To illustrate the using of these functions, let us solve the linear program given by:
+#! $\textbf{Maximize}\;\;\; P(x,y)= 1-2x+5y$, with $\newline$
+#! $100\leq x \leq 200 \newline$
+#! $80\leq y\leq 170 \newline$
+#! $y \geq -x+200\newline\newline$
+#! We bring the inequalities to the form $b+AX\geq 0$, we get:
+#! $\newline -100+x\geq 0 \newline$
+#! $200-x \geq 0 \newline$
+#! $-80+y \geq 0 \newline$
+#! $170 -y \geq 0 \newline$
+#! $-200 +x+y \geq 0 \newline$
 #! @Example
-A:= Cdd_PolyhedraByInequalities( [ [ 1, 1, 1 ], [ 3, 5, 5 ],
-[ 4, 2, -3/4 ] ] );
+A:= Cdd_PolyhedraByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ], 
+[ -80, 0, 1 ], [ 170, 0, -1 ], [ -200, 1, 1 ] ] );
 #! < Polyhedra given by its H-representation >
-L:= Cdd_LinearProgram( A, "max", [0, 2, 4 ] );
+Lp:= Cdd_LinearProgram( A, "max", [1, -2, 5 ] );
 #! < Linear program >
-Display( L );
-#! Linear program given by H-represented polyhedra  
-#! Begin 
-#!    3 X 3  rational
+S:= Cdd_SolveLinearProgram( Lp );
+#! [ [ 100, 170 ], 651 ]
+B:= Cdd_V_Rep( A );
+#! < Polyhedra given by its V-representation >
+Display( Lp );
+#! Linear program given by: 
+#! H-representation 
+#! begin 
+#!    5 X 3  rational
 #!                     
-#!    1     1     1 
-#!    3     5     5 
-#!    4     2  -3/4 
-#! End
-#! max  [ 0, 2, 4 ]
+#!    -100     1     0 
+#!     200    -1     0 
+#!     -80     0     1 
+#!     170     0    -1 
+#!    -200     1     1 
+#! end
+#! max  [ 1, -2, 5 ]
+Display( B );
+#! V-representation 
+#! begin 
+#!    5 X 3  rational
+#!                   
+#!    1  100  170 
+#!    1  100  100 
+#!    1  120   80 
+#!    1  200   80 
+#!    1  200  170 
+#! end
 #! @EndExample
+
+#! So the optimal solution is $(x=100,y=170)$ with optimal value $p=1-2(100)+5(170)=651$.
 #! @EndChunk
