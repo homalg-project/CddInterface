@@ -6,7 +6,9 @@ The GAP 4 package `CddInterface'
 ## Simple
 
 For a simplyfied installation, try
+    
     install.sh <path-to-gaproot>
+    
 If that does not work, try the following
 
 ## Advanced
