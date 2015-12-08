@@ -45,6 +45,21 @@ dnl ##
 AC_FIND_GAP
 
 dnl ##
+dnl ## Set cdd root dir
+dnl ##
+AC_ARG_WITH([cddlib],
+    [AC_HELP_STRING([--with-cddlib=<path>], [specify the path of cdd installation])],
+    [CDD="$with_cddlib"],
+    [AC_MSG_ERROR([Must use --with-cddlib])]
+)
+CDD_CPPFLAGS="-I$CDD/include"
+CDD_LDPATH="$CDD/lib"
+CDD_LDFLAGS="-L$CDD_LDPATH -lcddgmp"
+AC_SUBST(CDD_LDPATH)
+AC_SUBST(CDD_LDFLAGS)
+AC_SUBST(CDD_CPPFLAGS)
+
+dnl ##
 dnl ## Detect pointer size to distinguish 32 and 64 bit builds
 dnl ##
 AC_CHECK_SIZEOF([void **])
