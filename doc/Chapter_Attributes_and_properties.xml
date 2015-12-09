@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Attributes_and_properties">
+<Heading>Attributes and properties</Heading>
+
+<Section Label="Chapter_Attributes_and_properties_Section_Attributes_and_properties_of_polyhedra">
+<Heading>Attributes and properties of polyhedra</Heading>
+
+<ManSection>
+  <Attr Arg="poly" Name="Cdd_Dimension" Label="for IsCddPolyhedra"/>
+ <Returns>The dimension of the polyhedra
+</Returns>
+ <Description>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="poly" Name="Cdd_AmbientSpaceDimension" Label="for IsCddPolyhedra"/>
+ <Returns>The dimension of the ambient space of the polyhedra
+</Returns>
+ <Description>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="poly" Name="Cdd_GeneratingVertices" Label="for IsCddPolyhedra"/>
+ <Returns>The reduced generating vertices of the polyhedra
+</Returns>
+ <Description>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="poly" Name="Cdd_GeneratingRays" Label="for IsCddPolyhedra"/>
+ <Returns>The reduced generating rays of the polyhedra
+</Returns>
+ <Description>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="poly" Name="Cdd_Equalities" Label="for IsCddPolyhedra"/>
+ <Returns>The reduced defining equalities of the polyhedra
+</Returns>
+ <Description>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="poly" Name="Cdd_Inequalities" Label="for IsCddPolyhedra"/>
+ <Returns>The reduced defining inequalities of the polyhedra
+</Returns>
+ <Description>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="poly" Name="Cdd_IsEmpty" Label="for IsCddPolyhedra"/>
+ <Returns><Math>\texttt{true}</Math> if the polyhedra is empty and <Math>\texttt{false}</Math> otherwise
+</Returns>
+ <Description>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="poly" Name="Cdd_IsCone" Label="for IsCddPolyhedra"/>
+ <Returns><Math>\texttt{true}</Math> if the polyhedra is cone and <Math>\texttt{false}</Math> otherwise
+</Returns>
+ <Description>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="poly" Name="Cdd_IsPointed" Label="for IsCddPolyhedra"/>
+ <Returns><Math>\texttt{true}</Math> if the polyhedra is pointed and <Math>\texttt{false}</Math> otherwise
+</Returns>
+ <Description>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

@@ -4,3 +4,4 @@
 <#Include SYSTEM "Chapter_Introduction.xml">
 <#Include SYSTEM "Chapter_Creating_polyhedras_and_their_Operations.xml">
 <#Include SYSTEM "Chapter_Linear_Programs.xml">
+<#Include SYSTEM "Chapter_Attributes_and_properties.xml">

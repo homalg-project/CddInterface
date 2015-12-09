@@ -187,16 +187,8 @@ function( list )
   local res, i, L;
 
   L:= List( [ 1..Length( list ) ], i-> DenominatorRat( list[i] ) );
-  
-  res:= 1;
 
-  for i in L do
-
-     res:= LcmInt( res, i );
-    
-  od;
-
-  return res;
+  return Iterated( L , Lcm ); 
 
 end );
 
@@ -301,8 +293,8 @@ function( matrix, rep )
  
  if rep = 1 then 
  
-       res:= List( [ 1.. Length( matrix ) ], i->LcmOfDenominatorRatInList( matrix[ i ] )*matrix[ i ] ) ;
-       
+       res:= List( [ 1.. Length( matrix ) ], 
+                   i-> LcmOfDenominatorRatInList( matrix[ i ] )*matrix[ i ] /Iterated( LcmOfDenominatorRatInList( matrix[ i ] )*matrix[ i ], Gcd  ) ) ;
        return res;
        
  fi;
@@ -313,7 +305,7 @@ function( matrix, rep )
     
       if matrix[i][1]=0 then 
            
-            res[i]:= LcmOfDenominatorRatInList( matrix[i] )* matrix[i];
+            res[i]:= LcmOfDenominatorRatInList( matrix[i] )* matrix[ i ] /Iterated( LcmOfDenominatorRatInList( matrix[ i ] )*matrix[ i ], Gcd  ) ;
             
       else 
         
@@ -413,6 +405,39 @@ return [ generating_vertices, generating_rays ];
 end );
    
    
+####
+InstallMethod( GiveInequalitiesAndEqualities,
+               [ IsList, IsList ],
+function( matrix, linearity )
+
+local equalities, inequalities , current, temp, l, i;
+
+inequalities:= [];
+
+equalities:= [];
+
+l:= Length( matrix );
+
+for i in [ 1..l ] do
+   
+       current:= matrix[ i ];
+   
+       if i in linearity then
+       
+              Add( equalities, current );
+        
+       else
+       
+              Add( inequalities, current );
+   
+       
+       fi;
+   
+od;
+
+return [ inequalities, equalities ];
+
+end );
 
              
              

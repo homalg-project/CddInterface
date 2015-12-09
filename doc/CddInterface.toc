@@ -13,4 +13,15 @@
 \contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Creating a linear program}}{8}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }Cdd{\textunderscore }LinearProgram (for IsCddPolyhedra, IsString, IsList)}}{8}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }Cdd{\textunderscore }SolveLinearProgram (for IsCddLinearProgram)}}{8}{subsection.3.1.2}
-\contentsline {chapter}{Index}{10}{section*.2}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Attributes and properties}}{10}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Attributes and properties of polyhedra}}{10}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }Cdd{\textunderscore }Dimension (for IsCddPolyhedra)}}{10}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }Cdd{\textunderscore }AmbientSpaceDimension (for IsCddPolyhedra)}}{10}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }Cdd{\textunderscore }GeneratingVertices (for IsCddPolyhedra)}}{10}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\leavevmode {\color {Chapter }Cdd{\textunderscore }GeneratingRays (for IsCddPolyhedra)}}{10}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\leavevmode {\color {Chapter }Cdd{\textunderscore }Equalities (for IsCddPolyhedra)}}{10}{subsection.4.1.5}
+\contentsline {subsection}{\numberline {4.1.6}\leavevmode {\color {Chapter }Cdd{\textunderscore }Inequalities (for IsCddPolyhedra)}}{10}{subsection.4.1.6}
+\contentsline {subsection}{\numberline {4.1.7}\leavevmode {\color {Chapter }Cdd{\textunderscore }IsEmpty (for IsCddPolyhedra)}}{10}{subsection.4.1.7}
+\contentsline {subsection}{\numberline {4.1.8}\leavevmode {\color {Chapter }Cdd{\textunderscore }IsCone (for IsCddPolyhedra)}}{11}{subsection.4.1.8}
+\contentsline {subsection}{\numberline {4.1.9}\leavevmode {\color {Chapter }Cdd{\textunderscore }IsPointed (for IsCddPolyhedra)}}{11}{subsection.4.1.9}
+\contentsline {chapter}{Index}{12}{section*.2}

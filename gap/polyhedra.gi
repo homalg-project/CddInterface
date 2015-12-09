@@ -63,8 +63,11 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
        
    fi;
    
-      poly := rec( poly_inequalities:= arg[1],
-                   matrix:=arg[1],
+   temp := GiveInequalitiesAndEqualities( arg[1], [] );
+
+   poly := rec(    matrix:=arg[1],
+                   inequalities:= temp[1],
+                   equalities:= temp[2],
                    linearity:= [],
                    number_type:= "rational",
                    rep_type := "H-rep" );
@@ -90,11 +93,14 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    
    od;
    
-   poly := rec( poly_inequalities:= arg[1],
-                matrix:=arg[1],
-                linearity:= arg[2],
-                number_type:= "rational",
-                rep_type := "H-rep" );
+   temp := GiveInequalitiesAndEqualities( arg[1], arg[2] );
+
+   poly := rec(    matrix:=arg[1],
+                   inequalities:= temp[1],
+                   equalities:= temp[2],
+                   linearity:= arg[2],
+                   number_type:= "rational",
+                   rep_type := "H-rep" );
    
    ObjectifyWithAttributes( 
    poly, TheTypeCddPolyhedra
@@ -199,21 +205,58 @@ function( poly, obj, rowvec )
    
 end );
 
-# 
-# 
-# InstallMethod( Cdd_PolyhedraFromList,
-#               [ IsList ],
-#  function( list )
-#  
-#  local 
-#  
 
 ##################################
 ##
 ##  Attributes and Properties
 ##
 ##################################
+InstallMethod( Cdd_Dimension,
+              " returns the dimension of the polyhedra",
+              [ IsCddPolyhedra ],
+function( poly )
 
+return Cdd_AmbientSpaceDimension( poly)- Length( Cdd_H_Rep( poly )!.linearity );
+
+end );
+
+InstallMethod( Cdd_Inequalities,
+              " return the list of inequalities of a polyhedra",
+              [ IsCddPolyhedra ],
+function( poly )
+
+  return Cdd_H_Rep( poly )!.inequalities;
+
+end );
+
+InstallMethod( Cdd_Equalities,
+              " return the list of equalities of a poylhedra",
+              [ IsCddPolyhedra ],
+function( poly )
+
+  return Cdd_H_Rep( poly )!.equalities;
+
+end );
+
+
+InstallMethod( Cdd_GeneratingVertices,
+              " return the list of generating vertices",
+              [ IsCddPolyhedra ],
+function( poly )
+
+  return Cdd_V_Rep( poly )!.generating_vertices;
+      
+end );
+
+InstallMethod( Cdd_GeneratingRays,
+              " return the list of generating vertices",
+              [ IsCddPolyhedra ],
+function( poly )
+
+  return Cdd_V_Rep( poly )!.generating_rays;
+      
+end );
+###
 InstallMethod( Cdd_AmbientSpaceDimension,
               "finding the dimension of the ambient space",
               [ IsCddPolyhedra ],
@@ -223,6 +266,8 @@ function( poly )
  
 end );
 
+
+###
 InstallMethod( Cdd_IsEmpty,
                "finding if the polyhedron empty is or not",
                [ IsCddPolyhedra ],
@@ -231,6 +276,27 @@ function( poly )
   return Length( poly!.matrix ) = 0;
 
 end );
+
+
+InstallMethod( Cdd_IsCone, 
+                "finding if the polyhedron is a cone or not",
+                [ IsCddPolyhedra ],
+ function( poly )
+ 
+ return Length( Cdd_GeneratingVertices( poly ) ) = 0;
+ 
+ end );
+ 
+ 
+InstallMethod( Cdd_IsPointed,
+               "finding if the polyhedron is pointed or not",
+               [ IsCddPolyhedra ],
+function( poly )
+
+return Cdd_AmbientSpaceDimension( poly )= Length( Cdd_H_Rep( poly )!.matrix );
+
+end );
+
 ##################################
 ##
 ##  Operations

@@ -2,8 +2,17 @@
   
   [1XIndex[101X
   
+  [2XCdd_AmbientSpaceDimension[102X (for IsCddPolyhedra)  4.1-2
   [2XCdd_Canonicalize[102X (for IsCddPolyhedra)  2.2-1
+  [2XCdd_Dimension[102X (for IsCddPolyhedra)  4.1-1
+  [2XCdd_Equalities[102X (for IsCddPolyhedra)  4.1-5
+  [2XCdd_GeneratingRays[102X (for IsCddPolyhedra)  4.1-4
+  [2XCdd_GeneratingVertices[102X (for IsCddPolyhedra)  4.1-3
   [2XCdd_H_Rep[102X (for IsCddPolyhedra)  2.2-3
+  [2XCdd_Inequalities[102X (for IsCddPolyhedra)  4.1-6
+  [2XCdd_IsCone[102X (for IsCddPolyhedra)  4.1-8
+  [2XCdd_IsEmpty[102X (for IsCddPolyhedra)  4.1-7
+  [2XCdd_IsPointed[102X (for IsCddPolyhedra)  4.1-9
   [2XCdd_LinearProgram[102X (for IsCddPolyhedra, IsString, IsList)  3.1-1
   [2XCdd_PolyhedraByGenerators[102X  2.1-2
   [2XCdd_PolyhedraByInequalities[102X  2.1-1

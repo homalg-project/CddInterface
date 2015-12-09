@@ -1,0 +1,54 @@
+  
+  [1X4 [33X[0;0YAttributes and properties[133X[101X
+  
+  
+  [1X4.1 [33X[0;0YAttributes and properties of polyhedra[133X[101X
+  
+  [1X4.1-1 Cdd_Dimension[101X
+  
+  [29X[2XCdd_Dimension[102X( [3Xpoly[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe dimension of the polyhedra[133X
+  
+  [1X4.1-2 Cdd_AmbientSpaceDimension[101X
+  
+  [29X[2XCdd_AmbientSpaceDimension[102X( [3Xpoly[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe dimension of the ambient space of the polyhedra[133X
+  
+  [1X4.1-3 Cdd_GeneratingVertices[101X
+  
+  [29X[2XCdd_GeneratingVertices[102X( [3Xpoly[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe reduced generating vertices of the polyhedra[133X
+  
+  [1X4.1-4 Cdd_GeneratingRays[101X
+  
+  [29X[2XCdd_GeneratingRays[102X( [3Xpoly[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe reduced generating rays of the polyhedra[133X
+  
+  [1X4.1-5 Cdd_Equalities[101X
+  
+  [29X[2XCdd_Equalities[102X( [3Xpoly[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe reduced defining equalities of the polyhedra[133X
+  
+  [1X4.1-6 Cdd_Inequalities[101X
+  
+  [29X[2XCdd_Inequalities[102X( [3Xpoly[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe reduced defining inequalities of the polyhedra[133X
+  
+  [1X4.1-7 Cdd_IsEmpty[101X
+  
+  [29X[2XCdd_IsEmpty[102X( [3Xpoly[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[23X\texttt{true}[123X   if  the  polyhedra  is  empty  and  [23X\texttt{false}[123X
+            otherwise[133X
+  
+  [1X4.1-8 Cdd_IsCone[101X
+  
+  [29X[2XCdd_IsCone[102X( [3Xpoly[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[23X\texttt{true}[123X   if   the  polyhedra  is  cone  and  [23X\texttt{false}[123X
+            otherwise[133X
+  
+  [1X4.1-9 Cdd_IsPointed[101X
+  
+  [29X[2XCdd_IsPointed[102X( [3Xpoly[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[23X\texttt{true}[123X  if  the  polyhedra  is  pointed  and [23X\texttt{false}[123X
+            otherwise[133X
+  

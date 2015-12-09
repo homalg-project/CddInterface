@@ -4,10 +4,28 @@
 
   \indexspace
 
+  \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Ambient}\discretionary {-}{}{}\texttt  {Space}\discretionary {-}{}{}\texttt  {Dimension}
+    \subitem for IsCddPolyhedra, \hyperpage{10}
   \item \texttt  {Cdd{\textunderscore }Canonicalize}
     \subitem for IsCddPolyhedra, \hyperpage{6}
+  \item \texttt  {Cdd{\textunderscore }Dimension}
+    \subitem for IsCddPolyhedra, \hyperpage{10}
+  \item \texttt  {Cdd{\textunderscore }Equalities}
+    \subitem for IsCddPolyhedra, \hyperpage{10}
+  \item \texttt  {Cdd{\textunderscore }GeneratingRays}
+    \subitem for IsCddPolyhedra, \hyperpage{10}
+  \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Generating}\discretionary {-}{}{}\texttt  {Vertices}
+    \subitem for IsCddPolyhedra, \hyperpage{10}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {H{\textunderscore }Rep}
     \subitem for IsCddPolyhedra, \hyperpage{7}
+  \item \texttt  {Cdd{\textunderscore }Inequalities}
+    \subitem for IsCddPolyhedra, \hyperpage{10}
+  \item \texttt  {Cdd{\textunderscore }IsCone}
+    \subitem for IsCddPolyhedra, \hyperpage{11}
+  \item \texttt  {Cdd{\textunderscore }IsEmpty}
+    \subitem for IsCddPolyhedra, \hyperpage{10}
+  \item \texttt  {Cdd{\textunderscore }IsPointed}
+    \subitem for IsCddPolyhedra, \hyperpage{11}
   \item \texttt  {Cdd{\textunderscore }LinearProgram}
     \subitem for IsCddPolyhedra, IsString, IsList, \hyperpage{8}
   \item \texttt  {Cdd{\textunderscore }}\discretionary {-}{}{}\texttt  {Polyhedra}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Generators}, 

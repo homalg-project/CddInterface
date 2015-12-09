@@ -43,6 +43,17 @@
     3.1 [33X[0;0YCreating a linear program[133X
       3.1-1 Cdd_LinearProgram
       3.1-2 Cdd_SolveLinearProgram
+  4 [33X[0;0YAttributes and properties[133X
+    4.1 [33X[0;0YAttributes and properties of polyhedra[133X
+      4.1-1 Cdd_Dimension
+      4.1-2 Cdd_AmbientSpaceDimension
+      4.1-3 Cdd_GeneratingVertices
+      4.1-4 Cdd_GeneratingRays
+      4.1-5 Cdd_Equalities
+      4.1-6 Cdd_Inequalities
+      4.1-7 Cdd_IsEmpty
+      4.1-8 Cdd_IsCone
+      4.1-9 Cdd_IsPointed
   
   
   [32X

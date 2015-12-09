@@ -105,7 +105,32 @@ DeclareOperation( "Cdd_SolveLinearProgram", [IsCddLinearProgram] );
 ##
 ##################################
 
+#! @Chapter Attributes and properties
+#! @Section Attributes and properties of polyhedra
+
+#! @Arguments poly
+#! @Returns The dimension of the polyhedra
+DeclareAttribute( "Cdd_Dimension", IsCddPolyhedra );
+
+#! @Arguments poly
+#! @Returns The dimension of the ambient space of the polyhedra
 DeclareAttribute( "Cdd_AmbientSpaceDimension", IsCddPolyhedra );
+
+#! @Arguments poly
+#! @Returns The reduced generating vertices of the polyhedra
+DeclareAttribute( "Cdd_GeneratingVertices", IsCddPolyhedra );
+
+#! @Arguments poly
+#! @Returns The reduced generating rays of the polyhedra
+DeclareAttribute( "Cdd_GeneratingRays", IsCddPolyhedra );
+
+#! @Arguments poly
+#! @Returns The reduced defining equalities of the polyhedra
+DeclareAttribute( "Cdd_Equalities", IsCddPolyhedra );
+
+#! @Arguments poly
+#! @Returns The reduced defining inequalities of the polyhedra
+DeclareAttribute( "Cdd_Inequalities", IsCddPolyhedra );
 
 ##################################
 ##
@@ -113,5 +138,15 @@ DeclareAttribute( "Cdd_AmbientSpaceDimension", IsCddPolyhedra );
 ##
 ##################################
 
+#! @Arguments poly
+#! @Returns $\texttt{true}$ if the polyhedra is empty and $\texttt{false}$ otherwise
 DeclareProperty( "Cdd_IsEmpty", IsCddPolyhedra );
+
+#! @Arguments poly
+#! @Returns $\texttt{true}$ if the polyhedra is cone and $\texttt{false}$ otherwise
+DeclareProperty( "Cdd_IsCone", IsCddPolyhedra );
+
+#! @Arguments poly
+#! @Returns $\texttt{true}$ if the polyhedra is pointed and $\texttt{false}$ otherwise
+DeclareProperty( "Cdd_IsPointed", IsCddPolyhedra );
 
