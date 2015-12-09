@@ -6,23 +6,23 @@ A:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ] );
 #! < Polyhedra given by its H-representation >   
 Display( A );
 #! H-representation 
-#! Begin 
+#! begin 
 #!    2 X 3  rational
 #!               
 #!    0   1   0 
 #!    0   1  -1 
-#! End
+#! end
 B:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ], [ 2 ] );
 #! < Polyhedra given by its H-representation >
 Display( B );
 #! H-representation 
 #! Linearity 1, [ 2 ]
-#! Begin 
+#! begin 
 #!    2 X 3  rational
 #!               
 #!    0   1   0 
 #!    0   1  -1 
-#! End   
+#! end   
 #! @EndExample
 #! @EndChunk
 
@@ -33,22 +33,22 @@ A:= Cdd_PolyhedraByGenerators( [ [ 0, 1, 3 ], [ 1, 4, 5 ] ] );
 #! < Polyhedra given by its V-representation >
 Display( A );
 #! V-representation 
-#! Begin 
+#! begin 
 #!    2 X 3  rational
 #!             
 #!    0  1  3 
 #!    1  4  5 
-#! End
+#! end
 B:= Cdd_PolyhedraByGenerators( [ [ 0, 1, 3 ] ], [ 1 ] );      
 #! < Polyhedra given by its V-representation >
 Display( B );
 #! V-representation 
 #! Linearity 1, [ 1 ]
-#! Begin 
+#! begin 
 #!    1 X 3  rational
 #!             
 #!    0  1  3 
-#! End
+#! end
 #! @EndExample
 #! @EndChunk
 
@@ -60,12 +60,12 @@ B:= Cdd_Canonicalize( A );
 #! < Polyhedra given by its H-representation >
 Display( B );                                                             
 #! H-representation 
-#! Begin 
+#! begin 
 #!    2 X 3  rational
 #!               
 #!    0   1   3 
 #!    1   4  10 
-#! End
+#! end
 #! @EndExample
 #! @EndChunk
 
@@ -78,30 +78,30 @@ B:= Cdd_V_Rep( A );
 Display( B );                                   
 #! V-representation 
 #! Linearity 1, [ 2 ]
-#! Begin 
+#! begin 
 #!    2 X 3  rational
 #!               
 #!    0   1   0 
 #!    0  -1   1 
-#! End
+#! end
 C:= Cdd_H_Rep( B );
 #! < Polyhedra given by its H-representation >
 Display( C );
 #! H-representation 
-#! Begin 
+#! begin 
 #!    1 X 3  rational
 #!             
 #!    0  1  1 
-#! End
+#! end
 D:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 1, 34, 22, 43 ], 
 [ 11, 2, 2, 54, 53, 221 ], [33, 23, 45, 2, 40, 11 ] ] );
 #! < Polyhedra given by its H-representation >
-Cdd_V_Rep( C );                                                                                                     
+Cdd_V_Rep( D );                                                                                                     
 #! < Polyhedra given by its V-representation >
 Display( last );                                                                                                    
 #! V-representation 
 #! Linearity 2, [ 5, 6 ]
-#! Begin 
+#! begin 
 #!    6 X 6  rational
 #!                                                         
 #!    1  -743/14   369/14    11/14        0        0 
@@ -110,7 +110,7 @@ Display( last );
 #!    0      764     -390      -11        0        0 
 #!    0   -13526     6772       99      154        0 
 #!    0  -116608    59496     1485        0      154 
-#! End
+#! end
 #! @EndExample
 #! @EndChunk
 

@@ -3,8 +3,8 @@
  */
 
 #include "src/compiled.h"          /* GAP headers */
-#include "local/pkg/CddInterface/src/nothing.c"
-#include "local/pkg/CddInterface/src/cdd.c"
+#include "pkg/CddInterface/src/nothing.c"
+#include "pkg/CddInterface/src/cdd.c"
 
 /**********************************************************
 *

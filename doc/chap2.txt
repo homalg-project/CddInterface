@@ -18,23 +18,23 @@
     [4X[28X< Polyhedra given by its H-representation >   [128X[104X
     [4X[25Xgap>[125X [27XDisplay( A );[127X[104X
     [4X[28XH-representation [128X[104X
-    [4X[28XBegin [128X[104X
+    [4X[28Xbegin [128X[104X
     [4X[28X   2 X 3  rational[128X[104X
     [4X[28X              [128X[104X
     [4X[28X   0   1   0 [128X[104X
     [4X[28X   0   1  -1 [128X[104X
-    [4X[28XEnd[128X[104X
+    [4X[28Xend[128X[104X
     [4X[25Xgap>[125X [27XB:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ], [ 2 ] );[127X[104X
     [4X[28X< Polyhedra given by its H-representation >[128X[104X
     [4X[25Xgap>[125X [27XDisplay( B );[127X[104X
     [4X[28XH-representation [128X[104X
     [4X[28XLinearity 1, [ 2 ][128X[104X
-    [4X[28XBegin [128X[104X
+    [4X[28Xbegin [128X[104X
     [4X[28X   2 X 3  rational[128X[104X
     [4X[28X              [128X[104X
     [4X[28X   0   1   0 [128X[104X
     [4X[28X   0   1  -1 [128X[104X
-    [4X[28XEnd   [128X[104X
+    [4X[28Xend   [128X[104X
   [4X[32X[104X
   
   [1X2.1-2 Cdd_PolyhedraByGenerators[101X
@@ -52,22 +52,22 @@
     [4X[28X< Polyhedra given by its V-representation >[128X[104X
     [4X[25Xgap>[125X [27XDisplay( A );[127X[104X
     [4X[28XV-representation [128X[104X
-    [4X[28XBegin [128X[104X
+    [4X[28Xbegin [128X[104X
     [4X[28X   2 X 3  rational[128X[104X
     [4X[28X            [128X[104X
     [4X[28X   0  1  3 [128X[104X
     [4X[28X   1  4  5 [128X[104X
-    [4X[28XEnd[128X[104X
+    [4X[28Xend[128X[104X
     [4X[25Xgap>[125X [27XB:= Cdd_PolyhedraByGenerators( [ [ 0, 1, 3 ] ], [ 1 ] );      [127X[104X
     [4X[28X< Polyhedra given by its V-representation >[128X[104X
     [4X[25Xgap>[125X [27XDisplay( B );[127X[104X
     [4X[28XV-representation [128X[104X
     [4X[28XLinearity 1, [ 1 ][128X[104X
-    [4X[28XBegin [128X[104X
+    [4X[28Xbegin [128X[104X
     [4X[28X   1 X 3  rational[128X[104X
     [4X[28X            [128X[104X
     [4X[28X   0  1  3 [128X[104X
-    [4X[28XEnd[128X[104X
+    [4X[28Xend[128X[104X
   [4X[32X[104X
   
   
@@ -88,12 +88,12 @@
     [4X[28X< Polyhedra given by its H-representation >[128X[104X
     [4X[25Xgap>[125X [27XDisplay( B );                                                             [127X[104X
     [4X[28XH-representation [128X[104X
-    [4X[28XBegin [128X[104X
+    [4X[28Xbegin [128X[104X
     [4X[28X   2 X 3  rational[128X[104X
     [4X[28X              [128X[104X
     [4X[28X   0   1   3 [128X[104X
     [4X[28X   1   4  10 [128X[104X
-    [4X[28XEnd[128X[104X
+    [4X[28Xend[128X[104X
   [4X[32X[104X
   
   [1X2.2-2 Cdd_V_Rep[101X
@@ -118,30 +118,30 @@
     [4X[25Xgap>[125X [27XDisplay( B );                                   [127X[104X
     [4X[28XV-representation [128X[104X
     [4X[28XLinearity 1, [ 2 ][128X[104X
-    [4X[28XBegin [128X[104X
+    [4X[28Xbegin [128X[104X
     [4X[28X   2 X 3  rational[128X[104X
     [4X[28X              [128X[104X
     [4X[28X   0   1   0 [128X[104X
     [4X[28X   0  -1   1 [128X[104X
-    [4X[28XEnd[128X[104X
+    [4X[28Xend[128X[104X
     [4X[25Xgap>[125X [27XC:= Cdd_H_Rep( B );[127X[104X
     [4X[28X< Polyhedra given by its H-representation >[128X[104X
     [4X[25Xgap>[125X [27XDisplay( C );[127X[104X
     [4X[28XH-representation [128X[104X
-    [4X[28XBegin [128X[104X
+    [4X[28Xbegin [128X[104X
     [4X[28X   1 X 3  rational[128X[104X
     [4X[28X            [128X[104X
     [4X[28X   0  1  1 [128X[104X
-    [4X[28XEnd[128X[104X
+    [4X[28Xend[128X[104X
     [4X[25Xgap>[125X [27XD:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 1, 34, 22, 43 ], [127X[104X
     [4X[25X>[125X [27X[ 11, 2, 2, 54, 53, 221 ], [33, 23, 45, 2, 40, 11 ] ] );[127X[104X
     [4X[28X< Polyhedra given by its H-representation >[128X[104X
-    [4X[25Xgap>[125X [27XCdd_V_Rep( C );                                                                                                     [127X[104X
+    [4X[25Xgap>[125X [27XCdd_V_Rep( D );                                                                                                     [127X[104X
     [4X[28X< Polyhedra given by its V-representation >[128X[104X
     [4X[25Xgap>[125X [27XDisplay( last );                                                                                                    [127X[104X
     [4X[28XV-representation [128X[104X
     [4X[28XLinearity 2, [ 5, 6 ][128X[104X
-    [4X[28XBegin [128X[104X
+    [4X[28Xbegin [128X[104X
     [4X[28X   6 X 6  rational[128X[104X
     [4X[28X                                                        [128X[104X
     [4X[28X   1  -743/14   369/14    11/14        0        0 [128X[104X
@@ -150,6 +150,6 @@
     [4X[28X   0      764     -390      -11        0        0 [128X[104X
     [4X[28X   0   -13526     6772       99      154        0 [128X[104X
     [4X[28X   0  -116608    59496     1485        0      154 [128X[104X
-    [4X[28XEnd[128X[104X
+    [4X[28Xend[128X[104X
   [4X[32X[104X
   

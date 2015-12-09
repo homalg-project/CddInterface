@@ -24,23 +24,23 @@ gap> A:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ] );
 < Polyhedra given by its H-representation >   
 gap> Display( A );
 H-representation 
-Begin 
+begin 
    2 X 3  rational
               
    0   1   0 
    0   1  -1 
-End
+end
 gap> B:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ], [ 2 ] );
 < Polyhedra given by its H-representation >
 gap> Display( B );
 H-representation 
 Linearity 1, [ 2 ]
-Begin 
+begin 
    2 X 3  rational
               
    0   1   0 
    0   1  -1 
-End   
+end   
 ]]></Example>
 
 
@@ -62,22 +62,22 @@ gap> A:= Cdd_PolyhedraByGenerators( [ [ 0, 1, 3 ], [ 1, 4, 5 ] ] );
 < Polyhedra given by its V-representation >
 gap> Display( A );
 V-representation 
-Begin 
+begin 
    2 X 3  rational
             
    0  1  3 
    1  4  5 
-End
+end
 gap> B:= Cdd_PolyhedraByGenerators( [ [ 0, 1, 3 ] ], [ 1 ] );      
 < Polyhedra given by its V-representation >
 gap> Display( B );
 V-representation 
 Linearity 1, [ 1 ]
-Begin 
+begin 
    1 X 3  rational
             
    0  1  3 
-End
+end
 ]]></Example>
 
 
@@ -105,12 +105,12 @@ gap> B:= Cdd_Canonicalize( A );
 < Polyhedra given by its H-representation >
 gap> Display( B );                                                             
 H-representation 
-Begin 
+begin 
    2 X 3  rational
               
    0   1   3 
    1   4  10 
-End
+end
 ]]></Example>
 
 
@@ -143,30 +143,30 @@ gap> B:= Cdd_V_Rep( A );
 gap> Display( B );                                   
 V-representation 
 Linearity 1, [ 2 ]
-Begin 
+begin 
    2 X 3  rational
               
    0   1   0 
    0  -1   1 
-End
+end
 gap> C:= Cdd_H_Rep( B );
 < Polyhedra given by its H-representation >
 gap> Display( C );
 H-representation 
-Begin 
+begin 
    1 X 3  rational
             
    0  1  1 
-End
+end
 gap> D:= Cdd_PolyhedraByInequalities( [ [ 0, 1, 1, 34, 22, 43 ], 
 > [ 11, 2, 2, 54, 53, 221 ], [33, 23, 45, 2, 40, 11 ] ] );
 < Polyhedra given by its H-representation >
-gap> Cdd_V_Rep( C );                                                                                                     
+gap> Cdd_V_Rep( D );                                                                                                     
 < Polyhedra given by its V-representation >
 gap> Display( last );                                                                                                    
 V-representation 
 Linearity 2, [ 5, 6 ]
-Begin 
+begin 
    6 X 6  rational
                                                         
    1  -743/14   369/14    11/14        0        0 
@@ -175,7 +175,7 @@ Begin
    0      764     -390      -11        0        0 
    0   -13526     6772       99      154        0 
    0  -116608    59496     1485        0      154 
-End
+end
 ]]></Example>
 
 
