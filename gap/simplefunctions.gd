@@ -1,8 +1,7 @@
 
-DeclareOperation("PTM",
-                  [ IsMatrix ] );
-                  
+DeclareOperation("PTM", [ IsMatrix ] );
 DeclareOperation( "IsCompatiblePolyhedraList", [IsList] );
+DeclareOperation( "GiveGeneratingVerticesAndGeneratingRays", [ IsList, IsList ] );
 DeclareOperation( "ConvertRatListToIntList", [IsList] );
 DeclareOperation( "ConvertIntListToRatList", [IsList] );
 DeclareOperation( "ConvertListToListOfVectors", [IsList, IsInt] );

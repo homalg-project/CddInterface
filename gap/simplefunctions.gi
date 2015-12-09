@@ -269,16 +269,9 @@ else
      
 fi;
 
-
-if (poly!.rep_type= "H-rep" ) then 
-
-     matrix:= poly!.poly_inequalities;
-   
-else 
-
-    matrix:= poly!.poly_generators ;
+matrix:= poly!.matrix ;
     
-fi;
+
 
 Add(L, Length( matrix    )  );
 Add(L, Length( matrix[1] )  );
@@ -358,6 +351,71 @@ result[9]:= ConvertRatListToIntList( lp!.rowvector );
 return result;
 
 end );
+
+###
+
+InstallMethod( GiveGeneratingVerticesAndGeneratingRays,
+               [ IsList, IsList ],
+function( matrix, linearity )
+
+local generating_vertices, generating_rays, current, temp, l, i;
+
+generating_vertices:= [];
+
+generating_rays:= [];
+
+
+temp := StructuralCopy( matrix );
+
+l:= Length( temp );
+
+
+for i in [ 1..l ] do
+   
+   current:= temp[ i ];
+   
+   if current[1]=1 then 
+       
+       Remove( current, 1 );
+       
+       if i in linearity then
+       
+              Add( generating_vertices, current );
+              Add( generating_vertices, -current );
+        
+       else
+       
+              Add( generating_vertices, current );
+   
+       fi;
+       
+   else 
+
+       Remove( current, 1 ); 
+        
+       if i in linearity then
+       
+              Add( generating_rays, current );
+              Add( generating_rays, -current );
+        
+       else
+       
+              Add( generating_rays, current );
+   
+       fi;
+       
+   fi;
+   
+od;
+
+return [ generating_vertices, generating_rays ];
+
+end );
+   
+   
+
+             
+             
 
 
 

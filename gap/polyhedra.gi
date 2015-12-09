@@ -1,5 +1,5 @@
 #
-# LearnGap: This is written just to learn and test commands of Gap to understand it.
+# Gap Interface to Cdd package.
 #
 # Implementations
 #
@@ -54,19 +54,6 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    if Length( arg )= 0 then 
    
        Error( "inappropriate input" );
-       
-#    elif Length( arg )= 1 and arg[1]= [] then 
-#        
-#        poly := rec( poly_inequalities:= arg[1],
-#                 linearity:= [],
-#                 number_type:= "rational",
-#                 rep_type := "H-rep" );
-#    
-#        ObjectifyWithAttributes( 
-#        poly, TheTypeCddPolyhedra
-#        );
-#    
-#        return  poly;
    
    elif Length( arg )= 1 and IsList( arg[1] ) then
    
@@ -77,9 +64,10 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    fi;
    
       poly := rec( poly_inequalities:= arg[1],
-                linearity:= [],
-                number_type:= "rational",
-                rep_type := "H-rep" );
+                   matrix:=arg[1],
+                   linearity:= [],
+                   number_type:= "rational",
+                   rep_type := "H-rep" );
    
       ObjectifyWithAttributes( 
       poly, TheTypeCddPolyhedra
@@ -103,6 +91,7 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    od;
    
    poly := rec( poly_inequalities:= arg[1],
+                matrix:=arg[1],
                 linearity:= arg[2],
                 number_type:= "rational",
                 rep_type := "H-rep" );
@@ -134,8 +123,13 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
      if not ( arg[1][i][1] in [0,1] ) then Error("The first column of the matrix should be only 1's or 0's");fi;
    
    od;
-   poly := rec( poly_generators:= arg[1],
-                linearity:= [],
+   
+   temp:= GiveGeneratingVerticesAndGeneratingRays( arg[1], [ ] );
+   
+   poly := rec( generating_vertices := temp[1],
+                generating_rays := temp[2],
+                matrix:=arg[1],
+                linearity:= [ ],
                 number_type:= "rational",
                 rep_type := "V-rep" );
    
@@ -158,11 +152,17 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
                if arg[2][i]> Length( arg[1] ) or arg[2][i]<0 then Error("The linearity is not compatible");fi;
    
    od;
-   poly := rec( poly_generators:= arg[1],
-                linearity:= arg[2],
+   
+   
+   temp:= GiveGeneratingVerticesAndGeneratingRays( arg[ 1 ], arg[ 2 ] );
+   
+   poly := rec( generating_vertices := temp[1],
+                generating_rays := temp[2],
+                matrix:=arg[1],
+                linearity:= arg[ 2 ],
                 number_type:= "rational",
                 rep_type := "V-rep" );
-   
+                
    ObjectifyWithAttributes( 
    poly, TheTypeCddPolyhedra
    );
@@ -217,20 +217,20 @@ end );
 InstallMethod( Cdd_AmbientSpaceDimension,
               "finding the dimension of the ambient space",
               [ IsCddPolyhedra ],
-function( poly )
+function( poly ) 
 
-if poly!.rep_type= "H-rep" then 
-
-      return Length( poly!.poly_inequalities[1] )-1;
-
-else  
-
-      return Length( poly!.poly_generators[1] )-1;
-
-fi;
-
+  return Length( poly!.matrix[1] )-1;
+ 
 end );
 
+InstallMethod( Cdd_IsEmpty,
+               "finding if the polyhedron empty is or not",
+               [ IsCddPolyhedra ],
+function( poly )
+
+  return Length( poly!.matrix ) = 0;
+
+end );
 ##################################
 ##
 ##  Operations
@@ -335,14 +335,12 @@ InstallMethod( Display,
               
 
 function( poly )
-
-if poly!.rep_type= "H-rep" then 
   
-    if  poly!.poly_inequalities= [] then 
+ if  poly!.matrix= [] then 
     
          Print( "The empty polyhedra" );
          
-    else 
+ else 
     
       Print( poly!.rep_type, "resentation \n" );
   
@@ -350,36 +348,13 @@ if poly!.rep_type= "H-rep" then
 
       Print( "begin \n" );
   
-      Print("   ", Length( poly!.poly_inequalities)," X ", Length( poly!.poly_inequalities[1] ), "  ", poly!.number_type, "\n" );
+      Print("   ", Length( poly!.matrix)," X ", Length( poly!.matrix[1] ), "  ", poly!.number_type, "\n" );
   
-      PTM( poly!.poly_inequalities );
+      PTM( poly!.matrix );
   
       Print( "end\n" );
       
-     fi; 
-else
- 
-    if  poly!.poly_generators= [] then 
-    
-         Print( "The empty polyhedra" );
-         
-    else
-    
-      Print( poly!.rep_type, "resentation \n" );
-
-      if Length( poly!.linearity) <> 0 then Print( "Linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
- 
-      Print( "begin \n" );
-
-      Print("   ", Length( poly!.poly_generators)," X ", Length( poly!.poly_generators[1] ), "  ", poly!.number_type, "\n" );
-  
-      PTM( poly!.poly_generators );
-  
-      Print( "end\n" );
-
-      fi;
-
-fi;
+ fi; 
 
 end );
 

@@ -112,3 +112,6 @@ DeclareAttribute( "Cdd_AmbientSpaceDimension", IsCddPolyhedra );
 ##  Properties
 ##
 ##################################
+
+DeclareProperty( "Cdd_IsEmpty", IsCddPolyhedra );
+
