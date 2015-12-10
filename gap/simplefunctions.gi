@@ -197,7 +197,7 @@ InstallMethod( ListToPoly,
                [ IsList ],
 function( list )
 
-local numtype, matrix, temp;
+local numtype, matrix, temp, L, temp1, temp2, temp3, temp4, p, i;
 
 if not IsCompatiblePolyhedraList( list ) then return Error( "The given list is not compatible" ); fi;
 
@@ -209,16 +209,76 @@ matrix:= CanonicalizeList( matrix, list[1] );
 
  if list[1]=2 then 
 
+       temp2:= GiveGeneratingVerticesAndGeneratingRays( matrix, [ ] )[1];
+       
+       Display( temp2 );
+       
+       if temp2= [ List( [ 2..list[5] ], i->0 ) ] then 
+          
+              temp3:= StructuralCopy( matrix );
+              temp4:= StructuralCopy( list[ 6 ] );
+              temp1:= [1];
+              Append( temp1, temp2[1] );
+              
+              p:= Position( temp3, temp1 );
+          
+              Remove( temp3, p );
+          
+              for i in [ 1..Length( temp4 ) ] do
+          
+                  if i<p then 
+              
+                    temp4[i]:= temp4[i];
+                 
+                  else 
+              
+                    temp4[i]:= temp4[i]-1;
+                 
+                  fi;
+              
+              od;
+
+              
+              if list[3]=0 then
+              
+                  return Cdd_PolyhedraByGenerators( temp3 );
+       
+              else 
+              
+                  return Cdd_PolyhedraByGenerators( temp3 , temp4 );
+          
+              fi;
+          
+       fi;
+       
+ 
        if list[3]=0 then return Cdd_PolyhedraByGenerators( matrix );
        
           else return Cdd_PolyhedraByGenerators( matrix , list[6] );
           
        fi;
- else 
  
-      if list[3]=0 then return Cdd_PolyhedraByInequalities( matrix );
+ else 
        
-          else return Cdd_PolyhedraByInequalities( matrix , list[6] );
+      if list[ 4 ]=0 then 
+      
+           
+           L:= [1];
+           
+           Append( L, List( [2..list[5]], i-> 0 ) );
+      
+           return Cdd_PolyhedraByInequalities( [ L ] );
+           
+      fi;
+       
+       
+      if list[ 3 ]=0 then 
+      
+           return Cdd_PolyhedraByInequalities( matrix );
+       
+      else 
+          
+           return Cdd_PolyhedraByInequalities( matrix , list[6] );
        
       fi;
       

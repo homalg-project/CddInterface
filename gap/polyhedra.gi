@@ -57,9 +57,27 @@ InstallGlobalFunction( Cdd_PolyhedraByInequalities,
    
    elif Length( arg )= 1 and IsList( arg[1] ) then
    
+   if Length( arg[ 1 ] )=0 then 
+   
+   poly := rec(    matrix:= [ [1, 0, 0] ],
+                   inequalities:= [ ],
+                   equalities:= [ [1, 0, 0] ],
+                   linearity:= [],
+                   number_type:= "rational",
+                   rep_type := "H-rep" );
+   
+      ObjectifyWithAttributes( 
+      poly, TheTypeCddPolyhedra
+      );
+   
+      return  poly;
+      
+      
+   fi;   
+   
    if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
    
-      return Error( "inappropriate input" );
+      Error( "inappropriate input" );
        
    fi;
    
@@ -123,6 +141,7 @@ InstallGlobalFunction( Cdd_PolyhedraByGenerators,
    
    
    elif Length( arg )= 1 and IsList( arg[1] ) then
+   
    
    for i in [1..Length( arg[1]) ] do
    
@@ -273,7 +292,7 @@ InstallMethod( Cdd_IsEmpty,
                [ IsCddPolyhedra ],
 function( poly )
 
-  return Length( poly!.matrix ) = 0;
+  return Length(  Cdd_V_Rep( poly )!.matrix ) = 0;
 
 end );
 
@@ -310,6 +329,12 @@ InstallMethod( Cdd_Canonicalize,
  
  local L1, L2;
  
+  if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
+       
+      return poly;
+     
+  fi;
+  
  L1:= PolyToList( poly );
  
  L2:= CddInterface_Canonicalize( L1 );
@@ -331,7 +356,7 @@ InstallMethod( Cdd_V_Rep,
     
  else 
  
-    return ListToPoly( CddInterface_Compute_V_rep( PolyToList( poly ) ) );
+    return Cdd_Canonicalize( ListToPoly( CddInterface_Compute_V_rep( PolyToList( poly ) ) ) );
     
  fi;
     
@@ -349,7 +374,13 @@ InstallMethod( Cdd_H_Rep,
     
  else 
  
-    return ListToPoly( CddInterface_Compute_H_rep( PolyToList( poly ) ) );
+    if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
+       
+      return Cdd_PolyhedraByInequalities( [ [0, 1 ], [-1, -1 ] ] );
+      
+    fi;
+ 
+    return Cdd_Canonicalize( ListToPoly( CddInterface_Compute_H_rep( PolyToList( poly ) ) ) );
     
  fi;
     
@@ -402,7 +433,7 @@ InstallMethod( Display,
 
 function( poly )
   
- if  poly!.matrix= [] then 
+ if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
     
          Print( "The empty polyhedra" );
          
