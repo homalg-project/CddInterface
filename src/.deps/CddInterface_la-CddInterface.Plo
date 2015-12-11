@@ -73,15 +73,13 @@ src/CddInterface_la-CddInterface.lo: src/CddInterface.c \
  /usr/local/lib/gap4r8/src/compstat.h /usr/local/lib/gap4r8/src/streams.h \
  /usr/local/lib/gap4r8/src/sysfiles.h /usr/local/lib/gap4r8/src/weakptr.h \
  /usr/local/lib/gap4r8/src/vars.h /usr/local/lib/gap4r8/src/aobjects.h \
- /usr/local/lib/gap4r8/pkg/CddInterface/src/nothing.c \
- /usr/local/lib/gap4r8/pkg/CddInterface/src/cdd.c \
- /usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/setoper.h \
- /usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cdd.h \
- /usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cddmp.h \
- /usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cddtypes.h \
- /usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cdd_f.h \
- /usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cddmp_f.h \
- /usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cddtypes_f.h \
+ /usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/setoper.h \
+ /usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cdd.h \
+ /usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cddmp.h \
+ /usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cddtypes.h \
+ /usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cdd_f.h \
+ /usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cddmp_f.h \
+ /usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cddtypes_f.h \
  /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/huge_val.h \
  /usr/include/x86_64-linux-gnu/bits/huge_valf.h \
  /usr/include/x86_64-linux-gnu/bits/huge_vall.h \
@@ -311,23 +309,19 @@ src/CddInterface_la-CddInterface.lo: src/CddInterface.c \
 
 /usr/local/lib/gap4r8/src/aobjects.h:
 
-/usr/local/lib/gap4r8/pkg/CddInterface/src/nothing.c:
+/usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/setoper.h:
 
-/usr/local/lib/gap4r8/pkg/CddInterface/src/cdd.c:
+/usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cdd.h:
 
-/usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/setoper.h:
+/usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cddmp.h:
 
-/usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cdd.h:
+/usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cddtypes.h:
 
-/usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cddmp.h:
+/usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cdd_f.h:
 
-/usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cddtypes.h:
+/usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cddmp_f.h:
 
-/usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cdd_f.h:
-
-/usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cddmp_f.h:
-
-/usr/local/lib/gap4r8/pkg/CddInterface/cddlib/build/include/cddtypes_f.h:
+/usr/local/lib/gap4r8/local/pkg/CddInterface/cddlib/build/include/cddtypes_f.h:
 
 /usr/include/math.h:
 
