@@ -211,9 +211,7 @@ matrix:= CanonicalizeList( matrix, list[1] );
 
        temp2:= GiveGeneratingVerticesAndGeneratingRays( matrix, [ ] )[1];
        
-       Display( temp2 );
-       
-       if temp2= [ List( [ 2..list[5] ], i->0 ) ] then 
+       if temp2= [ List( [ 2..list[5] ], i->0 ) ] and not Length( matrix )=1 then 
           
               temp3:= StructuralCopy( matrix );
               temp4:= StructuralCopy( list[ 6 ] );

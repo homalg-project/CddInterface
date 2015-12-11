@@ -81,6 +81,9 @@ DeclareOperation( "Cdd_V_Rep", [ IsCddPolyhedra ] );
 DeclareOperation( "Cdd_H_Rep", [ IsCddPolyhedra ] );
 #! @InsertChunk Example4
 
+# DeclareOperation( "\=" , [ IsCddPolyhedra, IsCddPolyhedra ] );
+
+
 #! @Chapter Linear Programs
 #! @Section Creating a linear program
 

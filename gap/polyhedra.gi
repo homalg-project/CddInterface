@@ -235,7 +235,15 @@ InstallMethod( Cdd_Dimension,
               [ IsCddPolyhedra ],
 function( poly )
 
-return Cdd_AmbientSpaceDimension( poly)- Length( Cdd_H_Rep( poly )!.linearity );
+  if Cdd_IsEmpty( poly ) then 
+
+      return -1;
+      
+  else 
+
+      return Cdd_AmbientSpaceDimension( poly)- Length( Cdd_H_Rep( poly )!.linearity );
+      
+  fi;
 
 end );
 
@@ -327,7 +335,7 @@ InstallMethod( Cdd_Canonicalize,
                [ IsCddPolyhedra],
  function( poly )
  
- local L1, L2;
+ local temp, temp_poly, i, L1, L2;
  
   if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
        
@@ -335,11 +343,35 @@ InstallMethod( Cdd_Canonicalize,
      
   fi;
   
- L1:= PolyToList( poly );
+  
+  if poly!.rep_type= "H-rep" then 
+  
+      temp:= StructuralCopy( poly!.matrix );
+  
+      for i in poly!.matrix do
+      
+          if IsZero( i ) then 
+             
+             i[1]:=1;
+             
+          fi;
+          
+      od;
+      
+      temp_poly:= rec( matrix:= temp,
+                       linearity:= poly!.linearity,
+                       number_type:= "rational",
+                       rep_type := "H-rep" );
+                
+      ObjectifyWithAttributes( 
+      temp_poly, TheTypeCddPolyhedra
+      );
  
- L2:= CddInterface_Canonicalize( L1 );
- 
- return ListToPoly( L2 );
+      return ListToPoly( CddInterface_Canonicalize( PolyToList( temp_poly ) ) );
+   
+  fi;
+
+ return ListToPoly( CddInterface_Canonicalize( PolyToList( poly ) ) );
  
  end );
  
@@ -397,6 +429,21 @@ local temp;
 temp:= LinearProgramToList( lp );
 
 return CddInterface_LpSolution( temp );
+
+end );
+
+InstallMethod( \=,
+               [ IsCddPolyhedra, IsCddPolyhedra ],
+function( poly1, poly2 )
+local generating_vertices1, generating_vertices2, generating_rays1, generating_rays2;
+
+generating_vertices1:= Set(Cdd_GeneratingVertices( poly1 ) );
+generating_vertices2:= Set(Cdd_GeneratingVertices( poly2 ) );
+
+generating_rays1:= Set( Cdd_GeneratingRays( poly1 ) );
+generating_rays2:= Set( Cdd_GeneratingRays( poly2 ) );
+
+return generating_vertices1=generating_vertices2 and generating_rays1= generating_rays2;
 
 end );
 
