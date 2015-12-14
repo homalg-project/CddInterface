@@ -546,11 +546,116 @@ static  int* GAPPLIST_TOINTPtr( Obj list )
 }
 
 
+static Obj FaceWithDimAndInteriorPoint( dd_MatrixPtr M, dd_rowset R, dd_rowset S)
+{
+  dd_ErrorType err;
+  dd_rowset LL, ImL, RR, SS, Lbasis;
+  dd_rowrange i,iprev=0;
+  dd_colrange j,dim;
+  dd_LPSolutionPtr lps=NULL;
+  dd_boolean success=dd_FALSE;
+  Obj result, current2;
+  
+  result = NEW_PLIST(T_PLIST_CYC, 3);
+  SET_LEN_PLIST( result, 3 );
+  
+  set_initialize(&LL, M->rowsize);
+  set_initialize(&RR, M->rowsize);
+  set_initialize(&SS, M->rowsize);
+  set_copy(LL, M->linset); /* rememer the linset. */
+  set_copy(RR, R); /* copy of R. */
+  set_copy(SS, S); /* copy of S. */
+  if (dd_ExistsRestrictedFace(M, R, S, &err)){
+  
+        set_uni(M->linset, M->linset, R);
+        dd_FindRelativeInterior(M, &ImL, &Lbasis, &lps, &err);
+        dim=M->colsize - set_card(Lbasis)-1;
+        set_uni(M->linset, M->linset, ImL);
+        
+        SET_ELM_PLIST( result, 1, INTOBJ_INT( dim ) );
+        
+           size_t i1, size1;
+           int i, size;
+           int * lin;
+           Obj current;
+           
+           lin =  ddG_LinearityPtr( M );
+           size = ddG_LinearitySize( M );
+           size1=size;
+   
+           current= NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
+           SET_LEN_PLIST( current, size1 );
+ 
+           
+  
+           for(i=0;i<size;i++){
+           i1=i;
+           SET_ELM_PLIST( current, i1+1, INTOBJ_INT( *(lin +i ) ) );
+           CHANGED_BAG( current );
+           }
+        
+           
+        SET_ELM_PLIST( result, 2, current );
+        
+           
+           size_t j1,n;
+           n = (lps->d) -2;
+           
+           current2  = NEW_PLIST( T_PLIST_CYC, n );
+           SET_LEN_PLIST( current2 , n );  
+            
+          for (j=1; j <=n; j++) {
+            j1=j;
+            SET_ELM_PLIST( current2, j1 , MPQ_TO_GAPOBJ( lps->sol[ j ] ) );
+            CHANGED_BAG( current2 );
+            
+          }        
+           
+        SET_ELM_PLIST( result, 3, current2 );
+        CHANGED_BAG( result );
+        
+        dd_FreeLPSolution(lps);
+        set_free(ImL);
+        set_free(Lbasis);
+        set_copy(M->linset, LL); /* restore the linset */
+        set_free(LL);
+        set_free(RR);
+        set_free(SS);
+  
+  return result;
+  } else {
+      set_copy(M->linset, LL); /* restore the linset */
+        set_free(LL);
+        set_free(RR);
+        set_free(SS);
+  
+  return INTOBJ_INT( 0 );
+  }  
+  
+  
+}
 /**********************************************************
 *
 *    functions to be called from Gap 
 * 
 * ********************************************************/
+
+static Obj CddInterface_DimAndInteriorPoint( Obj self, Obj main )
+{
+  dd_MatrixPtr M;
+  dd_colrange mindim;
+  dd_rowset R, S;
+  dd_boolean rip=dd_TRUE;
+  
+//   mindim= INT_INTOBJ( min_dim );
+  M= GapInputToMatrixPtr( main );
+//   if (mindim>=M->colsize) mindim=M->colsize-1;
+  set_initialize(&R, M->rowsize); 
+  set_initialize(&S, M->rowsize);
+  
+  return FaceWithDimAndInteriorPoint( M,  R, S );
+}
+
 
 static Obj CddInterface_Canonicalize( Obj self,Obj main )
 {
@@ -679,6 +784,8 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Compute_H_rep, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Compute_V_rep, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_LpSolution, 1, "main"),
+    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_DimAndInteriorPoint, 1, "main"),
+    
 //     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_poly_and_give_it_back, 1, "list"),
     
     { 0 } /* Finish with an empty entry */
