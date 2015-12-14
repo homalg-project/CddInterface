@@ -71,11 +71,11 @@ InstallMethod( PTM,
      od;
 
   end );
-# this function returns if a list is compatible to define a polyhedra
+# this function returns if a list is compatible to define a polyhedron
 # [ 2 , 2        , 1            , 3      , 3     , [ 1, 3 ] , [-2/5, 1/7, 1/11, 0, 1, 1, 0, 2, 2] ]
 # [rep,numbertype,existlinearity, rowsize,closize, linearity, matrix                              ]
 
-InstallMethod( IsCompatiblePolyhedraList,
+InstallMethod( IsCompatiblePolyhedronList,
                [ IsList ],
 function ( list )
 local i;
@@ -199,7 +199,7 @@ function( list )
 
 local numtype, matrix, temp, L, temp1, temp2, temp3, temp4, p, i;
 
-if not IsCompatiblePolyhedraList( list ) then return Error( "The given list is not compatible" ); fi;
+if not IsCompatiblePolyhedronList( list ) then return Error( "The given list is not compatible" ); fi;
 
 temp:= ConvertIntListToRatList( list[7] );
 
@@ -239,20 +239,20 @@ matrix:= CanonicalizeList( matrix, list[1] );
               
               if list[3]=0 then
               
-                  return Cdd_PolyhedraByGenerators( temp3 );
+                  return Cdd_PolyhedronByGenerators( temp3 );
        
               else 
               
-                  return Cdd_PolyhedraByGenerators( temp3 , temp4 );
+                  return Cdd_PolyhedronByGenerators( temp3 , temp4 );
           
               fi;
           
        fi;
        
  
-       if list[3]=0 then return Cdd_PolyhedraByGenerators( matrix );
+       if list[3]=0 then return Cdd_PolyhedronByGenerators( matrix );
        
-          else return Cdd_PolyhedraByGenerators( matrix , list[6] );
+          else return Cdd_PolyhedronByGenerators( matrix , list[6] );
           
        fi;
  
@@ -265,18 +265,18 @@ matrix:= CanonicalizeList( matrix, list[1] );
            
            Append( L, List( [2..list[5]], i-> 0 ) );
       
-           return Cdd_PolyhedraByInequalities( [ L ] );
+           return Cdd_PolyhedronByInequalities( [ L ] );
            
       fi;
        
        
       if list[ 3 ]=0 then 
       
-           return Cdd_PolyhedraByInequalities( matrix );
+           return Cdd_PolyhedronByInequalities( matrix );
        
       else 
           
-           return Cdd_PolyhedraByInequalities( matrix , list[6] );
+           return Cdd_PolyhedronByInequalities( matrix , list[6] );
        
       fi;
       
@@ -287,7 +287,7 @@ end );
 
 InstallMethod( PolyToList,
 
-               [ IsCddPolyhedra ],
+               [ IsCddPolyhedron ],
                
 function( poly )
 
@@ -384,7 +384,7 @@ InstallMethod( LinearProgramToList,
 function( lp )
  local result;
 
- result:= PolyToList( Cdd_H_Rep( lp!.polyhedra ) );
+ result:= PolyToList( Cdd_H_Rep( lp!.polyhedron ) );
  
  if lp!.objective="max" then 
 
@@ -498,7 +498,34 @@ return [ inequalities, equalities ];
 end );
 
              
-             
+InstallMethod( ExtendLinearity, 
+               [ IsCddPolyhedron, IsList],
+               
+function( poly, lin )
+
+local temp;
+
+temp:= StructuralCopy( poly!.linearity );
+
+Append( temp, lin );
+
+temp:= Set( temp );
+
+if temp=[] then 
+
+    return Cdd_PolyhedronByInequalities( poly!.matrix );
+
+else
+ 
+    return Cdd_PolyhedronByInequalities( poly!.matrix, temp );
+
+fi;
+
+end );
+
+
+
+
 
 
 

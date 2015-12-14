@@ -1,6 +1,6 @@
 
 DeclareOperation("PTM", [ IsMatrix ] );
-DeclareOperation( "IsCompatiblePolyhedraList", [IsList] );
+DeclareOperation( "IsCompatiblePolyhedronList", [IsList] );
 DeclareOperation( "GiveGeneratingVerticesAndGeneratingRays", [ IsList, IsList ] );
 DeclareOperation( "GiveInequalitiesAndEqualities", [ IsList, IsList ] );
 DeclareOperation( "ConvertRatListToIntList", [IsList] );
@@ -10,6 +10,7 @@ DeclareOperation( "ConvertListOfVectorsToList", [IsMatrix] );
 DeclareOperation( "LcmOfDenominatorRatInList", [IsList] );
 DeclareOperation( "CanonicalizeList", [IsList, IsInt] );
 DeclareOperation( "ListToPoly", [ IsList ] );
-DeclareOperation( "PolyToList", [ IsCddPolyhedra ] );
+DeclareOperation( "PolyToList", [ IsCddPolyhedron ] );
 DeclareOperation( "LinearProgramToList", [ IsCddLinearProgram ] );
+DeclareOperation( "ExtendLinearity" , [IsCddPolyhedron, IsList] );
 DeclareGlobalFunction( "NumberOfDigitsOfTheNumber" );
