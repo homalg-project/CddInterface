@@ -81,11 +81,21 @@ DeclareOperation( "Cdd_V_Rep", [ IsCddPolyhedron ] );
 DeclareOperation( "Cdd_H_Rep", [ IsCddPolyhedron ] );
 #! @InsertChunk Example4
 
-# DeclareOperation( "\=" , [ IsCddPolyhedron, IsCddPolyhedron ] );
+
+#! @Arguments poly, i
+#! @Returns a $\texttt{CddPolyhedron}$ Object
+#! @Description 
+#! The function returns the Fourier projection of the polyhedron in the subspace $(O,x_1,\dots,x_{i-1},x_{i+1},\dots,x_n)$ after applying the Fourier elemination algorithm to get rid of the variable $x_{i}$.
+DeclareOperation( "Cdd_FourierProjection" , [IsCddPolyhedron, IsInt] );
+#! @InsertChunk Fourier
+
+
+DeclareOperation( "Cdd_ExtendLinearity" , [IsCddPolyhedron, IsList] );
+
 
 
 #! @Chapter Linear Programs
-#! @Section Creating a linear program
+#! @Section Creating and solving linear programs
 
 #! @Arguments poly, str, obj
 #! @Returns a $\texttt{CddLinearProgram}$ Object
@@ -102,14 +112,7 @@ DeclareOperation( "Cdd_LinearProgram", [IsCddPolyhedron, IsString, IsList] );
 DeclareOperation( "Cdd_SolveLinearProgram", [IsCddLinearProgram] );
 #! @InsertChunk Example5
 
-DeclareOperation( "Cdd_Faces", [ IsCddPolyhedron ] );
 
-DeclareOperation( "Cdd_Facets", [ IsCddPolyhedron ] );
-
-
-DeclareOperation( "Cdd_FacesWithInteriorPoints", [ IsCddPolyhedron ] );
-
-DeclareOperation( "Cdd_FacetsWithInteriorPoints", [ IsCddPolyhedron ] );
 
 ##################################
 ##
@@ -144,6 +147,45 @@ DeclareAttribute( "Cdd_Equalities", IsCddPolyhedron );
 #! @Returns The reduced defining inequalities of the polyhedron
 DeclareAttribute( "Cdd_Inequalities", IsCddPolyhedron );
 
+#! @Arguments poly
+#! @Returns An interior point of the polyhedron
+DeclareAttribute( "Cdd_InteriorPoint",  IsCddPolyhedron  );
+
+#! @Arguments poly
+#! @Returns All faces with their dimensions
+#! @Description
+#! This function takes a H-represented polyhedron $\texttt{poly}$ and returns a list. Every entry in this 
+#! list is a again a list, contains the dimension and linearity of the face defined as a polyhedron over the 
+#! same system of inequalities.
+DeclareAttribute( "Cdd_Faces",  IsCddPolyhedron  );
+
+
+#! @Arguments poly
+#! @Returns All faces with their dimensions and an interior point in each face
+#! @Description
+#! This function takes a H-represented polyhedron $\texttt{poly}$ and returns a list. Every entry in this 
+#! list is a again a list, contains the dimension, linearity of the face defined as a polyhedron over the 
+#! same system of inequalities and an interior point in the face.
+DeclareAttribute( "Cdd_FacesWithInteriorPoints",  IsCddPolyhedron  );
+
+#! @Arguments poly
+#! @Returns All facets with their dimensions 
+#! @Description
+#! This function takes a H-represented polyhedron $\texttt{poly}$ and returns a list. Every entry in this 
+#! list is a again a list, contains the dimension, linearity of the facet defined as a polyhedron over the 
+#! same system of inequalities.
+DeclareAttribute( "Cdd_Facets",  IsCddPolyhedron  );
+
+
+#! @Arguments poly
+#! @Returns All faces with their dimensions and an interior point in each face
+#! @Description
+#! This function takes a H-represented polyhedron $\texttt{poly}$ and returns a list. Every entry in this 
+#! list is a again a list, contains the dimension, linearity of the facet defined as a polyhedron over the 
+#! same system of inequalities and an interior point in the facet.
+DeclareAttribute( "Cdd_FacetsWithInteriorPoints",  IsCddPolyhedron );
+
+
 ##################################
 ##
 ##  Properties
@@ -161,4 +203,3 @@ DeclareProperty( "Cdd_IsCone", IsCddPolyhedron );
 #! @Arguments poly
 #! @Returns $\texttt{true}$ if the polyhedron is pointed and $\texttt{false}$ otherwise
 DeclareProperty( "Cdd_IsPointed", IsCddPolyhedron );
-

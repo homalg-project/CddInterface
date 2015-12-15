@@ -349,15 +349,28 @@ function( matrix, rep )
 
  local res, i;
  
+ 
+ res:= [ ];
+ 
  if rep = 1 then 
  
-       res:= List( [ 1.. Length( matrix ) ], 
-                   i-> LcmOfDenominatorRatInList( matrix[ i ] )*matrix[ i ] /Iterated( LcmOfDenominatorRatInList( matrix[ i ] )*matrix[ i ], Gcd  ) ) ;
-       return res;
+     for i in [ 1.. Length( matrix ) ] do
+    
+        if not IsZero( matrix[i] ) then 
+           
+              res[i]:= LcmOfDenominatorRatInList( matrix[i] )* matrix[ i ] /Iterated( LcmOfDenominatorRatInList( matrix[ i ] )*matrix[ i ], Gcd  ) ;
+            
+        else 
+        
+              res[i]:= matrix[i];
+            
+        fi;
+        
+     od;
+
+     return res;
        
  fi;
- 
- res:= List( [ 1.. Length( matrix ) ], i->0 );
  
  for i in [ 1.. Length( matrix ) ] do
     
@@ -498,28 +511,28 @@ return [ inequalities, equalities ];
 end );
 
              
-InstallMethod( ExtendLinearity, 
-               [ IsCddPolyhedron, IsList],
+
+InstallMethod( GetRidOfLinearity,
+               [ IsCddPolyhedron ],
                
-function( poly, lin )
+function( poly )
+local i, temp;
 
-local temp;
+if poly!.rep_type= "V-rep" then 
 
-temp:= StructuralCopy( poly!.linearity );
-
-Append( temp, lin );
-
-temp:= Set( temp );
-
-if temp=[] then 
-
-    return Cdd_PolyhedronByInequalities( poly!.matrix );
-
-else
- 
-    return Cdd_PolyhedronByInequalities( poly!.matrix, temp );
-
+      Error( "This function is written for H-rep polyhedra" );
+      
 fi;
+
+temp:= StructuralCopy( poly!.matrix );
+
+for i in poly!.linearity do
+
+   Add( temp, -temp[i] );
+   
+od;
+
+return Cdd_PolyhedronByInequalities(  temp  );
 
 end );
 

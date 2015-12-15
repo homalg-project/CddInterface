@@ -249,12 +249,6 @@ long int * ddG_RowVecPtr( dd_MatrixPtr M )
   return RowVec_array;
 } 
 
-
-
-
-
-
-
 long int * ddG_AmatrixPtr( dd_MatrixPtr M )
 {
   static long int Amatrix_array[50000];
@@ -640,19 +634,35 @@ static Obj FaceWithDimAndInteriorPoint( dd_MatrixPtr M, dd_rowset R, dd_rowset S
 * 
 * ********************************************************/
 
+static Obj CddInterface_FourierElimination( Obj self, Obj main)
+{
+  dd_MatrixPtr M, A, G;
+  dd_PolyhedraPtr poly;
+  dd_ErrorType err;
+  Obj current;
+  
+  dd_set_global_constants();
+  err=dd_NoError;
+  M= GapInputToMatrixPtr( main );
+  A= dd_FourierElimination( M, &err);
+  poly=dd_DDMatrix2Poly(A, &err);
+  G= dd_CopyInequalities( poly );
+  return MatrixPtrToGapObj( G );
+}
+
 static Obj CddInterface_DimAndInteriorPoint( Obj self, Obj main )
 {
   dd_MatrixPtr M;
   dd_colrange mindim;
   dd_rowset R, S;
   dd_boolean rip=dd_TRUE;
-  
+  dd_set_global_constants();
 //   mindim= INT_INTOBJ( min_dim );
   M= GapInputToMatrixPtr( main );
 //   if (mindim>=M->colsize) mindim=M->colsize-1;
   set_initialize(&R, M->rowsize); 
   set_initialize(&S, M->rowsize);
-  
+  dd_free_global_constants();
   return FaceWithDimAndInteriorPoint( M,  R, S );
 }
 
@@ -785,6 +795,8 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Compute_V_rep, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_LpSolution, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_DimAndInteriorPoint, 1, "main"),
+    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_FourierElimination, 1, "main"),
+    
     
 //     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_poly_and_give_it_back, 1, "list"),
     

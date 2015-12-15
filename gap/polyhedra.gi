@@ -468,6 +468,12 @@ InstallMethod( Cdd_Faces,
 function( poly )
 local temp, comb, lin, result, current, i, face;
 
+if poly!.rep_type = "V-rep" then 
+
+    Error( "The input should be in H-rep " );
+    
+fi;
+
 temp := List( [1..Length(poly!.matrix) ], i-> i);
 
 lin:= StructuralCopy( poly!.linearity );
@@ -480,7 +486,7 @@ comb := Combinations( temp );
 
 for i in comb do
 
-current:= ExtendLinearity( poly, i );
+current:= Cdd_ExtendLinearity( poly, i );
 
 face := CddInterface_DimAndInteriorPoint( PolyToList( current ) );
 
@@ -499,7 +505,14 @@ InstallMethod( Cdd_Facets,
 function( poly )
 local temp, L, i;
 
+if poly!.rep_type = "V-rep" then 
+
+    Error( "The input should be in H-rep " );
+    
+fi;
+
 temp:= Cdd_Faces( poly );
+
 L:= [ ];
 
 for i in temp do
@@ -523,6 +536,12 @@ InstallMethod( Cdd_FacesWithInteriorPoints,
 function( poly )
 local temp, comb, lin, result, current, i, face;
 
+if poly!.rep_type = "V-rep" then 
+
+    Error( "The input should be in H-rep " );
+    
+fi;
+
 temp := List( [1..Length(poly!.matrix) ], i-> i);
 
 lin:= StructuralCopy( poly!.linearity );
@@ -535,7 +554,7 @@ comb := Combinations( temp );
 
 for i in comb do
 
-current:= ExtendLinearity( poly, i );
+current:= Cdd_ExtendLinearity( poly, i );
 
 face := CddInterface_DimAndInteriorPoint( PolyToList( current ) );
 
@@ -554,7 +573,14 @@ function( poly )
 
 local temp, L, i;
 
+if poly!.rep_type = "V-rep" then 
+
+    Error( "The input should be in H-rep " );
+    
+fi;
+
 temp:= Cdd_FacesWithInteriorPoints( poly );
+
 L:= [ ];
 
 for i in temp do
@@ -569,6 +595,107 @@ od;
   
 return L;  
 
+
+end );
+
+####
+InstallMethod( Cdd_ExtendLinearity, 
+               [ IsCddPolyhedron, IsList],
+               
+function( poly, lin )
+
+local temp;
+
+temp:= StructuralCopy( poly!.linearity );
+
+Append( temp, lin );
+
+temp:= Set( temp );
+
+if temp=[] then 
+
+    return Cdd_PolyhedronByInequalities( poly!.matrix );
+
+else
+ 
+    return Cdd_PolyhedronByInequalities( poly!.matrix, temp );
+
+fi;
+
+end );
+
+
+InstallMethod( Cdd_InteriorPoint, 
+              [ IsCddPolyhedron ],
+              
+function( poly )
+
+return CddInterface_DimAndInteriorPoint( PolyToList( Cdd_H_Rep( poly ) ) )[3];
+
+end );
+
+
+InstallMethod( Cdd_FourierProjection,
+              [ IsCddPolyhedron, IsInt ],
+              
+function( poly, n )
+local f,temp_poly, temp, i,j,row_range, col_range, extra_row;
+
+if Cdd_IsEmpty( poly ) then return poly; fi;
+
+temp_poly:= GetRidOfLinearity( Cdd_H_Rep( StructuralCopy( poly ) ) );
+
+col_range:= Length( temp_poly!.matrix[1] );
+
+row_range:= Length( temp_poly!.matrix );
+
+temp:= temp_poly!.matrix;
+
+if n>= col_range then 
+ 
+   for j in [1..row_range] do
+   
+     for i in [col_range, n] do
+     
+          Add( temp[j], 0 );
+     
+     od;
+     
+   od;
+     
+else 
+
+     for i in [1..row_range] do
+   
+        Add( temp[i], temp[i][n+1] );
+        Remove( temp[i], n+1 );
+     
+     od;
+        
+     temp_poly:= Cdd_Canonicalize( ListToPoly( CddInterface_FourierElimination( PolyToList( Cdd_PolyhedronByInequalities( temp ) ) ) ) );
+     
+     temp:= temp_poly!.matrix;
+
+     row_range:= Length( temp );
+     
+     for i in [1..row_range] do
+   
+        Add( temp[i],0,n+1 );
+        
+     od;
+     
+     f:=function( t )
+     if t <> n+1 then return 0; else return 1;fi;
+     end;
+     
+     extra_row:= List( [ 1.. col_range ], i->f(i) );
+     
+     Add( temp, extra_row );
+     
+     Add( temp_poly!.linearity, row_range+1);
+fi;
+              
+return temp_poly;
 
 end );
 

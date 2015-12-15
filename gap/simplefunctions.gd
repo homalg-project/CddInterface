@@ -11,6 +11,6 @@ DeclareOperation( "LcmOfDenominatorRatInList", [IsList] );
 DeclareOperation( "CanonicalizeList", [IsList, IsInt] );
 DeclareOperation( "ListToPoly", [ IsList ] );
 DeclareOperation( "PolyToList", [ IsCddPolyhedron ] );
+DeclareOperation( "GetRidOfLinearity", [ IsCddPolyhedron ] );
 DeclareOperation( "LinearProgramToList", [ IsCddLinearProgram ] );
-DeclareOperation( "ExtendLinearity" , [IsCddPolyhedron, IsList] );
 DeclareGlobalFunction( "NumberOfDigitsOfTheNumber" );
