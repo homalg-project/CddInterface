@@ -1,6 +1,6 @@
-#! this example makes a problem, when its Interior point is asked
 
-LoadPackage( "Cdd" );
+
+LoadPackage( "CddInterface" );
 
 #! @Chunk demo
 #! @Example
