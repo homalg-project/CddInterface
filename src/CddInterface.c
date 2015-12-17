@@ -278,7 +278,71 @@ long int * ddG_AmatrixPtr( dd_MatrixPtr M )
   
 }
 
+long int* ddG_InteriorPoint( dd_MatrixPtr M )
+{
+  static long int result[50000];
+  dd_rowset R, S;
+  dd_rowset LL, ImL, RR, SS, Lbasis;
+  dd_LPSolutionPtr lps=NULL;
+  dd_ErrorType err;
+  dd_colrange mindim=0;
+  int j,z1,z2, dim;
+  mpz_t u,v;
+  
+  mpz_init( u ); mpz_init( v );
+  
+  set_initialize(&R, M->rowsize); 
+  set_initialize(&S, M->rowsize);
+  set_initialize(&LL, M->rowsize);
+  set_initialize(&RR, M->rowsize);
+  set_initialize(&SS, M->rowsize);
+  set_copy(LL, M->linset); /* rememer the linset. */
+  set_copy(RR, R); /* copy of R. */
+  set_copy(SS, S); /* copy of S. */
+  
+  if (dd_ExistsRestrictedFace(M, R, S, &err)){
+    set_uni(M->linset, M->linset, R);
+        dd_FindRelativeInterior(M, &ImL, &Lbasis, &lps, &err);
+        dim=M->colsize - set_card(Lbasis)-1;
+        set_uni(M->linset, M->linset, ImL);
+        result[0]= dim;
+          for (j=1; j <(lps->d)-1; j++) {
+            
+            mpq_get_num(u, lps->sol[j] );
+            mpq_get_den(v, lps->sol[j] );
+            z1= mpz_get_si( u );
+            z2= mpz_get_si( v );
+            
+            result[ 2*(j-1)+1 ]=z1;
+            result[ 2*(j-1)+2 ]=z2;
+            
+          }
+        
+        dd_FreeLPSolution(lps);
+        set_free(ImL);
+        set_free(Lbasis);
+  
+ } else { 
+        
+        result[0]=-1;
+        
+        for (j=1; j< 2*ddG_ColSize( M )+1; j++) {
+            
+            result[ j ]=0;
+            
+          }
+          
+          
+        
+}
 
+ set_copy(M->linset, LL); /* restore the linset */
+  set_free(LL);
+  set_free(RR);
+  set_free(SS);
+  
+ return result;
+}
 
 
 
@@ -539,34 +603,39 @@ static  int* GAPPLIST_TOINTPtr( Obj list )
   return array;
 }
 
-
-static Obj FaceWithDimAndInteriorPoint( dd_MatrixPtr M, dd_rowset R, dd_rowset S)
+/*
+static Obj FaceWithDimAndInteriorPoint( dd_MatrixPtr N, dd_rowset R, dd_rowset S)
 {
   dd_ErrorType err;
   dd_rowset LL, ImL, RR, SS, Lbasis;
   dd_rowrange i,iprev=0;
   dd_colrange j,dim;
-  dd_LPSolutionPtr lps=NULL;
+  static dd_LPSolutionPtr lps=NULL;
   dd_boolean success=dd_FALSE;
   Obj result, current2;
+  dd_MatrixPtr M;
   
-  result = NEW_PLIST(T_PLIST_CYC, 3);
-  SET_LEN_PLIST( result, 3 );
+  M= dd_CopyMatrix( N );
   
   set_initialize(&LL, M->rowsize);
   set_initialize(&RR, M->rowsize);
   set_initialize(&SS, M->rowsize);
-  set_copy(LL, M->linset); /* rememer the linset. */
-  set_copy(RR, R); /* copy of R. */
-  set_copy(SS, S); /* copy of S. */
+  set_copy(LL, M->linset);
+  set_copy(RR, R); 
+  set_copy(SS, S); 
   if (dd_ExistsRestrictedFace(M, R, S, &err)){
   
-        set_uni(M->linset, M->linset, R);
-        dd_FindRelativeInterior(M, &ImL, &Lbasis, &lps, &err);
-        dim=M->colsize - set_card(Lbasis)-1;
-        set_uni(M->linset, M->linset, ImL);
+        result = NEW_PLIST(T_PLIST_CYC, 3);
+       
+        SET_LEN_PLIST( result, 3 );
+  
+         set_uni(M->linset, M->linset, R);
+         dd_FindRelativeInterior(M, &ImL, &Lbasis, &lps, &err);
+         dim=M->colsize - set_card(Lbasis)-1;
+         set_uni(M->linset, M->linset, ImL);
         
         SET_ELM_PLIST( result, 1, INTOBJ_INT( dim ) );
+        
         
            size_t i1, size1;
            int i, size;
@@ -597,9 +666,10 @@ static Obj FaceWithDimAndInteriorPoint( dd_MatrixPtr M, dd_rowset R, dd_rowset S
            
            current2  = NEW_PLIST( T_PLIST_CYC, n );
            SET_LEN_PLIST( current2 , n );  
-            
+          
           for (j=1; j <=n; j++) {
             j1=j;
+            
             SET_ELM_PLIST( current2, j1 , MPQ_TO_GAPOBJ( lps->sol[ j ] ) );
             CHANGED_BAG( current2 );
             
@@ -611,14 +681,15 @@ static Obj FaceWithDimAndInteriorPoint( dd_MatrixPtr M, dd_rowset R, dd_rowset S
         dd_FreeLPSolution(lps);
         set_free(ImL);
         set_free(Lbasis);
-        set_copy(M->linset, LL); /* restore the linset */
+        set_copy(M->linset, LL); 
         set_free(LL);
         set_free(RR);
         set_free(SS);
   
+        
   return result;
   } else {
-      set_copy(M->linset, LL); /* restore the linset */
+      set_copy(M->linset, LL); 
         set_free(LL);
         set_free(RR);
         set_free(SS);
@@ -628,6 +699,8 @@ static Obj FaceWithDimAndInteriorPoint( dd_MatrixPtr M, dd_rowset R, dd_rowset S
   
   
 }
+*/
+
 /**********************************************************
 *
 *    functions to be called from Gap 
@@ -653,17 +726,28 @@ static Obj CddInterface_FourierElimination( Obj self, Obj main)
 static Obj CddInterface_DimAndInteriorPoint( Obj self, Obj main )
 {
   dd_MatrixPtr M;
-  dd_colrange mindim;
-  dd_rowset R, S;
-  dd_boolean rip=dd_TRUE;
-  dd_set_global_constants();
-//   mindim= INT_INTOBJ( min_dim );
+  Obj result;
+  
+  long int *interior_point;
+  size_t i1, size1;
+  int i, size;
+  
   M= GapInputToMatrixPtr( main );
-//   if (mindim>=M->colsize) mindim=M->colsize-1;
-  set_initialize(&R, M->rowsize); 
-  set_initialize(&S, M->rowsize);
-  dd_free_global_constants();
-  return FaceWithDimAndInteriorPoint( M,  R, S );
+  interior_point= ddG_InteriorPoint( M );
+  size= 2*(ddG_ColSize( M )-1)+1;
+  size1=size;
+   
+  
+  result= NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
+  SET_LEN_PLIST( result, size1 );
+  
+  for(i=0;i<size;i++){
+     i1=i;
+     SET_ELM_PLIST( result, i1+1, INTOBJ_INT( *(interior_point + i ) ) );
+     CHANGED_BAG( result );
+   }
+  
+return result;
 }
 
 
