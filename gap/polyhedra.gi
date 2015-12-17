@@ -246,15 +246,17 @@ InstallMethod( Cdd_Dimension,
               [ IsCddPolyhedron ],
 function( poly )
 
-  if Cdd_IsEmpty( poly ) then 
+#   if Cdd_IsEmpty( poly ) then 
+# 
+#       return -1;
+#       
+#   else 
+# 
+#       return Cdd_AmbientSpaceDimension( poly)- Length( Cdd_H_Rep( poly )!.linearity );
+#       
+#   fi;
 
-      return -1;
-      
-  else 
-
-      return Cdd_AmbientSpaceDimension( poly)- Length( Cdd_H_Rep( poly )!.linearity );
-      
-  fi;
+return CddInterface_DimAndInteriorPoint( PolyToList( poly ) )[1];
 
 end );
 
@@ -488,9 +490,9 @@ for i in comb do
 
 current:= Cdd_ExtendLinearity( poly, i );
 
-face := CddInterface_DimAndInteriorPoint( PolyToList( current ) );
+face := [ Cdd_Dimension( current ), current!.linearity ];
 
-if not face=0 then Add( result, [ face[1], face[2] ] );fi;
+if not face[1]=-1 then Add( result, face );fi;
 
 od;
 
@@ -529,12 +531,72 @@ return L;
 
 end );
 
+InstallMethod( Cdd_Lines,
+             [ IsCddPolyhedron ],
+             
+function( poly )
+local temp, L, i;
+
+if poly!.rep_type = "V-rep" then 
+
+    Error( "The input should be in H-rep " );
+    
+fi;
+
+temp:= Cdd_Faces( poly );
+
+L:= [ ];
+
+for i in temp do
+
+  if i[1]= 1 then 
+  
+     Add( L, i[2] );
+     
+  fi;
+  
+od;
+  
+return L;  
+
+end );
+
+###
+InstallMethod( Cdd_Vertices,
+             [ IsCddPolyhedron ],
+             
+function( poly )
+local temp, L, i;
+
+if poly!.rep_type = "V-rep" then 
+
+    Error( "The input should be in H-rep " );
+    
+fi;
+
+temp:= Cdd_Faces( poly );
+
+L:= [ ];
+
+for i in temp do
+
+  if i[1]= 0 then 
+  
+     Add( L, i[2] );
+     
+  fi;
+  
+od;
+  
+return L;  
+
+end );
 ###
 InstallMethod( Cdd_FacesWithInteriorPoints,
              [ IsCddPolyhedron],
              
 function( poly )
-local temp, comb, lin, result, current, i, face;
+local dim,temp, comb, lin, result, current, i, face, di;
 
 if poly!.rep_type = "V-rep" then 
 
@@ -556,9 +618,15 @@ for i in comb do
 
 current:= Cdd_ExtendLinearity( poly, i );
 
-face := CddInterface_DimAndInteriorPoint( PolyToList( current ) );
+di:= CddInterface_DimAndInteriorPoint( PolyToList( current ) ) ;
 
-if not face=0 then Add( result, face );fi;
+dim:= di[1];
+
+Remove(di, 1);
+
+face := [dim, current!.linearity, ConvertIntListToRatList( di ) ];
+
+if not face[1]=-1 then Add( result, face );fi;
 
 od;
 
@@ -566,37 +634,6 @@ return result;
 
 end );
 
-InstallMethod( Cdd_FacetsWithInteriorPoints,
-             [ IsCddPolyhedron],
-             
-function( poly )
-
-local temp, L, i;
-
-if poly!.rep_type = "V-rep" then 
-
-    Error( "The input should be in H-rep " );
-    
-fi;
-
-temp:= Cdd_FacesWithInteriorPoints( poly );
-
-L:= [ ];
-
-for i in temp do
-
-  if i[1]=temp[1][1]-1 then 
-  
-     Add( L, i );
-     
-  fi;
-  
-od;
-  
-return L;  
-
-
-end );
 
 ####
 InstallMethod( Cdd_ExtendLinearity, 
@@ -630,8 +667,21 @@ InstallMethod( Cdd_InteriorPoint,
               
 function( poly )
 
-return CddInterface_DimAndInteriorPoint( PolyToList( Cdd_H_Rep( poly ) ) )[3];
+local dim_and_interior;
+dim_and_interior:= CddInterface_DimAndInteriorPoint( PolyToList( poly ) );
 
+if dim_and_interior[ 1 ]= -1 then 
+
+      return 0 ;
+
+else 
+
+   Remove( dim_and_interior, 1 );
+   
+   return ConvertIntListToRatList( dim_and_interior ); 
+
+fi;
+   
 end );
 
 

@@ -176,14 +176,21 @@ DeclareAttribute( "Cdd_FacesWithInteriorPoints",  IsCddPolyhedron  );
 #! same system of inequalities.
 DeclareAttribute( "Cdd_Facets",  IsCddPolyhedron  );
 
-
 #! @Arguments poly
-#! @Returns All faces with their dimensions and an interior point in each face
+#! @Returns All lines in the polyhedron 
 #! @Description
 #! This function takes a H-represented polyhedron $\texttt{poly}$ and returns a list. Every entry in this 
-#! list is a again a list, contains the dimension, linearity of the facet defined as a polyhedron over the 
-#! same system of inequalities and an interior point in the facet.
-DeclareAttribute( "Cdd_FacetsWithInteriorPoints",  IsCddPolyhedron );
+#! list is the linearity of a line defined as a polyhedron over the 
+#! same system of inequalities.
+DeclareAttribute( "Cdd_Lines",  IsCddPolyhedron  );
+
+#! @Arguments poly
+#! @Returns All Vertices 
+#! @Description
+#! This function takes a H-represented polyhedron $\texttt{poly}$ and returns a list. Every entry in this 
+#! list is the linearity of a vertex defined as a polyhedron over the same system of inequalities.
+DeclareAttribute( "Cdd_Vertices",  IsCddPolyhedron  );
+
 
 
 ##################################
