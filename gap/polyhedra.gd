@@ -210,3 +210,5 @@ DeclareProperty( "Cdd_IsCone", IsCddPolyhedron );
 #! @Arguments poly
 #! @Returns $\texttt{true}$ if the polyhedron is pointed and $\texttt{false}$ otherwise
 DeclareProperty( "Cdd_IsPointed", IsCddPolyhedron );
+
+#! @InsertChunk demo
