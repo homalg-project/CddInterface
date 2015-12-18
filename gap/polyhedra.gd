@@ -12,8 +12,6 @@
 
 DeclareGlobalVariable( "CddPolyhedronCalculations" );
 
-
-
 #################################
 ##
 ##  Categories
@@ -111,6 +109,17 @@ DeclareOperation( "Cdd_LinearProgram", [IsCddPolyhedron, IsString, IsList] );
 #! value 0.
 DeclareOperation( "Cdd_SolveLinearProgram", [IsCddLinearProgram] );
 #! @InsertChunk Example5
+
+DeclareOperation( "Cdd_Intersection", [IsCddPolyhedron, IsCddPolyhedron] );
+
+##################################
+##
+##  Operations on two Polyhedrons
+##
+##################################
+
+DeclareOperation( "Cdd_IsContained", [ IsCddPolyhedron, IsCddPolyhedron ] );
+
 
 
 
@@ -210,5 +219,4 @@ DeclareProperty( "Cdd_IsCone", IsCddPolyhedron );
 #! @Arguments poly
 #! @Returns $\texttt{true}$ if the polyhedron is pointed and $\texttt{false}$ otherwise
 DeclareProperty( "Cdd_IsPointed", IsCddPolyhedron );
-
 #! @InsertChunk demo

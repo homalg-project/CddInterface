@@ -4,16 +4,15 @@
 # Implementations
 #
 
-
 #############################
 ##
-##
+## Header
 ##
 #############################
 
-Print( "cddlib: a double description library:Version 0.94g (March 23, 2012)\n" );
-Print( "compiled for GMP rational arithmetic.\n");
-Print( "Copyright (C) 1996, Komei Fukuda, fukuda@ifor.math.ethz.ch\n" );
+Print( "Interface to cddlib: a double description library:Version 0.94g (March 23, 2012)\n" );
+Print( "             compiled for GMP rational arithmetic.\n");
+Print( "             Copyright (C) 1996, Komei Fukuda, fukuda@ifor.math.ethz.ch\n" );
 
 #############################
 ##
@@ -445,23 +444,10 @@ return CddInterface_LpSolution( temp );
 
 end );
 
-InstallMethod( \=,
-               [ IsCddPolyhedron, IsCddPolyhedron ],
-function( poly1, poly2 )
 
-local generating_vertices1, generating_vertices2, generating_rays1, generating_rays2;
 
-generating_vertices1:= Set(Cdd_GeneratingVertices( poly1 ) );
 
-generating_vertices2:= Set(Cdd_GeneratingVertices( poly2 ) );
 
-generating_rays1:= Set( Cdd_GeneratingRays( poly1 ) );
-
-generating_rays2:= Set( Cdd_GeneratingRays( poly2 ) );
-
-return generating_vertices1=generating_vertices2 and generating_rays1= generating_rays2;
-
-end );
 
 ###
 InstallMethod( Cdd_Faces,
@@ -668,6 +654,7 @@ InstallMethod( Cdd_InteriorPoint,
 function( poly )
 
 local dim_and_interior;
+
 dim_and_interior:= CddInterface_DimAndInteriorPoint( PolyToList( poly ) );
 
 if dim_and_interior[ 1 ]= -1 then 
@@ -748,6 +735,86 @@ fi;
 return temp_poly;
 
 end );
+
+#################################
+#
+#  Operations on two polyhedrons
+#
+#################################
+
+InstallMethod( \=,
+               [ IsCddPolyhedron, IsCddPolyhedron ],
+function( poly1, poly2 )
+
+local generating_vertices1, generating_vertices2, generating_rays1, generating_rays2;
+
+generating_vertices1:= Set(Cdd_GeneratingVertices( poly1 ) );
+
+generating_vertices2:= Set(Cdd_GeneratingVertices( poly2 ) );
+
+generating_rays1:= Set( Cdd_GeneratingRays( poly1 ) );
+
+generating_rays2:= Set( Cdd_GeneratingRays( poly2 ) );
+
+return generating_vertices1=generating_vertices2 and generating_rays1= generating_rays2;
+
+end );
+
+##
+InstallMethod( Cdd_Intersection,
+               [ IsCddPolyhedron, IsCddPolyhedron ],
+
+function( poly1, poly2 )
+local poly1_h, poly2_h, new_matrix, new_linearity, i, poly1_rowrange, poly2_rowrange;
+
+poly1_h:= Cdd_H_Rep( poly1 );
+
+poly2_h:= Cdd_H_Rep( poly2 );
+
+new_matrix := StructuralCopy( poly1_h!.matrix );
+
+new_linearity:= StructuralCopy( poly1_h!.linearity );
+
+poly1_rowrange := Length( poly1_h!.matrix );
+
+poly2_rowrange := Length( poly2_h!.matrix );
+
+for i in [ 1..poly2_rowrange ] do
+
+    Add(new_matrix, poly2_h!.matrix[ i ] );
+    
+    if i in poly2_h!.linearity then
+         
+         Add( new_linearity, i+poly1_rowrange );
+         
+    fi;
+    
+od;
+
+if Length( new_linearity)=0 then 
+
+     return Cdd_Canonicalize( Cdd_PolyhedronByInequalities( new_matrix ) );
+     
+else 
+
+     return Cdd_Canonicalize( Cdd_PolyhedronByInequalities( new_matrix, new_linearity ) );
+     
+fi;
+
+end );
+##
+InstallMethod( Cdd_IsContained,
+               [ IsCddPolyhedron, IsCddPolyhedron ],
+               
+function( poly1, poly2 )
+local temp;
+
+temp:= Cdd_Intersection( poly1, poly2 );
+
+return temp = poly1;
+
+end );
+
 
 ##################################
 ##
