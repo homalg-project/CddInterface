@@ -54,7 +54,7 @@ DeclareGlobalFunction( "Cdd_PolyhedronByInequalities" );
 DeclareGlobalFunction( "Cdd_PolyhedronByGenerators" );
 #! @InsertChunk Example2
 
-#! @Section Some operations on polyhedra
+#! @Section Some operations on a polyhedron
 
 #! @Arguments poly
 #! @Returns a $\texttt{CddPolyhedron}$ Object
@@ -90,6 +90,28 @@ DeclareOperation( "Cdd_FourierProjection" , [IsCddPolyhedron, IsInt] );
 
 DeclareOperation( "Cdd_ExtendLinearity" , [IsCddPolyhedron, IsList] );
 
+#! @Section Some operations on two polyhedra
+
+#! @Arguments poly1, poly2
+#! @Returns **true** or **false**
+#! @Description 
+#! The function returns **true** if **poly1** is contained in **poly2**, otherwise returns **false**.
+DeclareOperation( "Cdd_IsContained", [ IsCddPolyhedron, IsCddPolyhedron ] );
+
+#! @Arguments poly1, poly2
+#! @Returns a **CddPolyhedron**
+#! @Description 
+#! The function returns the intersection of **poly1** and **poly2**
+DeclareOperation( "Cdd_Intersection", [IsCddPolyhedron, IsCddPolyhedron] );
+
+
+#! @Arguments poly1, poly2
+#! @Returns a **CddPolyhedron**
+#! @Description 
+#! The function returns the Minkuwski sum of **poly1** and **poly2**.
+DeclareOperation( "\+", [ IsCddPolyhedron, IsCddPolyhedron ] );
+#! @InsertChunk minkuwski
+
 
 
 #! @Chapter Linear Programs
@@ -109,18 +131,6 @@ DeclareOperation( "Cdd_LinearProgram", [IsCddPolyhedron, IsString, IsList] );
 #! value 0.
 DeclareOperation( "Cdd_SolveLinearProgram", [IsCddLinearProgram] );
 #! @InsertChunk Example5
-
-DeclareOperation( "Cdd_Intersection", [IsCddPolyhedron, IsCddPolyhedron] );
-
-##################################
-##
-##  Operations on two Polyhedrons
-##
-##################################
-
-DeclareOperation( "Cdd_IsContained", [ IsCddPolyhedron, IsCddPolyhedron ] );
-
-DeclareOperation( "\+", [ IsCddPolyhedron, IsCddPolyhedron ] );
 
 
 ##################################
