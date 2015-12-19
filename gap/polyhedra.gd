@@ -120,7 +120,7 @@ DeclareOperation( "Cdd_Intersection", [IsCddPolyhedron, IsCddPolyhedron] );
 
 DeclareOperation( "Cdd_IsContained", [ IsCddPolyhedron, IsCddPolyhedron ] );
 
-
+DeclareOperation( "\+", [ IsCddPolyhedron, IsCddPolyhedron ] );
 
 
 ##################################

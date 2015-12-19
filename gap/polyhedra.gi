@@ -301,7 +301,7 @@ InstallMethod( Cdd_AmbientSpaceDimension,
               [ IsCddPolyhedron ],
 function( poly ) 
 
-  return Length( poly!.matrix[1] )-1;
+  return Length( Cdd_H_Rep( poly )!.matrix[1] )-1;
  
 end );
 
@@ -629,6 +629,12 @@ function( poly, lin )
 
 local temp;
 
+if poly!.rep_type = "V-rep" then 
+
+   Error( "The polyhedron should be in H-rep");
+   
+fi;
+
 temp:= StructuralCopy( poly!.linearity );
 
 Append( temp, lin );
@@ -655,7 +661,7 @@ function( poly )
 
 local dim_and_interior;
 
-dim_and_interior:= CddInterface_DimAndInteriorPoint( PolyToList( poly ) );
+dim_and_interior:= CddInterface_DimAndInteriorPoint( PolyToList( Cdd_H_Rep( poly ) ) );
 
 if dim_and_interior[ 1 ]= -1 then 
 
@@ -741,6 +747,75 @@ end );
 #  Operations on two polyhedrons
 #
 #################################
+
+InstallMethod( \+,
+               [ IsCddPolyhedron, IsCddPolyhedron ],
+function( poly1, poly2 )
+
+local col_range, g_vertices1, g_vertices2, g_rays1, g_rays2, new_generating_rays, new_generating_vertices, i,j, matrix, u ; 
+
+if Cdd_AmbientSpaceDimension( poly1) <> Cdd_AmbientSpaceDimension( poly1) then 
+
+    Error( "The polyhedrons are not in the same space" );
+    
+fi;
+
+col_range := Cdd_AmbientSpaceDimension( poly1 );
+
+g_vertices1:= ShallowCopy ( Cdd_GeneratingVertices( poly1 ) );
+
+if g_vertices1= [] then g_vertices1:= [ List( [1..col_range ], i-> 0 ) ]; fi;
+
+g_vertices2:= ShallowCopy ( Cdd_GeneratingVertices( poly2 ) );
+
+if g_vertices2= [] then g_vertices2:= [ List( [1..col_range ], i-> 0 ) ]; fi;
+
+new_generating_vertices := [];
+
+for i in g_vertices1 do
+  
+    for j in g_vertices2 do
+    
+         Add( new_generating_vertices, i+j );
+         
+    od;
+    
+od;
+
+matrix:= [ ];
+
+for i in new_generating_vertices do 
+   
+   u:= ShallowCopy( i );
+   
+   Add(u, 1, 1 );
+   
+   Add( matrix, u );
+   
+od;
+
+g_rays1:= Cdd_GeneratingRays( poly1 );
+g_rays2:= Cdd_GeneratingRays( poly2 );
+
+new_generating_rays:= Union( g_rays1 ,g_rays2 );
+
+for i in new_generating_rays do 
+
+   u:= ShallowCopy( i );
+   
+   Add(u, 0, 1 );
+   
+   Add( matrix, u );
+   
+od;
+
+return Cdd_H_Rep( Cdd_PolyhedronByGenerators( matrix ) );
+
+end );
+
+
+
+
 
 InstallMethod( \=,
                [ IsCddPolyhedron, IsCddPolyhedron ],
@@ -856,7 +931,7 @@ function( poly )
     
       Print( poly!.rep_type, "resentation \n" );
   
-      if Length( poly!.linearity) <> 0 then Print( "Linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
+      if Length( poly!.linearity) <> 0 then Print( "linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
 
       Print( "begin \n" );
   
