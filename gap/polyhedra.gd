@@ -60,7 +60,7 @@ DeclareGlobalFunction( "Cdd_PolyhedronByGenerators" );
 #! @Returns a **CddPolyhedron** Object
 #! @Description 
 #! The function takes a polyhedron and reduces its defining inequalities ( generators set) by deleting all redundant inequalities ( generators ). 
-DeclareOperation( "Cdd_Canonicalize", [ IsCddPolyhedron ] );
+DeclareAttribute( "Cdd_Canonicalize",  IsCddPolyhedron  );
 #! @InsertChunk Example3
 
 
@@ -68,7 +68,7 @@ DeclareOperation( "Cdd_Canonicalize", [ IsCddPolyhedron ] );
 #! @Returns a **CddPolyhedron** Object
 #! @Description 
 #! The function takes a polyhedron and returns its reduced V-representation. 
-DeclareOperation( "Cdd_V_Rep", [ IsCddPolyhedron ] );
+DeclareAttribute( "Cdd_V_Rep",  IsCddPolyhedron  );
 
 
 
@@ -76,7 +76,7 @@ DeclareOperation( "Cdd_V_Rep", [ IsCddPolyhedron ] );
 #! @Returns a **CddPolyhedron** Object
 #! @Description 
 #! The function takes a polyhedron and returns its reduced H-representation. 
-DeclareOperation( "Cdd_H_Rep", [ IsCddPolyhedron ] );
+DeclareAttribute( "Cdd_H_Rep",  IsCddPolyhedron  );
 #! @InsertChunk Example4
 
 
@@ -90,7 +90,7 @@ DeclareOperation( "Cdd_FourierProjection" , [IsCddPolyhedron, IsInt] );
 
 DeclareOperation( "Cdd_ExtendLinearity" , [IsCddPolyhedron, IsList] );
 
-#! @Section Some operations on two polyhedra
+#! @Section Some operations on two polyhedrons
 
 #! @Arguments poly1, poly2
 #! @Returns **true** or **false**

@@ -10,9 +10,9 @@
 ##
 #############################
 
-Print( "Interface to cddlib: a double description library:Version 0.94g (March 23, 2012)\n" );
-Print( "             compiled for GMP rational arithmetic.\n");
+Print( "Interface to cddlib: Implementation of the double description method of Motzkin et al.\n");
 Print( "             Copyright (C) 1996, Komei Fukuda, fukuda@ifor.math.ethz.ch\n" );
+Print( "             http://www.ifor.math.ethz.ch/~fukuda/cdd_home/cdd.html\n" );
 
 #############################
 ##
@@ -245,18 +245,20 @@ InstallMethod( Cdd_Dimension,
               [ IsCddPolyhedron ],
 function( poly )
 
-#   if Cdd_IsEmpty( poly ) then 
-# 
-#       return -1;
-#       
-#   else 
-# 
-#       return Cdd_AmbientSpaceDimension( poly)- Length( Cdd_H_Rep( poly )!.linearity );
-#       
-#   fi;
+   if Cdd_IsEmpty( poly ) then 
+ 
+       return -1;
+       
+   else 
+ 
+       return Cdd_AmbientSpaceDimension( poly)- Length( Cdd_H_Rep( poly )!.linearity );
+       
+   fi;
 
-return CddInterface_DimAndInteriorPoint( PolyToList( poly ) )[1];
+      # return CddInterface_DimAndInteriorPoint( PolyToList( Cdd_H_Rep( poly ) ) )[1];
 
+    #fi;
+    
 end );
 
 InstallMethod( Cdd_Inequalities,
@@ -347,60 +349,89 @@ InstallMethod( Cdd_Canonicalize,
                [ IsCddPolyhedron],
  function( poly )
  
- local temp, temp_poly, i, L1, L2;
+  local temp, temp_poly, i, L1, L2, L, H;
  
-  if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
+   if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
        
       return poly;
      
-  fi;
-  
-  
-  if poly!.rep_type= "H-rep" then 
-  
-      temp:= StructuralCopy( poly!.matrix );
-  
-      for i in poly!.matrix do
-      
-          if IsZero( i ) then 
-             
-             i[1]:=1;
-             
-          fi;
-          
-      od;
-      
-      temp_poly:= rec( matrix:= temp,
-                       linearity:= poly!.linearity,
-                       number_type:= "rational",
-                       rep_type := "H-rep" );
-                
-      ObjectifyWithAttributes( 
-      temp_poly, TheTypeCddPolyhedron
-      );
- 
-      return ListToPoly( CddInterface_Canonicalize( PolyToList( temp_poly ) ) );
+   fi;
    
-  fi;
-
- return ListToPoly( CddInterface_Canonicalize( PolyToList( poly ) ) );
+#    
+#    if poly!.rep_type= "H-rep" then 
+#    
+#        temp:= StructuralCopy( poly!.matrix );
+#    
+#        for i in poly!.matrix do
+#        
+#            if IsZero( i ) then 
+#               
+#               i[1]:=1;
+#               
+#            fi;
+#            
+#        od;
+#        
+#        temp_poly:= rec( matrix:= temp,
+#                         linearity:= poly!.linearity,
+#                         number_type:= "rational",
+#                         rep_type := "H-rep" );
+#                  
+#        ObjectifyWithAttributes( 
+#        temp_poly, TheTypeCddPolyhedron
+#        );
+#   
+#        return ListToPoly( CddInterface_Canonicalize( PolyToList( temp_poly ) ) );
+#     
+#    fi;
  
- end );
+ L:= CddInterface_Canonicalize( PolyToList( poly ) );
+ 
+ H:= ListToPoly( L );
+ 
+ L2:= StructuralCopy( L );
+ 
+ Append( L2, [ 0, [ ] ] );
+     
+ Add( L2[6], Length( L2[ 6 ] ), 1 );
+     
+ SetPolyToList( H, L2 );
+ 
+  return H;
+   
+end );
  
 
 InstallMethod( Cdd_V_Rep, 
                [ IsCddPolyhedron ],
  function( poly )
  
- local L, p;
+ local L, p, Q, L2;
  
  if poly!.rep_type = "V-rep" then 
  
-    return Cdd_Canonicalize( poly );
+     return Cdd_Canonicalize( poly );
     
  else 
+     
+     L := CddInterface_Compute_V_rep( PolyToList( poly ) );
  
-    return Cdd_Canonicalize( ListToPoly( CddInterface_Compute_V_rep( PolyToList( poly ) ) ) );
+     Q := ListToPoly( L );
+     
+     
+     L2:= StructuralCopy( L );
+     
+     Append( L2, [ 0, [ ] ] );
+     
+     Add( L2[6], Length( L2[ 6 ] ), 1 );
+     
+     SetPolyToList( Q, L );
+     
+     SetCdd_H_Rep( Q, Cdd_Canonicalize( poly ) );
+
+     return Cdd_Canonicalize( Q );
+      
+#      return Q; 
     
  fi;
     
@@ -410,7 +441,7 @@ InstallMethod( Cdd_H_Rep,
                [ IsCddPolyhedron ],
  function( poly )
  
- local L, p;
+ local L, H, p, L2;
  
  if poly!.rep_type = "H-rep" then 
  
@@ -424,7 +455,25 @@ InstallMethod( Cdd_H_Rep,
       
     fi;
  
-    return Cdd_Canonicalize( ListToPoly( CddInterface_Compute_H_rep( PolyToList( poly ) ) ) );
+     L := CddInterface_Compute_H_rep( PolyToList( poly ) );
+ 
+     H := ListToPoly( L );
+     
+     L2:= StructuralCopy( L );
+     
+     Append( L2, [ 0, [ ] ] );
+     
+     Add( L2[6], Length( L2[ 6 ] ), 1 );
+     
+     SetPolyToList( H, L2 );
+     
+     SetCdd_V_Rep( H, Cdd_Canonicalize( poly ) );
+     
+     return Cdd_Canonicalize( H );
+      
+#      return H; 
+     
+#     return Cdd_Canonicalize( ListToPoly( CddInterface_Compute_H_rep( PolyToList( poly ) ) ) );
     
  fi;
     
@@ -462,7 +511,7 @@ if poly!.rep_type = "V-rep" then
     
 fi;
 
-temp := List( [1..Length(poly!.matrix) ], i-> i);
+temp := [ 1..Length( poly!.matrix ) ];
 
 lin:= StructuralCopy( poly!.linearity );
 
@@ -627,7 +676,7 @@ InstallMethod( Cdd_ExtendLinearity,
                
 function( poly, lin )
 
-local temp;
+local temp, temp2, L, P;
 
 if poly!.rep_type = "V-rep" then 
 
@@ -639,17 +688,34 @@ temp:= StructuralCopy( poly!.linearity );
 
 Append( temp, lin );
 
-temp:= Set( temp );
+temp:= List( Set( temp ) );
 
 if temp=[] then 
 
-    return Cdd_PolyhedronByInequalities( poly!.matrix );
+      P:= Cdd_PolyhedronByInequalities( poly!.matrix );
+      
+      SetPolyToList( P, PolyToList( poly ) );
+      
 
 else
  
-    return Cdd_PolyhedronByInequalities( poly!.matrix, temp );
-
+      P:= Cdd_PolyhedronByInequalities( poly!.matrix, temp );
+      
+      L:=  ShallowCopy( PolyToList( poly ) ) ;
+      
+      temp2:= ShallowCopy( temp );
+      
+      Add( temp2, Length( temp2 ), 1 );
+      
+      L[ 3] := 1;
+      
+      L[ 6 ]:= temp2;
+      
+      SetPolyToList( P, L );
+      
 fi;
+
+return P;
 
 end );
 

@@ -45,11 +45,11 @@ dd_MatrixPtr ddG_CanonicalizeMatrix( dd_MatrixPtr M)
 
 
 dd_MatrixPtr ddG_PolyInput2Matrix (int k_rep, int k_numtype,int k_linearity, dd_rowrange k_rowrange, 
-                         dd_colrange k_colrange,char k_linearity_array[50000],char k_matrix[50000],
-                         int k_LPobject, char k_rowvec[50000])
+                         dd_colrange k_colrange,char k_linearity_array[dd_linelenmax],char k_matrix[dd_linelenmax],
+                         int k_LPobject, char k_rowvec[dd_linelenmax])
                                   
 {
-char numbtype[50000], k_value[50000], k_matrixx[50000],k_linearity_arrayx[50000], k_rowvecx[50000];
+char numbtype[dd_linelenmax], k_value[dd_linelenmax], k_matrixx[dd_linelenmax],k_linearity_arrayx[dd_linelenmax], k_rowvecx[dd_linelenmax];
 dd_MatrixPtr M=NULL;
  dd_rowrange m_input,i;
  dd_colrange d_input,j;
@@ -208,7 +208,7 @@ int * ddG_LinearityPtr(dd_MatrixPtr M )
   dd_rowrange r;
   dd_rowset s;
   int i,u;
-  static int lin_array[50000];
+  static int lin_array[dd_linelenmax];
   
   r= ddG_RowSize( M );
   s= ddG_RowSet( M );
@@ -227,7 +227,7 @@ int * ddG_LinearityPtr(dd_MatrixPtr M )
 
 long int * ddG_RowVecPtr( dd_MatrixPtr M )
 {
-  static long int RowVec_array[50000];
+  static long int RowVec_array[dd_linelenmax];
   static mpz_t u,v;
   int i,z1,z2;
   dd_Arow row_vector;
@@ -251,7 +251,7 @@ long int * ddG_RowVecPtr( dd_MatrixPtr M )
 
 long int * ddG_AmatrixPtr( dd_MatrixPtr M )
 {
-  static long int Amatrix_array[50000];
+  static long int Amatrix_array[dd_linelenmax];
   dd_rowrange r;
   dd_colrange s;
   dd_Amatrix Ma;
@@ -280,7 +280,7 @@ long int * ddG_AmatrixPtr( dd_MatrixPtr M )
 
 long int* ddG_InteriorPoint( dd_MatrixPtr M )
 {
-  static long int result[50000];
+  static long int result[dd_linelenmax];
   dd_rowset R, S;
   dd_rowset LL, ImL, RR, SS, Lbasis;
   dd_LPSolutionPtr lps=NULL;
@@ -517,7 +517,7 @@ static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
 {
   
   int k_rep,k_numtype,k_linearity, k_rowrange, k_colrange, k_LPobject;
-   char k_linearity_array[50000], k_matrix[50000],k_rowvec[50000];
+   char k_linearity_array[dd_linelenmax], k_matrix[dd_linelenmax],k_rowvec[dd_linelenmax];
   
   dd_set_global_constants();
   
@@ -580,7 +580,7 @@ Obj CINTLISTPtr_TOGAPPLIST(  int *list, int n1 )
 
 static  int* GAPPLIST_TOINTPtr( Obj list )
 {
-  static  int array[50000];
+  static  int array[dd_linelenmax];
   int i, len;
   Obj current_obj;
   if (! IS_PLIST( list ) ) {
@@ -754,7 +754,7 @@ return result;
 static Obj CddInterface_Canonicalize( Obj self,Obj main )
 {
   static dd_MatrixPtr M,A;
-  char d[50000];
+  char d[dd_linelenmax];
   Obj linearity_array;
 //   dd_ErrorType err=dd_NoError;
 //  dd_PolyhedraPtr poly;

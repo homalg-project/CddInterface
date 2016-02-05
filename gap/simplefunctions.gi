@@ -455,17 +455,25 @@ for i in [ 1..l ] do
    else 
 
        Remove( current, 1 ); 
-        
-       if i in linearity then
        
-              Add( generating_rays, current );
-              Add( generating_rays, -current );
+       if not IsZero( current ) then 
         
-       else
+              if i in linearity then
        
-              Add( generating_rays, current );
+                 Add( generating_rays, current );
+                 Add( generating_rays, -current );
+        
+              else
+       
+                 Add( generating_rays, current );
    
-       fi;
+              fi;
+           
+        else 
+        
+              Add( generating_vertices, current );
+            
+        fi;
        
    fi;
    

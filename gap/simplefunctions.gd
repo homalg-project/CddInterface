@@ -10,7 +10,7 @@ DeclareOperation( "ConvertListOfVectorsToList", [IsMatrix] );
 DeclareOperation( "LcmOfDenominatorRatInList", [IsList] );
 DeclareOperation( "CanonicalizeList", [IsList, IsInt] );
 DeclareOperation( "ListToPoly", [ IsList ] );
-DeclareOperation( "PolyToList", [ IsCddPolyhedron ] );
+DeclareAttribute( "PolyToList", IsCddPolyhedron  );
 DeclareOperation( "GetRidOfLinearity", [ IsCddPolyhedron ] );
 DeclareOperation( "LinearProgramToList", [ IsCddLinearProgram ] );
 DeclareGlobalFunction( "NumberOfDigitsOfTheNumber" );
