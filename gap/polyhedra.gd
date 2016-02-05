@@ -56,30 +56,6 @@ DeclareGlobalFunction( "Cdd_PolyhedronByGenerators" );
 
 #! @Section Some operations on a polyhedron
 
-#! @Arguments poly
-#! @Returns a **CddPolyhedron** Object
-#! @Description 
-#! The function takes a polyhedron and reduces its defining inequalities ( generators set) by deleting all redundant inequalities ( generators ). 
-DeclareAttribute( "Cdd_Canonicalize",  IsCddPolyhedron  );
-#! @InsertChunk Example3
-
-
-#! @Arguments poly
-#! @Returns a **CddPolyhedron** Object
-#! @Description 
-#! The function takes a polyhedron and returns its reduced V-representation. 
-DeclareAttribute( "Cdd_V_Rep",  IsCddPolyhedron  );
-
-
-
-#! @Arguments poly
-#! @Returns a **CddPolyhedron** Object
-#! @Description 
-#! The function takes a polyhedron and returns its reduced H-representation. 
-DeclareAttribute( "Cdd_H_Rep",  IsCddPolyhedron  );
-#! @InsertChunk Example4
-
-
 #! @Arguments poly, i
 #! @Returns a **CddPolyhedron** Object
 #! @Description 
@@ -141,6 +117,27 @@ DeclareOperation( "Cdd_SolveLinearProgram", [IsCddLinearProgram] );
 
 #! @Chapter Attributes and properties
 #! @Section Attributes and properties of polyhedron
+
+#! @Arguments poly
+#! @Returns a **CddPolyhedron** Object
+#! @Description 
+#! The function takes a polyhedron and reduces its defining inequalities ( generators set) by deleting all redundant inequalities ( generators ). 
+DeclareAttribute( "Cdd_Canonicalize",  IsCddPolyhedron  );
+#! @InsertChunk Example3
+
+
+#! @Arguments poly
+#! @Returns a **CddPolyhedron** Object
+#! @Description 
+#! The function takes a polyhedron and returns its reduced V-representation. 
+DeclareAttribute( "Cdd_V_Rep",  IsCddPolyhedron  );
+
+#! @Arguments poly
+#! @Returns a **CddPolyhedron** Object
+#! @Description 
+#! The function takes a polyhedron and returns its reduced H-representation. 
+DeclareAttribute( "Cdd_H_Rep",  IsCddPolyhedron  );
+#! @InsertChunk Example4
 
 #! @Arguments poly
 #! @Returns The dimension of the polyhedron
