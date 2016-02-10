@@ -284,7 +284,7 @@ matrix:= CanonicalizeList( matrix, list[1] );
 
 end );
 
-
+##
 InstallMethod( PolyToList,
 
                [ IsCddPolyhedron ],
@@ -342,6 +342,8 @@ return L;
 
 end );
 
+
+##
 InstallMethod( CanonicalizeList, 
                [ IsList, IsInt ],
                

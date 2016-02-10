@@ -787,6 +787,13 @@ static Obj CddInterface_Compute_H_rep( Obj self, Obj main )
    dd_set_global_constants();
    err=dd_NoError;
    M= GapInputToMatrixPtr( main );
+   
+   // i added this in 5.Feb.2016
+   dd_rowset impl_linset, redset;
+  dd_rowindex newpos;
+//   dd_ErrorType err;
+  dd_MatrixCanonicalize(&M, &impl_linset, &redset, &newpos, &err);
+  
    poly=dd_DDMatrix2Poly(M, &err);
    A= A=dd_CopyInequalities(poly);
    dd_free_global_constants();
@@ -801,6 +808,13 @@ static Obj CddInterface_Compute_V_rep( Obj self, Obj main )
    dd_set_global_constants();
    err=dd_NoError;
    M= GapInputToMatrixPtr( main );
+   
+    // i added this in 5.Feb.2016
+   dd_rowset impl_linset, redset;
+  dd_rowindex newpos;
+//   dd_ErrorType err;
+   dd_MatrixCanonicalize(&M, &impl_linset, &redset, &newpos, &err);
+   
    poly=dd_DDMatrix2Poly(M, &err);
    A= A=dd_CopyGenerators(poly);
    dd_free_global_constants();

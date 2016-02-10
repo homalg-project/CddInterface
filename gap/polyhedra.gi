@@ -334,7 +334,7 @@ InstallMethod( Cdd_IsPointed,
                [ IsCddPolyhedron ],
 function( poly )
 
-return Cdd_AmbientSpaceDimension( poly )= Length( Cdd_H_Rep( poly )!.matrix );
+return Length( Cdd_V_Rep( poly )!.linearity )= 0;
 
 end );
 
@@ -429,9 +429,7 @@ InstallMethod( Cdd_V_Rep,
      
      SetCdd_H_Rep( Q, Cdd_Canonicalize( poly ) );
 
-     return Cdd_Canonicalize( Q );
-      
-#      return Q; 
+     return  Q;
     
  fi;
     
@@ -469,7 +467,7 @@ InstallMethod( Cdd_H_Rep,
      
      SetCdd_V_Rep( H, Cdd_Canonicalize( poly ) );
      
-     return Cdd_Canonicalize( H );
+     return H ;
       
 #      return H; 
      
