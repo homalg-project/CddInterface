@@ -1,3 +1,4 @@
+/doc/*
 libtool
 src/.deps/
 src/.libs/
