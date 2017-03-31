@@ -132,13 +132,13 @@ Display( last );
 A:= Cdd_PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ], 
 [ -80, 0, 1 ], [ 170, 0, -1 ], [ -200, 1, 1 ] ] );
 #! < Polyhedron given by its H-representation >
-Lp:= Cdd_LinearProgram( A, "max", [1, -2, 5 ] );
+#! Lp:= Cdd_LinearProgram( A, "max", [1, -2, 5 ] );
 #! < Linear program >
-S:= Cdd_SolveLinearProgram( Lp );
+#! S:= Cdd_SolveLinearProgram( Lp );
 #! [ [ 100, 170 ], 651 ]
-B:= Cdd_V_Rep( A );
+#! B:= Cdd_V_Rep( A );
 #! < Polyhedron given by its V-representation >
-Display( Lp );
+#! Display( Lp );
 #! Linear program given by: 
 #! H-representation 
 #! begin 
@@ -151,7 +151,7 @@ Display( Lp );
 #!    -200     1     1 
 #! end
 #! max  [ 1, -2, 5 ]
-Display( B );
+#! Display( B );
 #! V-representation 
 #! begin 
 #!    5 X 3  rational
