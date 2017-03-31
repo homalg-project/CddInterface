@@ -14,3 +14,4 @@ DeclareAttribute( "PolyToList", IsCddPolyhedron  );
 DeclareOperation( "GetRidOfLinearity", [ IsCddPolyhedron ] );
 DeclareOperation( "LinearProgramToList", [ IsCddLinearProgram ] );
 DeclareGlobalFunction( "NumberOfDigitsOfTheNumber" );
+DeclareGlobalFunction( "ListToString" );

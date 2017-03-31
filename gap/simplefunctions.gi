@@ -334,7 +334,8 @@ Append( temp, lin );
 
 Add( L, temp );
 
-Add( L, ConvertRatListToIntList( ConvertListOfVectorsToList( matrix ) ) );
+Add( L, ListToString( matrix ) );
+# Add( L, ConvertRatListToIntList( ConvertListOfVectorsToList( matrix ) ) );
 
 Append( L, [ 0, [] ] );
 
@@ -551,4 +552,15 @@ end );
 
 
 
-
+InstallGlobalFunction( "ListToString",
+                       [ IsList ],
+  function( l )
+  local i,j,s;
+  s := " ";
+  for i in [ 1 .. Length( l ) ] do 
+  for j in [ 1 .. Length( l[ 1 ] ) ] do
+  s := Concatenation( [ s, String( l[i][j] ), " " ] );
+  od;
+  od;
+  return s;
+end );

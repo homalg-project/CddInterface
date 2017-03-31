@@ -46,10 +46,10 @@ dd_MatrixPtr ddG_CanonicalizeMatrix( dd_MatrixPtr M)
 
 dd_MatrixPtr ddG_PolyInput2Matrix (int k_rep, int k_numtype,int k_linearity, dd_rowrange k_rowrange, 
                          dd_colrange k_colrange,char k_linearity_array[dd_linelenmax],char k_matrix[dd_linelenmax],
-                         int k_LPobject, char k_rowvec[dd_linelenmax])
+                         int str_len, int k_LPobject, char k_rowvec[dd_linelenmax])
                                   
 {
-char numbtype[dd_linelenmax], k_value[dd_linelenmax], k_matrixx[dd_linelenmax],k_linearity_arrayx[dd_linelenmax], k_rowvecx[dd_linelenmax];
+char numbtype[dd_linelenmax], k_value[dd_linelenmax], k_matrixx[str_len],k_linearity_arrayx[dd_linelenmax], k_rowvecx[dd_linelenmax];
 dd_MatrixPtr M=NULL;
  dd_rowrange m_input,i;
  dd_colrange d_input,j;
@@ -69,8 +69,7 @@ dd_MatrixPtr M=NULL;
  
 // // creating the matrix with these two dimesnions
    M=dd_CreateMatrix(k_rowrange, k_colrange);
-//   
-// 
+   
  // controling if the given representation is H or V.
    if( k_rep == 2 ) {
        rep=dd_Generator; newformat=dd_TRUE;
@@ -141,7 +140,6 @@ dd_MatrixPtr M=NULL;
   }  
   }
 
-  
   return M;
 }
 
@@ -373,71 +371,84 @@ int ddG_IsOptimal( dd_MatrixPtr M )
     else return 0;
 }
 
-static char * RATPLIST_STR( Obj list )
+
+static char * RATPLIST_STR( Obj string )
 {
- static char s[dd_linelenmax];
- char s1[dd_linelenmax];
-  int i,n,m, current;
-  Obj current_num, current_den;
-  
-  strcpy( s, " " );
-  
-  if (!IS_PLIST( list ) ){
-   ErrorMayQuit( "The argument is not a list", 0,0 );
-   return NULL;
-  }
-  
-  n= LEN_PLIST( list );
-  m= n/2;
-  
-  for(i=0;i<m;i++)
-  {
-    current_num = ELM_PLIST( list, 2*i+1 );
-    current_den = ELM_PLIST( list, 2*i+2 );
-    
-    if( !IS_INTOBJ( current_num ) || !IS_INTOBJ( current_den ) ) {
-      ErrorMayQuit( "no integer entries", 0, 0 );
-      return NULL;
-    }
-//     current= INT_INTOBJ( current_num );
-    sprintf(s1, "%ld/%ld", INT_INTOBJ(current_num), INT_INTOBJ(current_den) );
-    strcat(s,s1);
-    strcat(s, " ");
-  }
-  
-  return s;
+  char* input_string = CSTR_STRING( string );
+  return input_string;
 }
 
-static char * PLIST_STR( Obj list )
+static char * PLIST_STR( Obj string )
 {
- static char s[dd_linelenmax];
- char s1[dd_linelenmax];
-  int i,n, current;
-  Obj current_obj;
-  
-  strcpy( s, " " );
-  if (!IS_PLIST( list ) ){
-   ErrorMayQuit( "not a plain list kemo", 0,0 );
-   return NULL;
-  }
-  
-  n= LEN_PLIST( list );
-  
-  for(i=0;i<n;i++)
-  {
-    current_obj= ELM_PLIST( list, i+1 );
-    if( !IS_INTOBJ( current_obj ) ) {
-      ErrorMayQuit( "no integer entries", 0, 0 );
-      return NULL;
-    }
-    current= INT_INTOBJ( current_obj );
-    sprintf(s1, "%d", current );
-    strcat(s,s1);
-    strcat(s, " ");
-  }
-  
-  return s;
+  char* input_string = CSTR_STRING( string );
+  return input_string;
 }
+
+// static char * RATPLIST_STR( Obj list )
+// {
+//  static char s[dd_linelenmax];
+//  char s1[dd_linelenmax];
+//   int i,n,m, current;
+//   Obj current_num, current_den;
+// //   ErrorMayQuit( "hdj",0,0 );
+//   strcpy( s, " " );
+//   
+//   if (!IS_PLIST( list ) ){
+//    ErrorMayQuit( "The argument is not a list", 0,0 );
+//    return NULL;
+//   }
+//   
+//   n= LEN_PLIST( list );
+//   m= n/2;
+//   
+//   for(i=0;i<m;i++)
+//   {
+//     current_num = ELM_PLIST( list, 2*i+1 );
+//     current_den = ELM_PLIST( list, 2*i+2 );
+//     
+//     if( !IS_INTOBJ( current_num ) || !IS_INTOBJ( current_den ) ) {
+//       ErrorMayQuit( "no integer entries", 0, 0 );
+//       return NULL;
+//     }
+// //     current= INT_INTOBJ( current_num );
+//     sprintf(s1, "%ld/%ld", INT_INTOBJ(current_num), INT_INTOBJ(current_den) );
+//     strcat(s,s1);
+//     strcat(s, " ");
+//   }
+//   
+//   return s;
+// }
+
+// static char * PLIST_STR( Obj list )
+// {
+//  static char s[dd_linelenmax];
+//  char s1[dd_linelenmax];
+//   int i,n, current;
+//   Obj current_obj;
+//   
+//   strcpy( s, " " );
+//   if (!IS_PLIST( list ) ){
+//    ErrorMayQuit( "not a plain list kemo", 0,0 );
+//    return NULL;
+//   }
+//   
+//   n= LEN_PLIST( list );
+//   
+//   for(i=0;i<n;i++)
+//   {
+//     current_obj= ELM_PLIST( list, i+1 );
+//     if( !IS_INTOBJ( current_obj ) ) {
+//       ErrorMayQuit( "no integer entries", 0, 0 );
+//       return NULL;
+//     }
+//     current= INT_INTOBJ( current_obj );
+//     sprintf(s1, "%d", current );
+//     strcat(s,s1);
+//     strcat(s, " ");
+//   }
+//   
+//   return s;
+// }
 
 
 static Obj MatrixPtrToGapObj( dd_MatrixPtr M )
@@ -517,7 +528,7 @@ static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
 {
   
   int k_rep,k_numtype,k_linearity, k_rowrange, k_colrange, k_LPobject;
-   char k_linearity_array[dd_linelenmax], k_matrix[dd_linelenmax],k_rowvec[dd_linelenmax];
+  char k_linearity_array[dd_linelenmax],k_rowvec[dd_linelenmax];
   
   dd_set_global_constants();
   
@@ -527,17 +538,22 @@ static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
    k_rowrange=  INT_INTOBJ( ELM_PLIST( input , 4 ) );
    k_colrange=  INT_INTOBJ( ELM_PLIST( input , 5 ) );
    k_LPobject=  INT_INTOBJ( ELM_PLIST( input , 8 ) );
-  
+   Obj string = ELM_PLIST( input , 7 );
+   int str_len = GET_LEN_STRING( string );
+   char k_matrix[ str_len ];
   if (k_numtype==3) 
    strcpy( k_matrix,          PLIST_STR( ELM_PLIST( input , 7 ) ) );
   else 
+  {
+//    ErrorMayQuit( "t",0,0 );
    strcpy( k_matrix,          RATPLIST_STR( ELM_PLIST( input , 7 ) ) );
-    
+  }
+//     ErrorMayQuit( "hey kamalo", 0, 0 );
   strcpy( k_linearity_array, PLIST_STR( ELM_PLIST( input , 6 ) ) );
   strcpy( k_rowvec,          RATPLIST_STR( ELM_PLIST( input , 9 ) ) );
-
-  return ddG_PolyInput2Matrix( k_rep , k_numtype, k_linearity, k_rowrange, k_colrange, k_linearity_array, k_matrix , k_LPobject, k_rowvec  );
-}       
+//     ErrorMayQuit( "hey kamalo", 0, 0 );
+  return ddG_PolyInput2Matrix( k_rep , k_numtype, k_linearity, k_rowrange, k_colrange, k_linearity_array, k_matrix, str_len, k_LPobject, k_rowvec  );
+}
 
 
 /**********************************************************
@@ -816,7 +832,7 @@ static Obj CddInterface_Compute_V_rep( Obj self, Obj main )
    dd_MatrixCanonicalize(&M, &impl_linset, &redset, &newpos, &err);
    
    poly=dd_DDMatrix2Poly(M, &err);
-   A= A=dd_CopyGenerators(poly);
+   A=dd_CopyGenerators(poly);
    dd_free_global_constants();
    return MatrixPtrToGapObj( A );
 }
