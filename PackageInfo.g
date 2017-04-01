@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "CddInterface",
 Subtitle := "Gap interface to Cdd package",
-Version := "0.1",
-Date := "18/11/2015", # dd/mm/yyyy format
+Version := "2017.03.31",
+Date := "2017.03.31", # yyyy.mm.dd format
 
 Persons := [
   rec(
