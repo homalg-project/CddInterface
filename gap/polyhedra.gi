@@ -920,7 +920,7 @@ InstallMethod( ViewObj,
                [ IsCddPolyhedron],
 function( poly )
 
-Print( "< Polyhedron given by its ",poly!.rep_type,"resentation >");
+Print( "<Polyhedron given by its ",poly!.rep_type,"resentation>");
 
 end );
 
@@ -930,7 +930,7 @@ InstallMethod( ViewObj,
                
 function( poly )
 
-Print( "< Linear program >" );
+Print( "<Linear program>" );
 
 end );
 
