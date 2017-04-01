@@ -332,7 +332,7 @@ temp:= [ Length( lin ) ];
 
 Append( temp, lin );
 
-Add( L, temp );
+Add( L, ListToString( [ temp ] ) );
 
 Add( L, ListToString( matrix ) );
 # Add( L, ConvertRatListToIntList( ConvertListOfVectorsToList( matrix ) ) );

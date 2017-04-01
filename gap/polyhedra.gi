@@ -59,7 +59,7 @@ InstallGlobalFunction( Cdd_PolyhedronByInequalities,
                "constructor for polyhedron by inequalities",
 #              [IsMatrix, IsString],
    function( arg )
-   local poly, i, temp;
+   local poly, i, temp, matrix, new_mat;
    
    if Length( arg )= 0 then 
    
@@ -67,12 +67,12 @@ InstallGlobalFunction( Cdd_PolyhedronByInequalities,
    
    elif Length( arg )= 1 and IsList( arg[1] ) then
    
-   if Length( arg[ 1 ] )=0 then 
+   if Length( arg[ 1 ] )=0 or arg[ 1 ] = [ [ ] ] then 
    
-   poly := rec(    matrix:= [ [1, 0, 0] ],
-                   inequalities:= [ ],
-                   equalities:= [ [1, 0, 0] ],
-                   linearity:= [],
+   poly := rec(    matrix:= [ [1, 0] ],
+                   inequalities:= [ [ 1, 0 ] ],
+                   equalities:= [  ],
+                   linearity:= [ ],
                    number_type:= "rational",
                    rep_type := "H-rep" );
    
@@ -83,7 +83,8 @@ InstallGlobalFunction( Cdd_PolyhedronByInequalities,
       return  poly;
       
       
-   fi;   
+   fi; 
+   
    
    if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
    
@@ -91,9 +92,23 @@ InstallGlobalFunction( Cdd_PolyhedronByInequalities,
        
    fi;
    
-   temp := GiveInequalitiesAndEqualities( arg[1], [] );
+   matrix := arg[ 1 ];
+   new_mat := [];
 
-   poly := rec(    matrix:=arg[1],
+   for i in [ 1 .. Length( arg[ 1 ] ) ] do 
+   
+       if IsZero( matrix[ i ] ) then
+       temp := StructuralCopy( matrix[ i ] );
+       temp[ 1 ] := 1;
+       Add( new_mat, temp );
+       else
+       Add( new_mat, matrix[ i ] );
+       fi;
+   od;
+   
+   temp := GiveInequalitiesAndEqualities( new_mat, [] );
+
+   poly := rec(    matrix:=new_mat,
                    inequalities:= temp[1],
                    equalities:= temp[2],
                    linearity:= [],
@@ -121,9 +136,23 @@ InstallGlobalFunction( Cdd_PolyhedronByInequalities,
    
    od;
    
-   temp := GiveInequalitiesAndEqualities( arg[1], arg[2] );
+   matrix := arg[ 1 ];
+   new_mat := [];
+   
+   for i in [ 1 .. Length( arg[ 1 ] ) ] do 
+   
+       if IsZero( matrix[ i ] ) then
+       temp := StructuralCopy( matrix[ i ] );
+       temp[ 1 ] := 1;
+       Add( new_mat, temp );
+       else
+       Add( new_mat, matrix[ i ] );
+       fi;
+   od;
 
-   poly := rec(    matrix:=arg[1],
+   temp := GiveInequalitiesAndEqualities( new_mat, arg[2] );
+
+   poly := rec(    matrix:=new_mat,
                    inequalities:= temp[1],
                    equalities:= temp[2],
                    linearity:= arg[2],
