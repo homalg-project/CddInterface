@@ -49,7 +49,7 @@ DeclareGlobalFunction( "Cdd_PolyhedronByInequalities" );
 #! @Returns a **CddPolyhedron** Object
 #! @Description  
 #! The function takes a list in which every entry represents a vertex in the ambient vector space.
-#! In case we want some vertices to be free( the vertex and its negative belong to the polyhedron) we should refer 
+#! In case we want some vertices to be free (the vertex and its negative belong to the polyhedron) we should refer 
 #! in a second list to their indices . 
 DeclareGlobalFunction( "Cdd_PolyhedronByGenerators" );
 #! @InsertChunk Example2
@@ -73,13 +73,14 @@ DeclareOperation( "Cdd_ExtendLinearity" , [IsCddPolyhedron, IsList] );
 #! @Description 
 #! The function returns **true** if **poly1** is contained in **poly2**, otherwise returns **false**.
 DeclareOperation( "Cdd_IsContained", [ IsCddPolyhedron, IsCddPolyhedron ] );
+#! @InsertChunk comparing_polyhedrons
 
 #! @Arguments poly1, poly2
 #! @Returns a **CddPolyhedron**
 #! @Description 
 #! The function returns the intersection of **poly1** and **poly2**
 DeclareOperation( "Cdd_Intersection", [IsCddPolyhedron, IsCddPolyhedron] );
-
+#! @InsertChunk intersection
 
 #! @Arguments poly1, poly2
 #! @Returns a **CddPolyhedron**
