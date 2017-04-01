@@ -386,48 +386,7 @@ InstallMethod( Cdd_Canonicalize,
      
    fi;
    
-#    
-#    if poly!.rep_type= "H-rep" then 
-#    
-#        temp:= StructuralCopy( poly!.matrix );
-#    
-#        for i in poly!.matrix do
-#        
-#            if IsZero( i ) then 
-#               
-#               i[1]:=1;
-#               
-#            fi;
-#            
-#        od;
-#        
-#        temp_poly:= rec( matrix:= temp,
-#                         linearity:= poly!.linearity,
-#                         number_type:= "rational",
-#                         rep_type := "H-rep" );
-#                  
-#        ObjectifyWithAttributes( 
-#        temp_poly, TheTypeCddPolyhedron
-#        );
-#   
-#        return ListToPoly( CddInterface_Canonicalize( PolyToList( temp_poly ) ) );
-#     
-#    fi;
- 
- L:= CddInterface_Canonicalize( PolyToList( poly ) );
- 
- H:= ListToPoly( L );
- 
- L2:= StructuralCopy( L );
- 
- Append( L2, [ 0, [ ] ] );
-     
- Add( L2[6], Length( L2[ 6 ] ), 1 );
-     
- SetPolyToList( H, L2 );
- 
-  return H;
-   
+   return ListToPoly( CddInterface_Canonicalize( PolyToList( poly ) ) );
 end );
  
 
@@ -443,22 +402,7 @@ InstallMethod( Cdd_V_Rep,
     
  else 
      
-     L := CddInterface_Compute_V_rep( PolyToList( poly ) );
- 
-     Q := ListToPoly( L );
-     
-     
-     L2:= StructuralCopy( L );
-     
-     Append( L2, [ 0, [ ] ] );
-     
-     Add( L2[6], Length( L2[ 6 ] ), 1 );
-     
-     SetPolyToList( Q, L );
-     
-     SetCdd_H_Rep( Q, Cdd_Canonicalize( poly ) );
-
-     return  Q;
+     return ListToPoly( CddInterface_Compute_V_rep( PolyToList( poly ) ) );
     
  fi;
     
@@ -477,31 +421,12 @@ InstallMethod( Cdd_H_Rep,
  else 
  
     if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
-       
+      
       return Cdd_PolyhedronByInequalities( [ [0, 1 ], [-1, -1 ] ] );
       
     fi;
- 
-     L := CddInterface_Compute_H_rep( PolyToList( poly ) );
- 
-     H := ListToPoly( L );
-     
-     L2:= StructuralCopy( L );
-     
-     Append( L2, [ 0, [ ] ] );
-     
-     Add( L2[6], Length( L2[ 6 ] ), 1 );
-     
-     SetPolyToList( H, L2 );
-     
-     SetCdd_V_Rep( H, Cdd_Canonicalize( poly ) );
-     
-     return H ;
       
-#      return H; 
-     
-#     return Cdd_Canonicalize( ListToPoly( CddInterface_Compute_H_rep( PolyToList( poly ) ) ) );
-    
+      return ListToPoly( CddInterface_Compute_H_rep( PolyToList( poly ) ) );
  fi;
     
 end );
