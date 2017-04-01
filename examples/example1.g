@@ -3,7 +3,7 @@ LoadPackage("CddInterface");
 #! @Chunk Example1
 #! @Example
 A:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ] );
-#! < Polyhedron given by its H-representation >   
+#! <Polyhedron given by its H-representation>  
 Display( A );
 #! H-representation 
 #! begin 
@@ -13,7 +13,7 @@ Display( A );
 #!    0   1  -1 
 #! end
 B:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ], [ 2 ] );
-#! < Polyhedron given by its H-representation >
+#! <Polyhedron given by its H-representation>
 Display( B );
 #! H-representation 
 #! Linearity 1, [ 2 ]
@@ -30,7 +30,7 @@ Display( B );
 #! @Chunk Example2
 #! @Example
 A:= Cdd_PolyhedronByGenerators( [ [ 0, 1, 3 ], [ 1, 4, 5 ] ] );
-#! < Polyhedron given by its V-representation >
+#! <Polyhedron given by its V-representation>
 Display( A );
 #! V-representation 
 #! begin 
@@ -40,7 +40,7 @@ Display( A );
 #!    1  4  5 
 #! end
 B:= Cdd_PolyhedronByGenerators( [ [ 0, 1, 3 ] ], [ 1 ] );      
-#! < Polyhedron given by its V-representation >
+#! <Polyhedron given by its V-representation>
 Display( B );
 #! V-representation 
 #! Linearity 1, [ 1 ]
@@ -55,9 +55,9 @@ Display( B );
 #! @Chunk Example3
 #! @Example
 A:= Cdd_PolyhedronByInequalities( [ [ 0, 2, 6 ], [ 0, 1, 3 ], [1, 4, 10 ] ] );
-#! < Polyhedron given by its H-representation >
+#! <Polyhedron given by its H-representation>
 B:= Cdd_Canonicalize( A );                                                       
-#! < Polyhedron given by its H-representation >
+#! <Polyhedron given by its H-representation>
 Display( B );                                                             
 #! H-representation 
 #! begin 
@@ -72,9 +72,9 @@ Display( B );
 #! @Chunk Example4
 #! @Example
 A:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 1 ], [0, 5, 5 ] ] );                          
-#! < Polyhedron given by its H-representation >
+#! <Polyhedron given by its H-representation>
 B:= Cdd_V_Rep( A );                                    
-#! < Polyhedron given by its V-representation >
+#! <Polyhedron given by its V-representation>
 Display( B );                                   
 #! V-representation 
 #! Linearity 1, [ 2 ]
@@ -85,7 +85,7 @@ Display( B );
 #!    0  -1   1 
 #! end
 C:= Cdd_H_Rep( B );
-#! < Polyhedron given by its H-representation >
+#! <Polyhedron given by its H-representation>
 Display( C );
 #! H-representation 
 #! begin 
@@ -95,9 +95,9 @@ Display( C );
 #! end
 D:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 1, 34, 22, 43 ], 
 [ 11, 2, 2, 54, 53, 221 ], [33, 23, 45, 2, 40, 11 ] ] );
-#! < Polyhedron given by its H-representation >
+#! <Polyhedron given by its H-representation>
 Cdd_V_Rep( D );                                                                                                     
-#! < Polyhedron given by its V-representation >
+#! <Polyhedron given by its V-representation>
 Display( last );                                                                                                    
 #! V-representation 
 #! Linearity 2, [ 5, 6 ]
@@ -131,13 +131,13 @@ Display( last );
 #! @Example
 A:= Cdd_PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ], 
 [ -80, 0, 1 ], [ 170, 0, -1 ], [ -200, 1, 1 ] ] );
-#! < Polyhedron given by its H-representation >
+#! <Polyhedron given by its H-representation>
 #! Lp:= Cdd_LinearProgram( A, "max", [1, -2, 5 ] );
-#! < Linear program >
+#! <Linear program>
 #! S:= Cdd_SolveLinearProgram( Lp );
 #! [ [ 100, 170 ], 651 ]
 #! B:= Cdd_V_Rep( A );
-#! < Polyhedron given by its V-representation >
+#! <Polyhedron given by its V-representation>
 #! Display( Lp );
 #! Linear program given by: 
 #! H-representation 

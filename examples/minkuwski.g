@@ -14,10 +14,10 @@ Display( V );
 #! begin 
 #!    4 X 3  rational
 #!                
-#!    1   6  11 
 #!    0   3   1 
-#!    0   1   2 
+#!    1   6  11 
 #!    1   5  12 
+#!    0   1   2 
 #! end
 Cdd_GeneratingVertices( P ); 
 #! [ [ 2, 5 ] ]
