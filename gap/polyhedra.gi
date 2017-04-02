@@ -280,13 +280,13 @@ function( poly )
        
    else 
  
-       return Cdd_AmbientSpaceDimension( poly)- Length( Cdd_H_Rep( poly )!.linearity );
-       
-   fi;
+#        return Cdd_AmbientSpaceDimension( poly)- Length( Cdd_H_Rep( poly )!.linearity );
+#        
+#    fi;
 
-      # return CddInterface_DimAndInteriorPoint( PolyToList( Cdd_H_Rep( poly ) ) )[1];
+       return CddInterface_DimAndInteriorPoint( PolyToList( Cdd_H_Rep( poly ) ) )[ 1 ];
 
-    #fi;
+    fi;
     
 end );
 
