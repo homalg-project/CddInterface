@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "CddInterface",
 Subtitle := "Gap interface to Cdd package",
-Version := "2017.03.31",
-Date := "2017.03.31", # yyyy.mm.dd format
+Version := "2017.04.02",
+Date := "2017.04.02", # yyyy.mm.dd format
 
 Persons := [
   rec(
@@ -19,7 +19,7 @@ Persons := [
     IsMaintainer := true,
     FirstNames := "Kamal",
     LastName := "Saleh",
-    WWWHome := "Kamal.saleh@rwth-aachen.de",
+    WWWHome := "https://github.com/kamalsaleh/CddInterface/",
     Email := "kamal.saleh@rwth-aachen.de",
     PostalAddress := "Templergraben ",
     Place := "Aachen",
