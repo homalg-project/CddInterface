@@ -642,20 +642,26 @@ static Obj CddInterface_DimAndInteriorPoint( Obj self, Obj main )
   int i, size;
   
   M= GapInputToMatrixPtr( main );
+//   dd_WriteMatrix( stdout, M );
   interior_point= ddG_InteriorPoint( M );
-  size= 2*(ddG_ColSize( M )-1)+1;
+  size= ddG_ColSize( M );
   size1=size;
    
   
   result= NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
   SET_LEN_PLIST( result, size1 );
   
-  for(i=0;i<size;i++){
+  SET_ELM_PLIST( result, 1, INTOBJ_INT( *( interior_point ) ) );
+  CHANGED_BAG( result );
+  
+  for(i=1;i<size;i++){
      i1=i;
-     SET_ELM_PLIST( result, i1+1, INTOBJ_INT( *(interior_point + i ) ) );
+     SET_ELM_PLIST( result, i1 + 1, QUO( INTOBJ_INT( *(interior_point + 2*i-1 ) ), INTOBJ_INT( *(interior_point + 2*i ) ) ) );
      CHANGED_BAG( result );
    }
-  
+
+   dd_free_global_constants();
+
 return result;
 }
 
@@ -765,7 +771,7 @@ static Obj CddInterface_LpSolution( Obj self, Obj main )
     
   else 
     
-    return INTOBJ_INT( 0 ); 
+    return Fail; 
    
 }
 
