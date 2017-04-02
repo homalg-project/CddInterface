@@ -400,7 +400,7 @@ InstallMethod( LinearProgramToList,
 function( lp )
  local result;
 
- result:= PolyToList( Cdd_H_Rep( lp!.polyhedron ) );
+ result:= ShallowCopy( PolyToList( Cdd_H_Rep( lp!.polyhedron ) ) );
  
  if lp!.objective="max" then 
 
@@ -412,7 +412,7 @@ function( lp )
      
  fi;
 
-result[9]:= ConvertRatListToIntList( lp!.rowvector );
+result[9]:= ListToString( [ lp!.rowvector ] );
 
 return result;
 

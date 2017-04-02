@@ -612,7 +612,7 @@ dim:= di[1];
 
 Remove(di, 1);
 
-face := [dim, current!.linearity, ConvertIntListToRatList( di ) ];
+face := [dim, current!.linearity, ShallowCopy( di ) ];
 
 if not face[1]=-1 then Add( result, face );fi;
 
@@ -644,27 +644,12 @@ Append( temp, lin );
 temp:= List( Set( temp ) );
 
 if temp=[] then 
-
+     
       P:= Cdd_PolyhedronByInequalities( poly!.matrix );
-      
-      SetPolyToList( P, PolyToList( poly ) );
-      
-
+     
 else
- 
+     
       P:= Cdd_PolyhedronByInequalities( poly!.matrix, temp );
-      
-      L:=  ShallowCopy( PolyToList( poly ) ) ;
-      
-      temp2:= ShallowCopy( temp );
-      
-      Add( temp2, Length( temp2 ), 1 );
-      
-      L[ 3] := 1;
-      
-      L[ 6 ]:= temp2;
-      
-      SetPolyToList( P, L );
       
 fi;
 
@@ -684,13 +669,13 @@ dim_and_interior:= CddInterface_DimAndInteriorPoint( PolyToList( Cdd_H_Rep( poly
 
 if dim_and_interior[ 1 ]= -1 then 
 
-      return 0 ;
+      return fail ;
 
 else 
 
    Remove( dim_and_interior, 1 );
    
-   return ConvertIntListToRatList( dim_and_interior ); 
+   return ShallowCopy( dim_and_interior ); 
 
 fi;
    
