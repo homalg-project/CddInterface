@@ -22,14 +22,14 @@ Display( V );
 Cdd_GeneratingVertices( P ); 
 #! [ [ 2, 5 ] ]
 Cdd_GeneratingVertices( Q );
-#! [ [ 4, 6 ], [ 3, 7 ] ]
+#! [ [ 3, 7 ], [ 4, 6 ] ]
 Cdd_GeneratingVertices( S );
-#! [ [ 6, 11 ], [ 5, 12 ] ]
+#! [ [ 5, 12 ], [ 6, 11 ] ]
 Cdd_GeneratingRays( P );    
 #! [ [ 1, 2 ] ]
 Cdd_GeneratingRays( Q );
 #! [ [ 3, 1 ] ]
 Cdd_GeneratingRays( S );
-#! [ [ 3, 1 ], [ 1, 2 ] ]
+#! [ [ 1, 2 ], [ 3, 1 ] ]
 #! @EndExample
 #! @EndChunk
