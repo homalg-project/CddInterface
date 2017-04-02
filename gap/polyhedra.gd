@@ -39,7 +39,7 @@ DeclareCategory( "IsCddLinearProgram", IsObject );
 #! @Arguments arg 
 #! @Returns a **CddPolyhedron** Object
 #! @Description  
-#! The function takes a list in which every entry represents an inequality( or equality).
+#! The function takes a list in which every entry represents an inequality (or equality).
 #! In case we want some entries to represent equalities we should refer  
 #! in a second list to their indices.
 DeclareGlobalFunction( "Cdd_PolyhedronByInequalities" );
@@ -122,10 +122,9 @@ DeclareOperation( "Cdd_SolveLinearProgram", [IsCddLinearProgram] );
 #! @Arguments P
 #! @Returns a **CddPolyhedron** Object
 #! @Description 
-#! The function takes a polyhedron and reduces its defining inequalities ( generators set) by deleting all redundant inequalities ( generators ). 
+#! The function takes a polyhedron and reduces its defining inequalities (generators set) by deleting all redundant inequalities (generators). 
 DeclareAttribute( "Cdd_Canonicalize",  IsCddPolyhedron  );
 #! @InsertChunk Example3
-
 
 #! @Arguments P
 #! @Returns a **CddPolyhedron** Object
@@ -154,23 +153,30 @@ DeclareAttribute( "Cdd_Dimension", IsCddPolyhedron );
 DeclareAttribute( "Cdd_GeneratingVertices", IsCddPolyhedron );
 
 #! @Arguments P
-#! @Returns The reduced generating rays of the polyhedron
+#! @Returns list
+#! @Description 
+#! The output is the reduced generating rays of the polyhedron
 DeclareAttribute( "Cdd_GeneratingRays", IsCddPolyhedron );
 
 #! @Arguments P
-#! @Returns The reduced defining equalities of the polyhedron
+#! @Returns a list
+#! @Description 
+#! The output is the reduced equalities of the polyhedron.
 DeclareAttribute( "Cdd_Equalities", IsCddPolyhedron );
 
 #! @Arguments P
-#! @Returns The reduced defining inequalities of the polyhedron
+#! @Description 
+#! The output is the reduced inequalities of the polyhedron.
 DeclareAttribute( "Cdd_Inequalities", IsCddPolyhedron );
 
 #! @Arguments P
-#! @Returns An interior point of the polyhedron
+#! @Returns a list
+#! @Description 
+#! The output is an interior point in the polyhedron
 DeclareAttribute( "Cdd_InteriorPoint",  IsCddPolyhedron  );
 
 #! @Arguments P
-#! @Returns All faces with their dimensions
+#! @Returns a list
 #! @Description
 #! This function takes a H-represented polyhedron **poly** and returns a list. Every entry in this 
 #! list is a again a list, contains the dimension and linearity of the face defined as a polyhedron over the 
@@ -179,7 +185,7 @@ DeclareAttribute( "Cdd_Faces",  IsCddPolyhedron  );
 
 
 #! @Arguments P
-#! @Returns All faces with their dimensions and an interior point in each face
+#! @Returns a list
 #! @Description
 #! This function takes a H-represented polyhedron **P** and returns a list. Every entry in this 
 #! list is a again a list, contains the dimension, linearity of the face defined as a polyhedron over the 
@@ -187,7 +193,7 @@ DeclareAttribute( "Cdd_Faces",  IsCddPolyhedron  );
 DeclareAttribute( "Cdd_FacesWithInteriorPoints",  IsCddPolyhedron  );
 
 #! @Arguments P
-#! @Returns All facets with their dimensions 
+#! @Returns a list
 #! @Description
 #! This function takes a H-represented polyhedron **P** and returns a list. Every entry in this 
 #! list is a again a list, contains the dimension, linearity of the facet defined as a polyhedron over the 
@@ -195,7 +201,7 @@ DeclareAttribute( "Cdd_FacesWithInteriorPoints",  IsCddPolyhedron  );
 DeclareAttribute( "Cdd_Facets",  IsCddPolyhedron  );
 
 #! @Arguments P
-#! @Returns All lines in the polyhedron 
+#! @Returns a list
 #! @Description
 #! This function takes a H-represented polyhedron **P** and returns a list. Every entry in this 
 #! list is the linearity of a line defined as a polyhedron over the 
@@ -203,13 +209,11 @@ DeclareAttribute( "Cdd_Facets",  IsCddPolyhedron  );
 DeclareAttribute( "Cdd_Lines",  IsCddPolyhedron  );
 
 #! @Arguments P
-#! @Returns All Vertices 
+#! @Returns a list
 #! @Description
 #! This function takes a H-represented polyhedron **P** and returns a list. Every entry in this 
 #! list is the linearity of a vertex defined as a polyhedron over the same system of inequalities.
 DeclareAttribute( "Cdd_Vertices",  IsCddPolyhedron  );
-
-
 
 ##################################
 ##
@@ -218,14 +222,20 @@ DeclareAttribute( "Cdd_Vertices",  IsCddPolyhedron  );
 ##################################
 
 #! @Arguments P
-#! @Returns **true** if the polyhedron is empty and **false** otherwise
+#! @Returns true or false
+#! @Description
+#! The output is **true** if the polyhedron is empty and **false** otherwise
 DeclareProperty( "Cdd_IsEmpty", IsCddPolyhedron );
 
 #! @Arguments P
-#! @Returns **true** if the polyhedron is cone and **false** otherwise
+#! @Returns true or false
+#! @Description
+#! The output is **true** if the polyhedron is cone and **false** otherwise
 DeclareProperty( "Cdd_IsCone", IsCddPolyhedron );
 
 #! @Arguments P
-#! @Returns **true** if the polyhedron is pointed and **false** otherwise
+#! @Returns true or false
+#! @Description
+#! The output is **true** if the polyhedron is pointed and **false** otherwise
 DeclareProperty( "Cdd_IsPointed", IsCddPolyhedron );
 #! @InsertChunk demo
