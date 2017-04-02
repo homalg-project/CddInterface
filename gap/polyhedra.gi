@@ -295,7 +295,7 @@ InstallMethod( Cdd_Inequalities,
               [ IsCddPolyhedron ],
 function( poly )
 
-  return Cdd_H_Rep( poly )!.inequalities;
+  return Set( Cdd_Canonicalize( Cdd_H_Rep( poly ) )!.inequalities );
 
 end );
 
@@ -304,7 +304,7 @@ InstallMethod( Cdd_Equalities,
               [ IsCddPolyhedron ],
 function( poly )
 
-  return Cdd_H_Rep( poly )!.equalities;
+  return Set(Cdd_Canonicalize( Cdd_H_Rep( poly ) )!.equalities );
 
 end );
 
@@ -314,7 +314,7 @@ InstallMethod( Cdd_GeneratingVertices,
               [ IsCddPolyhedron ],
 function( poly )
 
-  return Cdd_V_Rep( poly )!.generating_vertices;
+  return Set( Cdd_Canonicalize( Cdd_V_Rep( poly ) )!.generating_vertices );
       
 end );
 
@@ -322,10 +322,11 @@ InstallMethod( Cdd_GeneratingRays,
               " return the list of generating vertices",
               [ IsCddPolyhedron ],
 function( poly )
-
-  return Cdd_V_Rep( poly )!.generating_rays;
-      
+  
+  return Set( Cdd_Canonicalize( Cdd_V_Rep( poly ) )!.generating_rays );
+  
 end );
+
 ###
 InstallMethod( Cdd_AmbientSpaceDimension,
               "finding the dimension of the ambient space",
