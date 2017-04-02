@@ -22,4 +22,6 @@ AutoDoc(
             )
 );
 
+PrintTo( "VERSION", PackageInfo( "CddInterface" )[1].Version );
+
 QUIT;
