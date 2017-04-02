@@ -269,6 +269,10 @@ end );
 ##  Attributes and Properties
 ##
 ##################################
+
+# The dimension, dim(P ), of a polyhedron P is the maximum number of affinely
+# independent points in P minus 1.
+#
 InstallMethod( Cdd_Dimension,
               " returns the dimension of the polyhedron",
               [ IsCddPolyhedron ],
