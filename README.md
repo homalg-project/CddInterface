@@ -3,20 +3,30 @@ The GAP 4 package `CddInterface'
 
 # Install
 
+Make sure you can update "configure" scriptes by installing `autoconf`
+    
+    sudo apt-get install autoconf
+    
+or
+    
+    sudo apt-get install dh-autoreconf
+    
+
 ## Simple
 
 For a simplyfied installation, try the following two commands in the main CddInterface directory
 
     gap makedoc.g
-    install.sh <path-to-gaproot>
+    ./install.sh <path-to-gaproot>
 
 If that does not work, try the following
 
 ## Advanced
 
-Go inside the cddlib directory, and create an install directory
-
+Go inside the cddlib directory and create a directory `build` using the following commands:
+    
     cd cddlib
+    make clean
     mkdir build
 
 After that, compile cddlib via
