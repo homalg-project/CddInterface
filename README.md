@@ -16,7 +16,6 @@ or
 
 For a simplyfied installation, try the following two commands in the main CddInterface directory
 
-    gap makedoc.g
     ./install.sh <path-to-gaproot>
 
 If that does not work, try the following
@@ -40,13 +39,21 @@ After that, compile cddlib via
 Cdd should now be installed in the `build` directory. After that, go back to the CddInterface main folder
 and install CddInterface with the following commands
 
-    gap makedoc.g
     ./autogen.sh
     ./configure --with-gaproot=path/to/gaproot --with-cddlib=$(pwd)/cddlib/build
     make
 
 After that, you should be able to load CddInterface.
 
+## Documentation
+To create the documentation:
+    
+    gap makedoc.g
+
+To run the test files 
+
+    gap maketest.g
+    
 ## Update
 The package can be updated using the following commands
 
