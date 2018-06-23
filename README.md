@@ -46,3 +46,9 @@ and install CddInterface with the following commands
     make
 
 After that, you should be able to load CddInterface.
+
+## Update
+The package can be updated using the following commands
+
+    git pull
+    make
