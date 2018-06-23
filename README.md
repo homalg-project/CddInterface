@@ -1,6 +1,14 @@
 The GAP 4 package `CddInterface'
 ==============================
 
+# Why CddInterface
+
+Every convex polyhedron has two representations, one as the intersection of finite halfspaces and the other as Minkowski sum of the convex hull of 
+finite points and the nonnegative hull of finite directions. These are called H-representation and V-representation, respectively. 
+
+CddInterface is a gap interface with the C package [Cdd
+](https://www.inf.ethz.ch/personal/fukudak/cdd_home/) which was basicly written to translate between H,V- representations. See manual.pdf to see how it works.
+
 # Install
 
 Make sure you can update "configure" scriptes by installing `autoconf`
@@ -59,3 +67,7 @@ The package can be updated using the following commands
 
     git pull
     make
+
+Of course you are welcome to e-mail me if there are any questions, remarks, suggestions ;)
+
+Kamal Saleh e-mail: saleh@mathematik.uni-siegen.de
