@@ -200,3 +200,8 @@ doc/times.css
 doc/title.xml
 doc/toggless.css
 doc/toggless.js
+cddlib/doc/cddlibman.aux
+cddlib/doc/cddlibman.log
+cddlib/doc/cddlibman.pdf
+cddlib/*
+cddlib/doc/cddlibman.toc
