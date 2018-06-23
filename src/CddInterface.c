@@ -16,6 +16,7 @@
 *    Auxiliary functions to be used inside C 
 * 
 * ********************************************************/
+int str_len;
 
 char* A2String(int *n, int size)
 {
@@ -33,23 +34,26 @@ char* A2String(int *n, int size)
 
 void dd_SetLinearity(dd_MatrixPtr, char *);
 
+//    M =ddG_PolyInput2Matrix(2, 3, 1, 3, 3, " 2 1 3 " , " 1 1 1 0 1 1 0 2 2 ", 1, " 4 7 8 " );
+
 dd_MatrixPtr ddG_PolyInput2Matrix (int k_rep, int k_numtype,int k_linearity, dd_rowrange k_rowrange, 
-                         dd_colrange k_colrange,char k_linearity_array[dd_linelenmax],char k_matrix[dd_linelenmax],
-                         int str_len, int k_LPobject, char k_rowvec[dd_linelenmax])
+                         dd_colrange k_colrange,char k_linearity_array[dd_linelenmax],
+                         char k_matrix[str_len], int k_LPobject, char k_rowvec[dd_linelenmax])
 {
+   
 char numbtype[dd_linelenmax], k_value[dd_linelenmax], k_matrixx[str_len],k_linearity_arrayx[dd_linelenmax], k_rowvecx[dd_linelenmax];
 dd_MatrixPtr M=NULL;
- dd_rowrange m_input,i;
- dd_colrange d_input,j;
- dd_RepresentationType rep;
- dd_boolean found=dd_FALSE, newformat=dd_FALSE, successful=dd_FALSE, linearity=dd_FALSE;
- dd_NumberType NT;
- dd_LPObjectiveType ob;
- mytype rational_value;
- static mytype value;
- char * pch;
- div_t z;
- int u;
+dd_rowrange m_input,i;
+dd_colrange d_input,j;
+dd_RepresentationType rep;
+dd_boolean found=dd_FALSE, newformat=dd_FALSE, successful=dd_FALSE, linearity=dd_FALSE;
+dd_NumberType NT;
+dd_LPObjectiveType ob;
+mytype rational_value;
+static mytype value;
+char * pch;
+div_t z;
+int u;
  
  strcpy( k_matrixx, k_matrix);
  strcpy( k_linearity_arrayx, k_linearity_array );
@@ -57,7 +61,6 @@ dd_MatrixPtr M=NULL;
  
 // // creating the matrix with these two dimesnions
    M=dd_CreateMatrix(k_rowrange, k_colrange);
-   
  // controling if the given representation is H or V.
    if( k_rep == 2 ) {
        rep=dd_Generator; newformat=dd_TRUE;
@@ -68,7 +71,7 @@ dd_MatrixPtr M=NULL;
      {
        rep=dd_Unspecified; newformat=dd_TRUE;
      }
- 
+
    M->representation=rep;
 //   
 // controling the numbertype in the matrix
@@ -80,7 +83,7 @@ dd_MatrixPtr M=NULL;
    } else if (k_numtype==1) {
      strcpy(numbtype, "real");}
      else { strcpy(numbtype, "unspecified");}
- 
+
    NT=dd_GetNumberType(numbtype);
 //   
    M->numbtype=NT;
@@ -92,20 +95,25 @@ dd_MatrixPtr M=NULL;
    }
 //  
 // // filling the matrix with elements scanned from the string k_matrix
+  // ErrorMayQuit("before",0,0);
+
     u=0;
     pch = strtok (k_matrixx," ,.{}][");
+    
     while(pch != NULL) {
       
-           strcpy( k_value, pch);
-           dd_init( rational_value );
-           dd_sread_rational_value (k_value, rational_value);
-           dd_set(value,rational_value);
-           dd_clear(rational_value);
-           z= div(u, k_colrange );
-           dd_set(M->matrix[z.quot][z.rem],value);
-           u= u+1;
-           pch = strtok (NULL, " ,.{}][");
-       }
+          strcpy( k_value, pch);
+          dd_init( rational_value );
+          dd_sread_rational_value (k_value, rational_value);
+          dd_set(value,rational_value);
+          dd_clear(rational_value);
+          if (k_colrange == 0) { ErrorMayQuit("You are dividing by 0!",0,0); }
+          z= div(u, k_colrange );
+          dd_set(M->matrix[z.quot][z.rem],value);
+          u= u+1;
+          pch = strtok (NULL, " ,.{}][");
+       } 
+  
   successful=dd_TRUE;
   
   if (k_LPobject==0 ) { M->objective=dd_LPnone; } 
@@ -424,7 +432,7 @@ static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
   char k_linearity_array[dd_linelenmax],k_rowvec[dd_linelenmax];
   
   dd_set_global_constants();
-  
+   
    k_rep=       INT_INTOBJ( ELM_PLIST( input , 1 ) );
    k_numtype=   INT_INTOBJ( ELM_PLIST( input , 2 ) );
    k_linearity= INT_INTOBJ( ELM_PLIST( input , 3 ) );
@@ -432,20 +440,25 @@ static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
    k_colrange=  INT_INTOBJ( ELM_PLIST( input , 5 ) );
    k_LPobject=  INT_INTOBJ( ELM_PLIST( input , 8 ) );
    Obj string = ELM_PLIST( input , 7 );
-   int str_len = GET_LEN_STRING( string );
-   char k_matrix[ str_len ];
-   strcpy( k_linearity_array, PLIST_STR( ELM_PLIST( input , 6 ) ) );
-  if (k_numtype==3) 
+  if (k_colrange == 0) { ErrorMayQuit("XHX",0,0); }
+ 
+  str_len = GET_LEN_STRING( string );
+  char k_matrix[ str_len ];
+  strcpy( k_linearity_array, PLIST_STR( ELM_PLIST( input , 6 ) ) );
+   
+
+  if (k_numtype==3){
    strcpy( k_matrix,          PLIST_STR( ELM_PLIST( input , 7 ) ) );
+  }
   else 
   {
-//    ErrorMayQuit( "t",0,0 );
-   strcpy( k_matrix,          RATPLIST_STR( ELM_PLIST( input , 7 ) ) );
+  strcpy( k_matrix,          RATPLIST_STR( ELM_PLIST( input , 7 ) ) );
   }
 //     ErrorMayQuit( "hey kamalo", 0, 0 );
   strcpy( k_rowvec,          RATPLIST_STR( ELM_PLIST( input , 9 ) ) );
-//     ErrorMayQuit( "hey kamalo", 0, 0 );
-  return ddG_PolyInput2Matrix( k_rep , k_numtype, k_linearity, k_rowrange, k_colrange, k_linearity_array, k_matrix, str_len, k_LPobject, k_rowvec  );
+
+  return ddG_PolyInput2Matrix( k_rep , k_numtype, k_linearity, k_rowrange, 
+  k_colrange, k_linearity_array, k_matrix, k_LPobject, k_rowvec  );
 }
 
 
@@ -698,7 +711,7 @@ static Obj CddInterface_Compute_H_rep( Obj self, Obj main )
 //   dd_MatrixCanonicalize(&M, &impl_linset, &redset, &newpos, &err);
   
    poly=dd_DDMatrix2Poly(M, &err);
-   A= A=dd_CopyInequalities(poly);
+   A=dd_CopyInequalities(poly);
    dd_free_global_constants();
    return MatPtrToGapObj( A );
 }
@@ -711,7 +724,7 @@ static Obj CddInterface_Compute_V_rep( Obj self, Obj main )
    dd_set_global_constants();
    err=dd_NoError;
    M= GapInputToMatrixPtr( main );
-   
+  //ErrorMayQuit( "&",0,0 );
     // i added this in 5.Feb.2016
    dd_rowset impl_linset, redset;
   dd_rowindex newpos;
