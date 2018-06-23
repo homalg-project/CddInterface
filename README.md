@@ -25,6 +25,7 @@ If that does not work, try the following
 
 Go inside the cddlib directory and create a directory `build` using the following commands:
     
+    sudo su (if root permission is needed)
     cd cddlib
     make clean
     mkdir build
