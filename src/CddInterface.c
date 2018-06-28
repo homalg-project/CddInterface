@@ -687,11 +687,13 @@ static Obj CddInterface_Canonicalize( Obj self,Obj main )
   dd_set_global_constants();
 //    M =ddG_PolyInput2Matrix(2, 3, 1, 3, 3, " 2 1 3 " , " 1 1 1 0 1 1 0 2 2 ", 1, " 4 7 8 " );
 //    M= ddG_PolyInput2Matrix( 1,2,0,2,3, " ", " 0 1 1 0 -1 -1 ", 20, 0, " ");
+
   M= GapInputToMatrixPtr( main );
   dd_rowset impl_linset, redset;
   dd_rowindex newpos;
   dd_ErrorType err;
   dd_MatrixCanonicalize(&M, &impl_linset, &redset, &newpos, &err);
+  dd_free_global_constants();
   return MatPtrToGapObj( M );
 }
 
