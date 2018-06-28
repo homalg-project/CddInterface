@@ -319,9 +319,12 @@ else
      
 fi;
 
-matrix:= poly!.matrix ;
-    
+matrix := poly!.matrix;
 
+if poly!.rep_type= "V-rep" and IsZero( matrix ) then
+    matrix := DuplicateFreeList( matrix );
+    matrix[1][1] := 1;
+fi;
 
 Add(L, Length( matrix    )  );
 Add(L, Length( matrix[1] )  );
