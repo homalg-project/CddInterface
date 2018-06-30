@@ -337,7 +337,7 @@ Append( temp, lin );
 
 Add( L, ListToString( [ temp ] ) );
 
-Add( L, String( matrix ) );
+Add( L, ReplacedString( String( matrix ), ",", ""  ) );
 # Add( L, ConvertRatListToIntList( ConvertListOfVectorsToList( matrix ) ) );
 
 Append( L, [ 0, [] ] );
