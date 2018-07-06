@@ -26,6 +26,10 @@ For a simplyfied installation, try the following two commands in the main CddInt
 
     ./install.sh <path-to-gaproot>
 
+or
+
+    sudo ./install.sh <path-to-gaproot> (if root permission is needed)
+
 If that does not work, try the following
 
 ## Advanced
