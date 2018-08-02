@@ -72,6 +72,13 @@ The package can be updated using the following commands
     git pull
     make
 
+## Using the package via Binder
+If you want to experiment online with the package you can use `notebook.ipynb` vie the binder link below.
+
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/kamalsaleh/CddInterface/master)
+
+
+
 Of course you are welcome to e-mail me if there are any questions, remarks, suggestions ;)
 
 Kamal Saleh e-mail: saleh@mathematik.uni-siegen.de
