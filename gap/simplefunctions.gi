@@ -200,12 +200,17 @@ function( list )
 local numtype, matrix, temp, L, temp1, temp2, temp3, temp4, p, i;
 
 if not IsCompatiblePolyhedronList( list ) then return Error( "The given list is not compatible" ); fi;
+if Length( list[ 7 ] ) <> 0 then
 
-temp:= ConvertIntListToRatList( list[7] );
+    temp:= ConvertIntListToRatList( list[7] );
 
-matrix:= ConvertListToListOfVectors( temp, list[5] );
+    matrix:= ConvertListToListOfVectors( temp, list[5] );
 
-matrix:= CanonicalizeList( matrix, list[1] );
+    matrix:= CanonicalizeList( matrix, list[1] );
+else
+    matrix := [ ];
+fi;
+
 
  if list[1]=2 then 
 
