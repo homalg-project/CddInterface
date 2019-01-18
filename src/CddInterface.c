@@ -454,7 +454,7 @@ static dd_MatrixPtr GapInputToMatrixPtr( Obj input )
   {
   strcpy( k_matrix,          RATPLIST_STR( ELM_PLIST( input , 7 ) ) );
   }
-//     ErrorMayQuit( "hey kamalo", 0, 0 );
+  
   strcpy( k_rowvec,          RATPLIST_STR( ELM_PLIST( input , 9 ) ) );
 
   return ddG_PolyInput2Matrix( k_rep , k_numtype, k_linearity, k_rowrange, 
@@ -654,8 +654,17 @@ static Obj CddInterface_DimAndInteriorPoint( Obj self, Obj main )
   size_t i1, size1;
   int i, size;
   
+  dd_PolyhedraPtr poly;
+  dd_ErrorType err;
+  dd_set_global_constants();
+  err=dd_NoError;
+  
   M= GapInputToMatrixPtr( main );
-//   dd_WriteMatrix( stdout, M );
+  //dd_WriteMatrix( stdout, M );
+  poly=dd_DDMatrix2Poly(M, &err);
+  M=dd_CopyInequalities(poly);
+  //dd_WriteMatrix( stdout, M );
+
   interior_point= ddG_InteriorPoint( M );
   size= ddG_ColSize( M );
   size1=size;
@@ -702,9 +711,9 @@ static Obj CddInterface_Compute_H_rep( Obj self, Obj main )
   static dd_MatrixPtr M, A;
   dd_PolyhedraPtr poly;
   dd_ErrorType err;
-   dd_set_global_constants();
-   err=dd_NoError;
-   M= GapInputToMatrixPtr( main );
+  dd_set_global_constants();
+  err=dd_NoError;
+  M= GapInputToMatrixPtr( main );
    
    // i added this in 5.Feb.2016
    dd_rowset impl_linset, redset;
@@ -811,7 +820,6 @@ static StructGVarFunc GVarFuncs [] = {
   
 //     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", TestCommandWithParams, 2, "param, param2"),
 //     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", TestCommand_max, 2, "param1, param2"),
-//     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", testkamalove, 0, ""),
 //     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_it_and_give_it_back, 1, "list"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Canonicalize, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_Compute_H_rep, 1, "main"),

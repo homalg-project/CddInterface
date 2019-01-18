@@ -288,7 +288,7 @@ function( poly )
 #        
 #    fi;
 
-       return CddInterface_DimAndInteriorPoint( PolyToList( Cdd_H_Rep( poly ) ) )[ 1 ];
+       return CddInterface_DimAndInteriorPoint( PolyToList( poly ) )[ 1 ];
 
     fi;
     
@@ -669,9 +669,9 @@ function( poly )
 
 local dim_and_interior;
 
-dim_and_interior:= CddInterface_DimAndInteriorPoint( PolyToList( Cdd_H_Rep( poly ) ) );
+dim_and_interior:= CddInterface_DimAndInteriorPoint( PolyToList( poly ) );
 
-if dim_and_interior[ 1 ]= -1 then 
+if dim_and_interior[ 1 ] = -1 then 
 
       return fail ;
 
