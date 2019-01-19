@@ -1,3 +1,13 @@
+#############################################################################
+##
+##  polyhedra.gi         CddInterface package                Kamal Saleh
+##
+##  Copyright 2019 Mathematics Faculty, Siegen University, Germany
+##
+##  Fans for NConvex package.
+##
+#############################################################################
+
 #
 # Gap Interface to Cdd package.
 #
