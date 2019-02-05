@@ -187,11 +187,19 @@ DeclareAttribute( "Cdd_InteriorPoint",  IsCddPolyhedron  );
 #! @Arguments P
 #! @Returns a list
 #! @Description
-#! This function takes a H-represented polyhedron **poly** and returns a list. Every entry in this 
+#! This function takes a H-represented polyhedron **P** and returns a list. Every entry in this 
 #! list is a again a list, contains the dimension and linearity of the face defined as a polyhedron over the 
 #! same system of inequalities.
 DeclareAttribute( "Cdd_Faces",  IsCddPolyhedron  );
 
+#! @Arguments P, d
+#! @Returns a list
+#! @Description
+#! This function takes a H-represented polyhedron **P** and a positive integer **d**. 
+#! The output is a list. Every entry in this 
+#! list is the linearity of an **d**- dimensional face of **P** defined as a polyhedron over the 
+#! same system of inequalities.
+KeyDependentOperation( "Cdd_FacesWithFixedDimension", IsCddPolyhedron, IsInt, ReturnTrue );
 
 #! @Arguments P
 #! @Returns a list
@@ -201,11 +209,21 @@ DeclareAttribute( "Cdd_Faces",  IsCddPolyhedron  );
 #! same system of inequalities and an interior point in the face.
 DeclareAttribute( "Cdd_FacesWithInteriorPoints",  IsCddPolyhedron  );
 
+#! @Arguments P, d
+#! @Returns a list
+#! @Description
+#! This function takes a H-represented polyhedron **P** and a positive integer **d**.
+#! The output is a list. Every entry in this 
+#! list is a again a list, contains the linearity of the face defined as a polyhedron over the 
+#! same system of inequalities and an interior point in this face.
+KeyDependentOperation( "Cdd_FacesWithFixedDimensionAndInteriorPoints", IsCddPolyhedron, IsInt, ReturnTrue );
+
+
 #! @Arguments P
 #! @Returns a list
 #! @Description
 #! This function takes a H-represented polyhedron **P** and returns a list. Every entry in this 
-#! list is a again a list, contains the dimension, linearity of the facet defined as a polyhedron over the 
+#! is the linearity of a facet defined as a polyhedron over the 
 #! same system of inequalities.
 DeclareAttribute( "Cdd_Facets",  IsCddPolyhedron  );
 
@@ -213,7 +231,7 @@ DeclareAttribute( "Cdd_Facets",  IsCddPolyhedron  );
 #! @Returns a list
 #! @Description
 #! This function takes a H-represented polyhedron **P** and returns a list. Every entry in this 
-#! list is the linearity of a line defined as a polyhedron over the 
+#! is the linearity of a ray ($1$-dimensional face) defined as a polyhedron over the
 #! same system of inequalities.
 DeclareAttribute( "Cdd_Lines",  IsCddPolyhedron  );
 

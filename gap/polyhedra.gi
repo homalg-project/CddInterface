@@ -460,15 +460,9 @@ return CddInterface_LpSolution( temp );
 
 end );
 
+## This implementations is old and slow
+BindGlobal( "Cdd_Faces_2",
 
-
-
-
-
-###
-InstallMethod( Cdd_Faces,
-             [ IsCddPolyhedron],
-             
 function( poly )
 local temp, comb, lin, result, current, i, face;
 
@@ -503,9 +497,55 @@ return result;
 end );
 
 ###
-InstallMethod( Cdd_Facets,
-             [ IsCddPolyhedron ],
-             
+InstallMethod( Cdd_FacesWithFixedDimensionOp,
+             [ IsCddPolyhedron, IsInt ],
+   function( poly, d )
+     local M, L;
+
+     if poly!.rep_type = "V-rep" then
+         
+         Error( "The input should be in H-rep " );
+
+     fi;
+
+     M := PolyToList( poly );
+
+     L := CddInterface_FacesWithDimensionAndInteriorPoints( M, d );
+
+     L := CanonicalizeListOfFacesAndInteriorPoints( L );
+
+     L := Filtered( L,  l -> l[ 1 ] = d );
+
+     return List( L, l -> l[ 2 ] );
+
+
+end );
+
+###
+InstallMethod( Cdd_Faces,
+             [ IsCddPolyhedron],
+   function( poly )
+     local M, L;
+
+     if poly!.rep_type = "V-rep" then
+         
+         Error( "The input should be in H-rep " );
+
+     fi;
+
+     M := PolyToList( poly );
+
+     L := CddInterface_FacesWithDimensionAndInteriorPoints( M, 0 );
+
+     L := CanonicalizeListOfFacesAndInteriorPoints( L );
+
+     return List( L, l -> l{ [ 1, 2 ] } );
+
+end );
+
+## This is old and slow
+BindGlobal( "Cdd_Facets_2",
+
 function( poly )
 local temp, L, i;
 
@@ -533,33 +573,24 @@ return L;
 
 end );
 
+###
+InstallMethod( Cdd_Facets,
+             [ IsCddPolyhedron ],
+   function( poly )
+     local d;
+     
+     d := Cdd_Dimension( poly );
+
+     return Cdd_FacesWithFixedDimension( poly, d - 1 );
+
+end );
+
 InstallMethod( Cdd_Lines,
              [ IsCddPolyhedron ],
              
 function( poly )
-local temp, L, i;
-
-if poly!.rep_type = "V-rep" then 
-
-    Error( "The input should be in H-rep " );
-    
-fi;
-
-temp:= Cdd_Faces( poly );
-
-L:= [ ];
-
-for i in temp do
-
-  if i[1]= 1 then 
   
-     Add( L, i[2] );
-     
-  fi;
-  
-od;
-  
-return L;  
+  return Cdd_FacesWithFixedDimension( poly, 1 );
 
 end );
 
@@ -568,74 +599,56 @@ InstallMethod( Cdd_Vertices,
              [ IsCddPolyhedron ],
              
 function( poly )
-local temp, L, i;
 
-if poly!.rep_type = "V-rep" then 
-
-    Error( "The input should be in H-rep " );
-    
-fi;
-
-temp:= Cdd_Faces( poly );
-
-L:= [ ];
-
-for i in temp do
-
-  if i[1]= 0 then 
-  
-     Add( L, i[2] );
-     
-  fi;
-  
-od;
-  
-return L;  
+  return Cdd_FacesWithFixedDimension( poly, 0 );
 
 end );
+
 ###
 InstallMethod( Cdd_FacesWithInteriorPoints,
-             [ IsCddPolyhedron],
+             [ IsCddPolyhedron ],
              
-function( poly )
-local dim,temp, comb, lin, result, current, i, face, di;
+     function( poly )
+     local M, L;
 
-if poly!.rep_type = "V-rep" then 
+     if poly!.rep_type = "V-rep" then
+         
+         Error( "The input should be in H-rep " );
 
-    Error( "The input should be in H-rep " );
-    
-fi;
+     fi;
 
-temp := List( [1..Length(poly!.matrix) ], i-> i);
+     M := PolyToList( poly );
 
-lin:= StructuralCopy( poly!.linearity );
+     L := CddInterface_FacesWithDimensionAndInteriorPoints( M, 0 );
 
-SubtractSet(temp, lin );
-
-result:= [];
-
-comb := Combinations( temp );
-
-for i in comb do
-
-current:= Cdd_ExtendLinearity( poly, i );
-
-di:= CddInterface_DimAndInteriorPoint( PolyToList( current ) ) ;
-
-dim:= di[1];
-
-Remove(di, 1);
-
-face := [dim, current!.linearity, ShallowCopy( di ) ];
-
-if not face[1]=-1 then Add( result, face );fi;
-
-od;
-
-return result;
+     return CanonicalizeListOfFacesAndInteriorPoints( L );
 
 end );
 
+###
+InstallMethod( Cdd_FacesWithFixedDimensionAndInteriorPointsOp,
+             [ IsCddPolyhedron, IsInt ],
+             
+     function( poly, d )
+     local M, L;
+
+     if poly!.rep_type = "V-rep" then
+         
+         Error( "The input should be in H-rep " );
+
+     fi;
+
+     M := PolyToList( poly );
+
+     L := CddInterface_FacesWithDimensionAndInteriorPoints( M, 0 );
+
+     L := CanonicalizeListOfFacesAndInteriorPoints( L );
+
+     L := Filtered( L, l -> l[ 1 ] = d );
+
+     return List( L, l -> l{ [ 2, 3 ] } );
+
+end );
 
 ####
 InstallMethod( Cdd_ExtendLinearity, 
