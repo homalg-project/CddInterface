@@ -23,7 +23,7 @@ Cdd_IsEmpty( poly );
 #! false
 Cdd_Faces( poly );
 #! [ [ 3, [ 1 ] ], [ 2, [ 1, 2 ] ], [ 1, [ 1, 2, 3 ] ], [ 2, [ 1, 3  ] ] ]
-poly1:= Cdd_ExtendLinearity( poly, [1,2,3] );
+poly1 := Cdd_ExtendLinearity( poly, [ 1, 2, 3 ] );
 #! <Polyhedron given by its H-representation>
 Display( poly1 );
 #! H-representation 
@@ -38,7 +38,7 @@ Display( poly1 );
 Cdd_Dimension( poly1 );
 #! 1
 Cdd_Facets( poly );
-#! [ [ 2, [ 1, 2 ] ], [ 2, [ 1, 3 ] ] ]
+#! [ [ 1, 2 ], [ 1, 3 ] ]
 Cdd_GeneratingVertices( poly );
 #! [ [ -209/75, 56/25, -8/25, 0 ] ]
 Cdd_GeneratingRays( poly );
