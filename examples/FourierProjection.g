@@ -1,7 +1,7 @@
 LoadPackage( "CddInterface" );
 
 #! @Chunk Fourier
-#! To illustrate this projection, Let  $P= Conv( (1,2), (4,5) )$ in $\mathbb{Q}^2$.
+#! To illustrate this projection, Let  $P= \mathrm{conv}( (1,2), (4,5) )$ in $\mathbb{Q}^2$.
 #! $\newline$
 #! To find its projection on the subspace $(O, x_1)$, we apply the Fourier elemination to get rid of $x_2$ 
 #! @Example
@@ -43,7 +43,7 @@ Display( Cdd_V_Rep( P_x1 ) );
 #! @EndExample
 #! Let again $Q= Conv( (2,3,4), (2,4,5) )+ nonneg( (1,1,1) )$, and let us compute its projection on $(O,x_2,x_3)$
 #! @Example
-Q := Cdd_PolyhedronByGenerators( [ [1,2,3,4],[1,2,4,5], [0,1,1,1] ] );
+Q := Cdd_PolyhedronByGenerators( [ [ 1, 2, 3, 4 ],[ 1, 2, 4, 5 ], [ 0, 1, 1, 1 ] ] );
 #! <Polyhedron given by its V-representation>
 R := Cdd_H_Rep( Q );
 #! <Polyhedron given by its H-representation>

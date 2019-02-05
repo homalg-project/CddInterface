@@ -71,7 +71,7 @@ Display( B );
 
 #! @Chunk Example4
 #! @Example
-A:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 1 ], [0, 5, 5 ] ] );                          
+A:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 1 ], [ 0, 5, 5 ] ] );                          
 #! <Polyhedron given by its H-representation>
 B:= Cdd_V_Rep( A );                                    
 #! <Polyhedron given by its V-representation>
