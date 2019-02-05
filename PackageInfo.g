@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "CddInterface",
 Subtitle := "Gap interface to Cdd package",
-Version := "2019.01.14",
-Date := "2019.01.15", # yyyy.mm.dd format
+Version := "2019.02.01",
+Date := "2019.02.02", # yyyy.mm.dd format
 
 Persons := [
   rec(
@@ -69,7 +69,7 @@ AvailabilityTest := function()
 
 TestFile := "tst/testall.g",
 
-#Keywords := [ "TODO" ],
+Keywords := [ "cddlib", "Polyhedra", "Convex Geometry", "NConvex" ],
 
 ));
 
