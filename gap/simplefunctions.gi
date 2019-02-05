@@ -555,12 +555,8 @@ return Cdd_PolyhedronByInequalities(  temp  );
 
 end );
 
-
-
-
-
-
-InstallGlobalFunction( "ListToString",
+##
+InstallGlobalFunction( ListToString,
                        [ IsList ],
   function( l )
   local i,j,s;
@@ -571,4 +567,19 @@ InstallGlobalFunction( "ListToString",
   od;
   od;
   return s;
+end );
+
+##
+InstallGlobalFunction( CanonicalizeListOfFacesAndInteriorPoints,
+    function( L )
+    local new_L;
+    
+    if IsInt( L ) then 
+        return [];
+    elif IsList( L ) and Length( L ) = 3 and IsInt(L[1]) then
+        new_L := List( L, l -> ShallowCopy( l) );
+        return [ new_L ];
+    else 
+        return Concatenation( List( L, l -> CanonicalizeListOfFacesAndInteriorPoints( l ) ) );
+    fi;
 end );
