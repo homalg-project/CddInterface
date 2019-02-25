@@ -72,6 +72,12 @@ The package can be updated using the following commands
     git pull
     make
 
+## Using the package via Docker
+With docker app you can run an image of the newest version of gap && CddInterface via
+the command
+
+    docker run -it kamalsaleh/gap_packages
+
 ## Using the package via Binder
 If you want to experiment online with the package you can use `notebook.ipynb` vie the binder link below.
 
