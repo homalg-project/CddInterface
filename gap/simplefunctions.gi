@@ -1,29 +1,40 @@
 InstallGlobalFunction( NumberOfDigitsOfTheNumber,
      function(a)
-return Length( String( a ) );
+       
+       return Length( String( a ) );
+
 end);
 
 # this functions prints a matrix in good form
 InstallMethod( PTM,
-               [ IsMatrix ],
-               
+            [ IsMatrix ],
+
   function( matrix )
     local i,j,m,t,n;
 
-     m:=1;n:=1;
-     
-    for i in [1..Length(matrix)] do
+    m := 1;
     
-        if n<NumberOfDigitsOfTheNumber( matrix[i][1] ) then n:= NumberOfDigitsOfTheNumber( matrix[i][1] );fi;
+    n := 1;
+     
+    for i in [ 1 .. Length( matrix ) ] do
+      
+      if n < NumberOfDigitsOfTheNumber( matrix[i][1] ) then
+        
+        n:= NumberOfDigitsOfTheNumber( matrix[i][1] );
+      
+      fi;
        
     od;
      
-     
-    for  i in [1..Length(matrix)] do
+    for i in [ 1 .. Length( matrix ) ] do
     
-       for  j in [1..Length(matrix[1])] do
-    
-           if m<NumberOfDigitsOfTheNumber(matrix[i][j]) then m:=NumberOfDigitsOfTheNumber(matrix[i][j]);fi;
+       for  j in [ 1 .. Length( matrix[ 1 ] ) ] do
+         
+         if m < NumberOfDigitsOfTheNumber( matrix[ i ][ j ] ) then
+           
+           m := NumberOfDigitsOfTheNumber( matrix[ i ][ j ] );
+           
+         fi;
       
        od;
       
@@ -31,46 +42,48 @@ InstallMethod( PTM,
 
     Print("   ");
 
-    for i in [1..Length(matrix[1])*(m+2)-2] do
+    for i in [ 1 .. Length( matrix[ 1 ] ) * ( m + 2 ) - 2 ] do
 
-         Print(" ");
+      Print(" ");
          
     od;
     
-    Print("  ","\n");
+    Print( "  ", "\n" );
  
-    for i in [1..Length(matrix)] do
-        
-        Print("   ");
+    for i in [ 1 .. Length( matrix ) ] do
       
-        for j in [1..Length(matrix[1])] do
-             
-             
-              
-                  if j=1 then 
-                           
-                           for t in [1..n-NumberOfDigitsOfTheNumber(matrix[i][j])] do
-              
-                                Print(" ");
-                    
-                           od;
-                  else 
-                           for t in [1..m+2-NumberOfDigitsOfTheNumber(matrix[i][j])] do
-              
-                           Print(" ");
-                    
-                           od;
-                  fi;
-         
-                  Print(matrix[i][j]); 
-             
-         od;
-       
-        Print(" ","\n");
+      Print( "   " );
+      
+      for j in [ 1 .. Length( matrix[ 1 ] ) ] do
         
-     od;
+        if j=1 then 
+                           
+          for t in [ 1 .. n - NumberOfDigitsOfTheNumber( matrix[ i ][ j ] ) ] do
 
-  end );
+            Print( " " );
+
+          od;
+
+        else 
+          
+          for t in [ 1 .. m + 2 - NumberOfDigitsOfTheNumber( matrix[ i ][ j ] ) ] do
+              
+            Print(" ");
+                    
+          od;
+        
+        fi;
+         
+        Print( matrix[ i ][ j ] );
+            
+      od;
+       
+      Print(" ","\n");
+        
+    od;
+
+end );
+
 # this function returns if a list is compatible to define a polyhedron
 # [ 2 , 2        , 1            , 3      , 3     , [ 1, 3 ] , [-2/5, 1/7, 1/11, 0, 1, 1, 0, 2, 2] ]
 # [rep,numbertype,existlinearity, rowsize,closize, linearity, matrix                              ]
