@@ -10,4 +10,4 @@ fi;
 Unbind(_PATH_SO);
 
 ReadPackage( "CddInterface", "gap/polyhedra.gd");
-ReadPackage( "CddInterface", "gap/simplefunctions.gd");
+ReadPackage( "CddInterface", "gap/tools.gd");
