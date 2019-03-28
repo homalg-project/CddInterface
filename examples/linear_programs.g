@@ -14,22 +14,22 @@ LoadPackage( "CddInterface" );
 #! $170 -y \geq 0 \newline$
 #! $-200 +x+y \geq 0 \newline$
 #! @Example
-A:= Cdd_PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ], 
+A:= Cdd_PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ],
 [ -80, 0, 1 ], [ 170, 0, -1 ], [ -200, 1, 1 ] ] );
 #! <Polyhedron given by its H-representation>
 lp1:= Cdd_LinearProgram( A, "max", [1, -2, 5 ] );
 #! <Linear program>
 Display( lp1 );
-#! Linear program given by: 
-#! H-representation 
-#! begin 
+#! Linear program given by:
+#! H-representation
+#! begin
 #!    5 X 3  rational
-#!                     
-#!    -100     1     0 
-#!     200    -1     0 
-#!     -80     0     1 
-#!     170     0    -1 
-#!    -200     1     1 
+#!
+#!    -100     1     0
+#!     200    -1     0
+#!     -80     0     1
+#!     170     0    -1
+#!    -200     1     1
 #! end
 #! max  [ 1, -2, 5 ]
 Cdd_SolveLinearProgram( lp1 );
@@ -37,16 +37,16 @@ Cdd_SolveLinearProgram( lp1 );
 lp2:= Cdd_LinearProgram( A, "min", [ 1, -2, 5 ] );
 #! <Linear program>
 Display( lp2 );
-#! Linear program given by: 
-#! H-representation 
-#! begin 
+#! Linear program given by:
+#! H-representation
+#! begin
 #!    5 X 3  rational
-#!                      
-#!    -100     1     0 
-#!     200    -1     0 
-#!     -80     0     1 
-#!     170     0    -1 
-#!    -200     1     1 
+#!
+#!    -100     1     0
+#!     200    -1     0
+#!     -80     0     1
+#!     170     0    -1
+#!    -200     1     1
 #! end
 #! min  [ 1, -2, 5 ]
 Cdd_SolveLinearProgram( lp2 );
@@ -54,15 +54,15 @@ Cdd_SolveLinearProgram( lp2 );
 B:= Cdd_V_Rep( A );
 #! <Polyhedron given by its V-representation>
 Display( B );
-#! V-representation 
-#! begin 
+#! V-representation
+#! begin
 #!    5 X 3  rational
-#!                   
-#!    1  100  170 
-#!    1  100  100 
-#!    1  120   80 
-#!    1  200   80 
-#!    1  200  170 
+#!
+#!    1  100  170
+#!    1  100  100
+#!    1  120   80
+#!    1  200   80
+#!    1  200  170
 #! end
 #! @EndExample
 #! So the optimal solution for $\texttt{lp1}$ is $(x=100,y=170)$ with optimal value $p=1-2(100)+5(170)=651$ and for $\texttt{lp2}$ is
