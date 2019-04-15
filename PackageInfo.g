@@ -27,11 +27,16 @@ Persons := [
   ),
 ],
 
-PackageWWWHome := "https://github.com/kamalsaleh/CddInterface/",
+PackageWWWHome := "https://kamalsaleh.github.io/CddInterface",
 
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "CddInterface-", ~.Version ),
-README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/kamalsaleh/CddInterface" ),
+
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL     := Concatenation( ~.SourceRepository.URL, "/archive/", ~.Version ),
+README_URL     := Concatenation( ~.SourceRepository.URL, "/releases/latest/download/README.md" ),
+PackageInfoURL := Concatenation( ~.SourceRepository.URL, "/releases/latest/download/PackageInfo.g" ),
 
 ArchiveFormats := ".tar.gz",
 
