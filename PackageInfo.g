@@ -31,7 +31,7 @@ PackageWWWHome := "https://kamalsaleh.github.io/CddInterface",
 
 SourceRepository := rec(
     Type := "git",
-    URL := "https://github.com/kamalsaleh/CddInterface" ),
+    URL := "https://github.com/homalg-project/CddInterface" ),
 
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 ArchiveURL     := Concatenation( ~.SourceRepository.URL, "/archive/", ~.Version ),
