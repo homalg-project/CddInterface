@@ -6,7 +6,7 @@ The GAP 4 package `CddInterface'
 Every convex polyhedron P has two representations, one as the intersection of finite halfspaces and the other as Minkowski sum of the convex hull of 
 finite points and the nonnegative hull of finite directions. These are called H-representation and V-representation, respectively. 
 
-CddInterface is a gap interface with the C package [Cddlib
+[CddInterface](https://kamalsaleh.github.io/CddInterface/) is a gap interface with the C package [Cddlib
 ](https://www.inf.ethz.ch/personal/fukudak/cdd_home/) which among other things can translate between H,V- representations of a polyhedron P and solve linear programming problems over P, i.e. a problem of maximizing and minimizing a linear function over P. A list of all available operations can be found in the manual.pdf.
 
 # Install
