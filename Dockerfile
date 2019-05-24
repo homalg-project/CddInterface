@@ -13,4 +13,4 @@ RUN cd /home/gap/inst/gap-master/pkg \
     && git clone https://github.com/kamalsaleh/NConvex
 
 USER gap
-WORKDIR $HOME/inst
+WORKDIR $HOME/inst/gap-master/pkg/CddInterface
