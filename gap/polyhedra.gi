@@ -21,8 +21,8 @@
 #############################
 
 Print( "Interface to cddlib: Implementation of the double description method of Motzkin et al.\n");
-Print( "             Copyright (C) 1996, Komei Fukuda, fukuda@ifor.math.ethz.ch\n" );
-Print( "             http://www.ifor.math.ethz.ch/~fukuda/cdd_home/cdd.html\n" );
+Print( "   Copyright (C) 1996, Komei Fukuda, fukuda@ifor.math.ethz.ch\n" );
+Print( "   http://www.ifor.math.ethz.ch/~fukuda/cdd_home/cdd.html\n" );
 
 #############################
 ##
