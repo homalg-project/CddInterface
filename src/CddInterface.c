@@ -208,26 +208,25 @@ dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_
   }
   //
   // // filling the matrix with elements scanned from the string k_matrix
-  u = 0;
+  //
+  
   pch = strtok(k_matrixx, " ,.{}][");
+  int uu,vv;
+  
+  for (uu = 0; uu < k_rowrange; uu++){
+  for (vv = 0; vv < k_colrange; vv++){
+  	//fprintf(stdout, "uu:%d: ", uu );
+  	//fprintf(stdout, "vv:%d: ", vv );
 
-  while (pch != NULL)
-  {
-
-    strcpy(k_value, pch);
-    dd_init(rational_value);
-    dd_sread_rational_value(k_value, rational_value);
-    dd_set(value, rational_value);
-    dd_clear(rational_value);
-    if (k_colrange == 0)
-    {
-      ErrorMayQuit("You are dividing by 0!", 0, 0);
-    }
-    z = div(u, k_colrange);
-    dd_set(M->matrix[z.quot][z.rem], value);
-    u = u + 1;
-    pch = strtok(NULL, " ,.{}][");
+    	strcpy(k_value, pch);
+    	dd_init(rational_value);
+    	dd_sread_rational_value(k_value, rational_value);
+    	dd_set(value, rational_value);
+    	dd_set(M->matrix[uu][vv], value);
+    	dd_clear(rational_value);
+    	pch = strtok(NULL, " ,.{}][");
   }
+  } 
 
   successful = dd_TRUE;
 
