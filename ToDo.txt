@@ -1,0 +1,2 @@
+1- Update the package to get the last version of Cddlib https://github.com/cddlib/cddlib
+2- Support inputs with real entries?
