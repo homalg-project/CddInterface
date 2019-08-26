@@ -12,18 +12,11 @@ fi;
 
 AutoDoc( 
         rec(
-            scaffold := rec( entities := [ "GAP4", "homalg", "CAP" ],
-                             ),
-            
+            maketest := rec( commands := [ "LoadPackage(\"CddInterface\");" ] ),
+            scaffold := rec( entities := [ "GAP4", "homalg" ] ),
             autodoc := rec( files := [ "doc/intro.autodoc" ] ),
-
-            maketest := rec( folder := ".",
-                             commands :=
-                             [ "LoadPackage( \"CddInterface\" );",
-                             ],
-                           ),
-            )
-);
-
+            extract_examples := rec( units := "Single" )
+            ) 
+        );
 
 QUIT;
