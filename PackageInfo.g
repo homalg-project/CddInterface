@@ -23,9 +23,14 @@ Persons := [
     LastName := "Saleh",
     WWWHome := "https://github.com/kamalsaleh",
     Email := "kamal.saleh@uni-siegen.de",
-    PostalAddress := "Walterfelx 3 ",
+    PostalAddress := Concatenation(
+                       "Department Mathematik\n",
+                       "Universität Siegen\n",
+                       "Walter-Flex-Straße 3\n",
+                       "57072 Siegen\n",
+                       "Germany" ),
     Place := "Siegen",
-    Institution := "Mathematik Fakultät",
+    Institution := "Universität Siegen",
   ),
 ],
 
