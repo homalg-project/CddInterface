@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e # abort upon error
+
 if [ "$#" -ge 1 ]; then
     gap_path=$1
     shift
