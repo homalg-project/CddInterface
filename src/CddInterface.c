@@ -16,11 +16,6 @@
 *    Auxiliary functions to be used inside C 
 * 
 * ********************************************************/
-static long int result[dd_linelenmax];
-
-static void reset_global_variables(){
-  memset(result, 0, 1 );
-}
 
 extern void dd_SetLinearity(dd_MatrixPtr, char *);
 
@@ -244,17 +239,13 @@ static Obj ddG_LinearityPtr(dd_MatrixPtr M)
 
 
 
-static long int *ddG_InteriorPoint(dd_MatrixPtr M)
+static Obj ddG_InteriorPoint(dd_MatrixPtr M)
 {
   dd_rowset R, S;
   dd_rowset LL, ImL, RR, SS, Lbasis;
   dd_LPSolutionPtr lps = NULL;
   dd_ErrorType err;
-  long int j, z1, z2, dim;
-  mpz_t u, v;
-
-  mpz_init(u);
-  mpz_init(v);
+  long int j, dim;
 
   set_initialize(&R, M->rowsize);
   set_initialize(&S, M->rowsize);
@@ -265,23 +256,20 @@ static long int *ddG_InteriorPoint(dd_MatrixPtr M)
   set_copy(RR, R);         /* copy of R. */
   set_copy(SS, S);         /* copy of S. */
 
+  Obj result;
+
   if (dd_ExistsRestrictedFace(M, R, S, &err))
   {
     set_uni(M->linset, M->linset, R);
     dd_FindRelativeInterior(M, &ImL, &Lbasis, &lps, &err);
     dim = M->colsize - set_card(Lbasis) - 1;
     set_uni(M->linset, M->linset, ImL);
-    result[0] = dim;
+
+    result = NEW_PLIST(T_PLIST_EMPTY, lps->d);
+    ASS_LIST(result, 1, INTOBJ_INT(dim));
     for (j = 1; j < (lps->d) - 1; j++)
     {
-
-      mpq_get_num(u, lps->sol[j]);
-      mpq_get_den(v, lps->sol[j]);
-      z1 = mpz_get_si(u);
-      z2 = mpz_get_si(v);
-
-      result[2 * (j - 1) + 1] = z1;
-      result[2 * (j - 1) + 2] = z2;
+      ASS_LIST(result, j + 1, MPQ_TO_GAPOBJ(lps->sol[j]));
     }
 
     dd_FreeLPSolution(lps);
@@ -290,14 +278,8 @@ static long int *ddG_InteriorPoint(dd_MatrixPtr M)
   }
   else
   {
-
-    result[0] = -1;
-
-    for (j = 1; j < 2 * ddG_ColSize(M) + 1; j++)
-    {
-
-      result[j] = 0;
-    }
+    result = NEW_PLIST(T_PLIST_EMPTY, 1);
+    ASS_LIST(result, 1, INTOBJ_INT(-1));
   }
 
   set_copy(M->linset, LL); /* restore the linset */
@@ -390,7 +372,6 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
 
   // reset the global variable, before defining it again to be used in the current session.
   dd_set_global_constants();
-  reset_global_variables( );
 
   k_rep = INT_INTOBJ(ELM_PLIST(input, 1));
   k_numtype = INT_INTOBJ(ELM_PLIST(input, 2));
@@ -593,9 +574,6 @@ static Obj CddInterface_DimAndInteriorPoint(Obj self, Obj main)
   dd_MatrixPtr M;
   Obj result;
 
-  long int *interior_point;
-  int i, size;
-
   dd_PolyhedraPtr poly;
   dd_ErrorType err;
   err = dd_NoError;
@@ -607,17 +585,7 @@ static Obj CddInterface_DimAndInteriorPoint(Obj self, Obj main)
   M = dd_CopyInequalities(poly);
   //dd_WriteMatrix( stdout, M );
 
-  interior_point = ddG_InteriorPoint(M);
-  size = ddG_ColSize(M);
-
-  result = NEW_PLIST((size > 0) ? T_PLIST_CYC : T_PLIST, size);
-
-  ASS_LIST(result, 1, INTOBJ_INT(*(interior_point)));
-
-  for (i = 1; i < size; i++)
-  {
-    ASS_LIST(result, i + 1, QUO(INTOBJ_INT(*(interior_point + 2 * i - 1)), INTOBJ_INT(*(interior_point + 2 * i))));
-  }
+  result = ddG_InteriorPoint(M);
 
   dd_free_global_constants();
 
