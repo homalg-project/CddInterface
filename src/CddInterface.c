@@ -107,31 +107,31 @@ Obj CINTLISTPtr_TOGAPPLIST(int *list, int n1)
   return M;
 }
 
-static int *GAPPLIST_TOINTPtr(Obj list)
-{
-  int i, len;
-  Obj current_obj;
-  if (!IS_PLIST(list))
-  {
-    ErrorMayQuit("not a plain list", 0, 0);
-    return NULL;
-  }
-
-  len = LEN_PLIST(list);
-
-  for (i = 0; i < len; i++)
-  {
-    current_obj = ELM_PLIST(list, i + 1);
-    if (!IS_INTOBJ(current_obj))
-    {
-      ErrorMayQuit("not integer entries", 0, 0);
-      return NULL;
-    }
-    array[i] = INT_INTOBJ(current_obj);
-  }
-
-  return array;
-}
+// static int *GAPPLIST_TOINTPtr(Obj list)
+// {
+//   int i, len;
+//   Obj current_obj;
+//   if (!IS_PLIST(list))
+//   {
+//     ErrorMayQuit("not a plain list", 0, 0);
+//     return NULL;
+//   }
+// 
+//   len = LEN_PLIST(list);
+// 
+//   for (i = 0; i < len; i++)
+//   {
+//     current_obj = ELM_PLIST(list, i + 1);
+//     if (!IS_INTOBJ(current_obj))
+//     {
+//       ErrorMayQuit("not integer entries", 0, 0);
+//       return NULL;
+//     }
+//     array[i] = INT_INTOBJ(current_obj);
+//   }
+// 
+//   return array;
+// }
 
 //
 dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_rowrange k_rowrange,
@@ -144,7 +144,6 @@ dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_
   int u;
   dd_MatrixPtr M = NULL;
   dd_RepresentationType rep;
-  dd_boolean newformat = dd_FALSE, successful = dd_FALSE, linearity = dd_FALSE;
   dd_NumberType NT;
   mytype rational_value;
 
@@ -158,17 +157,14 @@ dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_
   if (k_rep == 2)
   {
     rep = dd_Generator;
-    newformat = dd_TRUE;
   }
   else if (k_rep == 1)
   {
     rep = dd_Inequality;
-    newformat = dd_TRUE;
   }
   else
   {
     rep = dd_Unspecified;
-    newformat = dd_TRUE;
   }
 
   M->representation = rep;
@@ -198,7 +194,6 @@ dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_
   //  controling the linearity of the given polygon.
   if (k_linearity == 1)
   {
-    linearity = dd_TRUE;
     dd_SetLinearity(M, k_linearity_arrayx);
   }
   //
@@ -222,8 +217,6 @@ dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_
     	pch = strtok(NULL, " ,.{}][");
   }
   } 
-
-  successful = dd_TRUE;
 
   if (k_LPobject == 0)
   {
