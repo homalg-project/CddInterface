@@ -16,13 +16,11 @@
 *    Auxiliary functions to be used inside C 
 * 
 * ********************************************************/
-static int str_len;
 static int lin_array[dd_linelenmax];
 static long int result[dd_linelenmax];
 static mytype value;
 
 static void reset_global_variables(){
-  str_len = 0;
   memset(lin_array, 0, 1);
   memset(result, 0, 1 );
   dd_init( value );
@@ -89,21 +87,17 @@ static Obj MPQ_TO_GAPOBJ(const mpq_t x)
 
 //
 static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_rowrange k_rowrange,
-                                  dd_colrange k_colrange, char k_linearity_array[dd_linelenmax],
-                                  char k_matrix[str_len], int k_LPobject, char k_rowvec[dd_linelenmax])
+                                  dd_colrange k_colrange, char k_linearity_arrayx[dd_linelenmax],
+                                  char k_matrixx[], int k_LPobject, char k_rowvecx[dd_linelenmax])
 {
 
-  char numbtype[dd_linelenmax], k_value[dd_linelenmax], k_matrixx[str_len], k_linearity_arrayx[dd_linelenmax], k_rowvecx[dd_linelenmax];
+  char numbtype[dd_linelenmax], k_value[dd_linelenmax];
   char *pch;
   int u;
   dd_MatrixPtr M = NULL;
   dd_RepresentationType rep;
   dd_NumberType NT;
   mytype rational_value;
-
-  strcpy(k_matrixx, k_matrix);
-  strcpy(k_linearity_arrayx, k_linearity_array);
-  strcpy(k_rowvecx, k_rowvec);
 
   // // creating the matrix with these two dimesnions
   M = dd_CreateMatrix(k_rowrange, k_colrange);
@@ -331,18 +325,6 @@ static int ddG_NumberType(dd_MatrixPtr M)
   return M->numbtype;
 }
 
-static char *RATPLIST_STR(Obj string)
-{
-  char *input_string = CSTR_STRING(string);
-  return input_string;
-}
-
-static char *PLIST_STR(Obj string)
-{
-  char *input_string = CSTR_STRING(string);
-  return input_string;
-}
-
 static Obj MatPtrToGapObj(dd_MatrixPtr M)
 {
   Obj current, result;
@@ -444,23 +426,14 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
     ErrorMayQuit("This should not happen, please report this!", 0, 0);
   }
 
-  str_len = GET_LEN_STRING(string);
+  int str_len = GET_LEN_STRING(string);
   //fprintf(stdout, "%d: ", str_len);
   //ErrorMayQuit( "j", 0, 0 );
 
   char k_matrix[str_len];
-  strcpy(k_linearity_array, PLIST_STR(ELM_PLIST(input, 6)));
-
-  if (k_numtype == 3)
-  {
-    strcpy(k_matrix, PLIST_STR(ELM_PLIST(input, 7)));
-  }
-  else
-  {
-    strcpy(k_matrix, RATPLIST_STR(ELM_PLIST(input, 7)));
-  }
-
-  strcpy(k_rowvec, RATPLIST_STR(ELM_PLIST(input, 9)));
+  strcpy(k_linearity_array, CSTR_STRING(ELM_PLIST(input, 6)));
+  strcpy(k_matrix, CSTR_STRING(ELM_PLIST(input, 7)));
+  strcpy(k_rowvec, CSTR_STRING(ELM_PLIST(input, 9)));
 
   return ddG_PolyInput2Matrix(k_rep, k_numtype, k_linearity, k_rowrange,
                               k_colrange, k_linearity_array, k_matrix, k_LPobject, k_rowvec);
