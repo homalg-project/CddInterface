@@ -6,6 +6,8 @@
 #
 ACLOCAL_AMFLAGS = -I m4
 
+AM_CFLAGS = -Wall
+
 BINARCHDIR = bin/$(GAPARCH)
 GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/CddInterface.so
 
