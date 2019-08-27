@@ -27,8 +27,8 @@ extern void dd_SetLinearity(dd_MatrixPtr, char *);
 // }
 
 // The following conversion has been taken from
-// https://github.com/gap-packages/NormalizInterface/src
-// Thanks to Sebastian Gutsche
+// https://github.com/gap-packages/NormalizInterface
+// Thanks to Max Horn
 static Obj MPZ_TO_GAPOBJ( const mpz_t x)
 {
     Obj res;
