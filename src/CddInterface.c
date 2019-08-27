@@ -187,11 +187,6 @@ static dd_rowrange ddG_RowSize(dd_MatrixPtr M)
   return M->rowsize;
 }
 
-static dd_colrange ddG_ColSize(dd_MatrixPtr M)
-{
-  return M->colsize;
-}
-
 static dd_rowset ddG_RowSet(dd_MatrixPtr M)
 {
   return M->linset;
@@ -286,75 +281,44 @@ static Obj ddG_InteriorPoint(dd_MatrixPtr M)
   return result;
 }
 
-static int ddG_RepresentationType(dd_MatrixPtr M)
-{
-  return M->representation;
-}
-
-static int ddG_NumberType(dd_MatrixPtr M)
-{
-  return M->numbtype;
-}
-
 static Obj MatPtrToGapObj(dd_MatrixPtr M)
 {
   Obj current, result;
   dd_Amatrix Ma;
+  dd_rowrange nrRows = M->rowsize;
+  dd_colrange nrCols = M->colsize;
 
   //dd_WriteMatrix(stdout, M);
   result = NEW_PLIST(T_PLIST_CYC, 7);
 
   // reading the representation of M
-  current = INTOBJ_INT(ddG_RepresentationType(M));
-  ASS_LIST(result, 1, current);
+  ASS_LIST(result, 1, INTOBJ_INT(M->representation));
 
   // reading the number type
-  current = INTOBJ_INT(ddG_NumberType(M));
-  ASS_LIST(result, 2, current);
+  ASS_LIST(result, 2, INTOBJ_INT(M->numbtype));
 
   if (ddG_LinearitySize(M) == 0)
     ASS_LIST(result, 3, INTOBJ_INT(0));
   else
     ASS_LIST(result, 3, INTOBJ_INT(1));
 
-  current = INTOBJ_INT(ddG_RowSize(M));
-  ASS_LIST(result, 4, current);
-
-  current = INTOBJ_INT(ddG_ColSize(M));
-  ASS_LIST(result, 5, current);
-
-  int i, j, size;
-  mpz_t u, v;
-
+  ASS_LIST(result, 4, INTOBJ_INT(nrRows));
+  ASS_LIST(result, 5, INTOBJ_INT(nrCols));
   ASS_LIST(result, 6, ddG_LinearityPtr(M));
-
-  dd_rowrange r;
-  dd_colrange s;
-
-  r = ddG_RowSize(M);
-  s = ddG_ColSize(M);
 
   Ma = M->matrix;
 
-  size = 2 * s * r;
+  current = NEW_PLIST(T_PLIST_CYC, nrRows);
 
-  current = NEW_PLIST(T_PLIST_CYC, size);
-
-  mpz_init(u);
-  mpz_init(v);
-
-  for (i = 0; i < r; i++)
-    for (j = 0; j < s; j++)
+  for (int i = 0; i < nrRows; i++)
+  {
+    Obj row = NEW_PLIST(T_PLIST_CYC, nrCols);
+    ASS_LIST(current, i+1, row);
+    for (int j = 0; j < nrCols; j++)
     {
-      mpq_get_num(u, *(*(Ma + i) + j));
-      mpq_get_den(v, *(*(Ma + i) + j));
-
-      //gmp_printf ("%s is an mpz %Zd\n", " u = ", u);
-      //gmp_printf ("%s is an mpz %Zd\n", " v = ", v);
-
-      ASS_LIST(current, 2 * (i * s + j) + 1, MPZ_TO_GAPOBJ(u));
-      ASS_LIST(current, 2 * (i * s + j) + 2, MPZ_TO_GAPOBJ(v));
+      ASS_LIST(row, j+1, MPQ_TO_GAPOBJ(Ma[i][j]));
     }
+  }
 
   ASS_LIST(result, 7, current);
   return result;
