@@ -16,23 +16,19 @@
 *    Auxiliary functions to be used inside C 
 * 
 * ********************************************************/
-int str_len;
-int lin_array[dd_linelenmax];
-long int RowVec_array[dd_linelenmax];
-long int result[dd_linelenmax];
-int array[dd_linelenmax];
-mytype value;
+static int str_len;
+static int lin_array[dd_linelenmax];
+static long int result[dd_linelenmax];
+static mytype value;
 
-void reset_global_variables(){
+static void reset_global_variables(){
   str_len = 0;
   memset(lin_array, 0, 1);
-  memset(RowVec_array, 0, 1 );
   memset(result, 0, 1 );
-  memset(array, 0, 1 );
   dd_init( value );
 }
 
-void dd_SetLinearity(dd_MatrixPtr, char *);
+extern void dd_SetLinearity(dd_MatrixPtr, char *);
 
 // Old implementation
 // Obj MPZ_TO_GAPOBJ(mpz_t x)
@@ -73,7 +69,7 @@ static Obj MPZ_TO_GAPOBJ( const mpz_t x)
     return res;
 }
 
-Obj MPQ_TO_GAPOBJ(const mpq_t x)
+static Obj MPQ_TO_GAPOBJ(const mpq_t x)
 {
   mpz_t num, den;
   //gmp_printf ("a hex rational: %#40Qx\n", x);
@@ -91,50 +87,8 @@ Obj MPQ_TO_GAPOBJ(const mpq_t x)
 * ********************************************************/
 
 
-Obj CINTLISTPtr_TOGAPPLIST(int *list, int n1)
-{
-  size_t i, n;
-  Obj M;
-  n = n1;
-  M = NEW_PLIST(T_PLIST_CYC, n);
-  SET_LEN_PLIST(M, n);
-  for (i = 0; i < n; i++)
-  {
-    SET_ELM_PLIST(M, i + 1, INTOBJ_INT(*(list + i)));
-    CHANGED_BAG(M);
-  }
-
-  return M;
-}
-
-// static int *GAPPLIST_TOINTPtr(Obj list)
-// {
-//   int i, len;
-//   Obj current_obj;
-//   if (!IS_PLIST(list))
-//   {
-//     ErrorMayQuit("not a plain list", 0, 0);
-//     return NULL;
-//   }
-// 
-//   len = LEN_PLIST(list);
-// 
-//   for (i = 0; i < len; i++)
-//   {
-//     current_obj = ELM_PLIST(list, i + 1);
-//     if (!IS_INTOBJ(current_obj))
-//     {
-//       ErrorMayQuit("not integer entries", 0, 0);
-//       return NULL;
-//     }
-//     array[i] = INT_INTOBJ(current_obj);
-//   }
-// 
-//   return array;
-// }
-
 //
-dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_rowrange k_rowrange,
+static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_rowrange k_rowrange,
                                   dd_colrange k_colrange, char k_linearity_array[dd_linelenmax],
                                   char k_matrix[str_len], int k_LPobject, char k_rowvec[dd_linelenmax])
 {
@@ -249,38 +203,22 @@ dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_
   return M;
 }
 
-dd_LPSolutionPtr ddG_LPSolutionPtr(dd_MatrixPtr M)
-{
-  dd_ErrorType err = dd_NoError;
-  dd_LPPtr lp;
-  dd_LPSolverType solver = dd_DualSimplex;
-  dd_LPSolutionPtr lps;
-
-  lp = dd_Matrix2LP(M, &err);
-
-  dd_LPSolve(lp, solver, &err);
-
-  lps = dd_CopyLPSolution(lp);
-
-  return lps;
-}
-
-dd_rowrange ddG_RowSize(dd_MatrixPtr M)
+static dd_rowrange ddG_RowSize(dd_MatrixPtr M)
 {
   return M->rowsize;
 }
 
-dd_colrange ddG_ColSize(dd_MatrixPtr M)
+static dd_colrange ddG_ColSize(dd_MatrixPtr M)
 {
   return M->colsize;
 }
 
-dd_rowset ddG_RowSet(dd_MatrixPtr M)
+static dd_rowset ddG_RowSet(dd_MatrixPtr M)
 {
   return M->linset;
 }
 
-int ddG_LinearitySize(dd_MatrixPtr M)
+static int ddG_LinearitySize(dd_MatrixPtr M)
 {
   dd_rowrange r;
   dd_rowset s;
@@ -299,7 +237,7 @@ int ddG_LinearitySize(dd_MatrixPtr M)
   return u;
 }
 
-int *ddG_LinearityPtr(dd_MatrixPtr M)
+static int *ddG_LinearityPtr(dd_MatrixPtr M)
 {
   dd_rowrange r;
   dd_rowset s;
@@ -319,32 +257,7 @@ int *ddG_LinearityPtr(dd_MatrixPtr M)
   return lin_array;
 }
 
-long int *ddG_RowVecPtr(dd_MatrixPtr M)
-{
-  mpz_t u, v;
-  long int i, z1, z2;
-  dd_Arow row_vector;
-  mpz_init(u);
-  mpz_init(v);
-
-  row_vector = M->rowvec;
-
-  for (i = 0; i < M->colsize; i++)
-  {
-    mpq_get_num(u, *(row_vector + i));
-    mpq_get_den(v, *(row_vector + i));
-    z1 = mpz_get_si(u);
-    z2 = mpz_get_si(v);
-    RowVec_array[2 * i] = z1;
-    RowVec_array[2 * i + 1] = z2;
-  }
-  mpz_clear(u);
-  mpz_clear(v);
-
-  return RowVec_array;
-}
-
-long int *ddG_InteriorPoint(dd_MatrixPtr M)
+static long int *ddG_InteriorPoint(dd_MatrixPtr M)
 {
   dd_rowset R, S;
   dd_rowset LL, ImL, RR, SS, Lbasis;
@@ -408,30 +321,14 @@ long int *ddG_InteriorPoint(dd_MatrixPtr M)
   return result;
 }
 
-int ddG_RepresentationType(dd_MatrixPtr M)
+static int ddG_RepresentationType(dd_MatrixPtr M)
 {
   return M->representation;
 }
 
-int ddG_NumberType(dd_MatrixPtr M)
+static int ddG_NumberType(dd_MatrixPtr M)
 {
   return M->numbtype;
-}
-
-dd_Amatrix ddG_Matrix(dd_MatrixPtr M)
-{
-  return M->matrix;
-}
-
-int ddG_IsOptimal(dd_MatrixPtr M)
-{
-  dd_LPSolutionPtr lps;
-  lps = ddG_LPSolutionPtr(M);
-
-  if (lps->LPS == dd_Optimal)
-    return 1;
-  else
-    return 0;
 }
 
 static char *RATPLIST_STR(Obj string)
