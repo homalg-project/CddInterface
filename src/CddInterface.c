@@ -453,31 +453,25 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
 
   //dd_WriteMatrix(stdout, M);
   result = NEW_PLIST(T_PLIST_CYC, 7);
-  SET_LEN_PLIST(result, 7);
 
   // reading the representation of M
   current = INTOBJ_INT(ddG_RepresentationType(M));
-  SET_ELM_PLIST(result, 1, current);
-  CHANGED_BAG(result);
+  ASS_LIST(result, 1, current);
 
   // reading the number type
   current = INTOBJ_INT(ddG_NumberType(M));
-  SET_ELM_PLIST(result, 2, current);
-  CHANGED_BAG(result);
+  ASS_LIST(result, 2, current);
 
   if (ddG_LinearitySize(M) == 0)
-    SET_ELM_PLIST(result, 3, INTOBJ_INT(0));
+    ASS_LIST(result, 3, INTOBJ_INT(0));
   else
-    SET_ELM_PLIST(result, 3, INTOBJ_INT(1));
-  CHANGED_BAG(result);
+    ASS_LIST(result, 3, INTOBJ_INT(1));
 
   current = INTOBJ_INT(ddG_RowSize(M));
-  SET_ELM_PLIST(result, 4, current);
-  CHANGED_BAG(result);
+  ASS_LIST(result, 4, current);
 
   current = INTOBJ_INT(ddG_ColSize(M));
-  SET_ELM_PLIST(result, 5, current);
-  CHANGED_BAG(result);
+  ASS_LIST(result, 5, current);
 
   size_t i1, size1;
   int i, j, size;
@@ -489,17 +483,14 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
   size1 = size;
 
   current = NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
-  SET_LEN_PLIST(current, size1);
 
   for (i = 0; i < size; i++)
   {
     i1 = i;
-    SET_ELM_PLIST(current, i1 + 1, INTOBJ_INT(*(lin + i)));
-    CHANGED_BAG(current);
+    ASS_LIST(current, i1 + 1, INTOBJ_INT(*(lin + i)));
   }
 
-  SET_ELM_PLIST(result, 6, current);
-  CHANGED_BAG(result);
+  ASS_LIST(result, 6, current);
 
   dd_rowrange r;
   dd_colrange s;
@@ -513,7 +504,6 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
   size1 = size;
 
   current = NEW_PLIST(T_PLIST_CYC, size1);
-  SET_LEN_PLIST(current, size1);
 
   mpz_init(u);
   mpz_init(v);
@@ -527,14 +517,11 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
       //gmp_printf ("%s is an mpz %Zd\n", " u = ", u);
       //gmp_printf ("%s is an mpz %Zd\n", " v = ", v);
 
-      SET_ELM_PLIST(current, 2 * (i * s + j) + 1, MPZ_TO_GAPOBJ(u));
-      CHANGED_BAG(current);
-      SET_ELM_PLIST(current, 2 * (i * s + j) + 2, MPZ_TO_GAPOBJ(v));
-      CHANGED_BAG(current);
+      ASS_LIST(current, 2 * (i * s + j) + 1, MPZ_TO_GAPOBJ(u));
+      ASS_LIST(current, 2 * (i * s + j) + 2, MPZ_TO_GAPOBJ(v));
     }
 
-  SET_ELM_PLIST(result, 7, current);
-  CHANGED_BAG(result);
+  ASS_LIST(result, 7, current);
   return result;
 }
 
@@ -658,14 +645,12 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
 
     result = NEW_PLIST(T_PLIST_CYC, 3);
 
-    SET_LEN_PLIST(result, 3);
-
     set_uni(M->linset, M->linset, R);
     dd_FindRelativeInterior(M, &ImL, &Lbasis, &lps, &err);
     dim = M->colsize - set_card(Lbasis) - 1;
     set_uni(M->linset, M->linset, ImL);
 
-    SET_ELM_PLIST(result, 1, INTOBJ_INT(dim));
+    ASS_LIST(result, 1, INTOBJ_INT(dim));
 
     size_t i1, size1;
     int i, size;
@@ -675,28 +660,24 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
     size = ddG_LinearitySize(M);
     size1 = size;
     current = NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
-    SET_LEN_PLIST(current, size1);
     for (i = 0; i < size; i++)
     {
       i1 = i;
-      SET_ELM_PLIST(current, i1 + 1, INTOBJ_INT(*(lin + i)));
-      CHANGED_BAG(current);
+      ASS_LIST(current, i1 + 1, INTOBJ_INT(*(lin + i)));
     }
 
-    SET_ELM_PLIST(result, 2, current);
+    ASS_LIST(result, 2, current);
 
     size_t j1, n;
     n = (lps->d) - 2;
     current2 = NEW_PLIST((n > 0) ? T_PLIST_CYC : T_PLIST, n);
-    SET_LEN_PLIST(current2, n);
     for (j = 1; j <= n; j++)
     {
       j1 = j;
-      SET_ELM_PLIST(current2, j1, MPQ_TO_GAPOBJ(lps->sol[j]));
-      CHANGED_BAG(current2);
+      ASS_LIST(current2, j1, MPQ_TO_GAPOBJ(lps->sol[j]));
     }
 
-    SET_ELM_PLIST(result, 3, current2);
+    ASS_LIST(result, 3, current2);
 
     dd_FreeLPSolution(lps);
     set_free(ImL);
@@ -707,8 +688,7 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
 
       result_2 = NEW_PLIST(T_PLIST_CYC, 1 + M->rowsize);
       size1 = M->rowsize;
-      SET_LEN_PLIST(result_2, 1 + M->rowsize);
-      SET_ELM_PLIST(result_2, 1, result);
+      ASS_LIST(result_2, 1, result);
 
       for (i = 1; i <= M->rowsize; i++)
       {
@@ -724,22 +704,20 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
           }
           iprev = i;
           r = FaceWithDimAndInteriorPoint(M, RR, SS, mindim);
-          SET_ELM_PLIST(result_2, i1 + 1, r);
+          ASS_LIST(result_2, i1 + 1, r);
         }
         else
         {
-          SET_ELM_PLIST(result_2, i1 + 1, INTOBJ_INT(2019));
+          ASS_LIST(result_2, i1 + 1, INTOBJ_INT(2019));
         }
       }
 
-      CHANGED_BAG(result_2);
 
       return result_2;
     }
     else
     {
 
-      CHANGED_BAG(result);
 
       return result;
     }
@@ -801,16 +779,13 @@ static Obj CddInterface_DimAndInteriorPoint(Obj self, Obj main)
   size1 = size;
 
   result = NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
-  SET_LEN_PLIST(result, size1);
 
-  SET_ELM_PLIST(result, 1, INTOBJ_INT(*(interior_point)));
-  CHANGED_BAG(result);
+  ASS_LIST(result, 1, INTOBJ_INT(*(interior_point)));
 
   for (i = 1; i < size; i++)
   {
     i1 = i;
-    SET_ELM_PLIST(result, i1 + 1, QUO(INTOBJ_INT(*(interior_point + 2 * i - 1)), INTOBJ_INT(*(interior_point + 2 * i))));
-    CHANGED_BAG(result);
+    ASS_LIST(result, i1 + 1, QUO(INTOBJ_INT(*(interior_point + 2 * i - 1)), INTOBJ_INT(*(interior_point + 2 * i))));
   }
 
   dd_free_global_constants();
@@ -887,19 +862,17 @@ static Obj CddInterface_LpSolution(Obj self, Obj main)
 
     n = lps->d - 1;
     res = NEW_PLIST(T_PLIST_CYC, 2);
-    SET_LEN_PLIST(res, 2);
 
     current = NEW_PLIST(T_PLIST_CYC, n);
-    SET_LEN_PLIST(current, n);
 
     for (j = 1; j <= n; j++)
     {
       i = j;
-      SET_ELM_PLIST(current, i, MPQ_TO_GAPOBJ(lps->sol[j]));
+      ASS_LIST(current, i, MPQ_TO_GAPOBJ(lps->sol[j]));
     }
 
-    SET_ELM_PLIST(res, 1, current);
-    SET_ELM_PLIST(res, 2, MPQ_TO_GAPOBJ(lps->optvalue));
+    ASS_LIST(res, 1, current);
+    ASS_LIST(res, 2, MPQ_TO_GAPOBJ(lps->optvalue));
 
     return res;
   }
