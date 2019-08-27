@@ -1,3 +1,6 @@
+
+cddlib-*/
+current_cddlib
 .deps/
 .libs/
 *.la
