@@ -182,31 +182,19 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
   return M;
 }
 
-static dd_rowrange ddG_RowSize(dd_MatrixPtr M)
-{
-  return M->rowsize;
-}
-
-static dd_rowset ddG_RowSet(dd_MatrixPtr M)
-{
-  return M->linset;
-}
-
 static int ddG_LinearitySize(dd_MatrixPtr M)
 {
   dd_rowrange r;
   dd_rowset s;
   int i, u;
 
-  r = ddG_RowSize(M);
-  s = ddG_RowSet(M);
+  r = M->rowsize;
+  s = M->linset;
 
   u = 0;
   for (i = 1; i <= r; i++)
     if (set_member(i, s))
-    {
-      u = u + 1;
-    }
+      u++;
 
   return u;
 }
@@ -217,8 +205,8 @@ static Obj ddG_LinearityPtr(dd_MatrixPtr M)
   dd_rowset s;
   int i;
 
-  r = ddG_RowSize(M);
-  s = ddG_RowSet(M);
+  r = M->rowsize;
+  s = M->linset;
 
   Obj current = NEW_PLIST(T_PLIST, 16);
   for (i = 1; i <= r; i++)
@@ -227,8 +215,6 @@ static Obj ddG_LinearityPtr(dd_MatrixPtr M)
 
   return current;
 }
-
-
 
 static Obj ddG_InteriorPoint(dd_MatrixPtr M)
 {
