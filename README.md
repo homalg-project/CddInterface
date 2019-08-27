@@ -3,8 +3,8 @@ The GAP 4 package `CddInterface'
 
 # Why CddInterface
 
-Every convex polyhedron P has two representations, one as the intersection of finite halfspaces and the other as Minkowski sum of the convex hull of 
-finite points and the nonnegative hull of finite directions. These are called H-representation and V-representation, respectively. 
+Every convex polyhedron P has two representations, one as the intersection of finite halfspaces and the other as Minkowski sum of the convex hull of
+finite points and the nonnegative hull of finite directions. These are called H-representation and V-representation, respectively.
 
 [CddInterface](https://kamalsaleh.github.io/CddInterface/) is a gap interface with the C package [Cddlib
 ](https://www.inf.ethz.ch/personal/fukudak/cdd_home/) which among other things can translate between H,V- representations of a polyhedron P and solve linear programming problems over P, i.e. a problem of maximizing and minimizing a linear function over P. A list of all available operations can be found in the [manual.pdf](https://github.com/homalg-project/CddInterface/releases/latest/download/manual.pdf).
@@ -15,11 +15,6 @@ Make sure you can update "configure" scriptes by installing `autoconf`
     
     sudo apt-get install autoconf
     
-or
-    
-    sudo apt-get install dh-autoreconf
-    
-
 ## Simple
 
 For a simplyfied installation, try the following two commands in the main CddInterface directory
@@ -34,16 +29,17 @@ If that does not work, try the following
 
 ## Advanced
 
-Go inside the cddlib directory and create a directory `build` using the following commands:
+Go inside the CddInterface directory and download some release of [cddlib](https://github.com/cddlib/cddlib/releases) and extract it. For example the release 0.94j:
     
-    sudo su (if root permission is needed)
-    cd cddlib
-    make clean
-    mkdir build
+    wget https://github.com/cddlib/cddlib/releases/download/0.94j/cddlib-0.94j.tar.gz
+    tar xvf cddlib-0.94j.tar.gz
+    ln -sf $(pwd)/cddlib-0.94j $(pwd)/current_cddlib
 
 After that, compile cddlib via
-
-    ./bootstrap.sh
+    
+    cd current_cddlib
+    mkdir build
+    ./bootstrap
     ./configure --prefix=$(pwd)/build
     make
     make install
@@ -52,7 +48,7 @@ Cdd should now be installed in the `build` directory. After that, go back to the
 and install CddInterface with the following commands
 
     ./autogen.sh
-    ./configure --with-gaproot=path/to/gaproot --with-cddlib=$(pwd)/cddlib/build
+    ./configure --with-gaproot=path/to/gaproot --with-cddlib=$(pwd)/current_cddlib/build
     make
 
 After that, you should be able to load CddInterface.
@@ -62,7 +58,7 @@ To create the documentation:
     
     gap makedoc.g
 
-To run the test files 
+To run the test files
 
     gap maketest.g
     gap tst/testall.g
