@@ -95,7 +95,6 @@ Obj CINTLISTPtr_TOGAPPLIST(int *list, int n1)
 {
   size_t i, n;
   Obj M;
-  int r;
   n = n1;
   M = NEW_PLIST(T_PLIST_CYC, n);
   SET_LEN_PLIST(M, n);
@@ -142,15 +141,11 @@ dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_
 
   char numbtype[dd_linelenmax], k_value[dd_linelenmax], k_matrixx[str_len], k_linearity_arrayx[dd_linelenmax], k_rowvecx[dd_linelenmax];
   char *pch;
-  div_t z;
   int u;
   dd_MatrixPtr M = NULL;
-  dd_rowrange m_input, i;
-  dd_colrange d_input, j;
   dd_RepresentationType rep;
-  dd_boolean found = dd_FALSE, newformat = dd_FALSE, successful = dd_FALSE, linearity = dd_FALSE;
+  dd_boolean newformat = dd_FALSE, successful = dd_FALSE, linearity = dd_FALSE;
   dd_NumberType NT;
-  dd_LPObjectiveType ob;
   mytype rational_value;
 
   strcpy(k_matrixx, k_matrix);
@@ -362,7 +357,6 @@ long int *ddG_InteriorPoint(dd_MatrixPtr M)
   dd_rowset LL, ImL, RR, SS, Lbasis;
   dd_LPSolutionPtr lps = NULL;
   dd_ErrorType err;
-  dd_colrange mindim = 0;
   long int j, z1, z2, dim;
   mpz_t u, v;
 
@@ -600,7 +594,7 @@ static void FacesOfPolyhedron(dd_MatrixPtr M, dd_rowset R, dd_rowset S, dd_colra
   dd_ErrorType err;
   dd_rowset LL, ImL, RR, SS, Lbasis;
   dd_rowrange i, iprev = 0;
-  dd_colrange j, dim;
+  dd_colrange dim;
   dd_LPSolutionPtr lps = NULL;
 
   set_initialize(&LL, M->rowsize);
@@ -651,10 +645,9 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
 {
   dd_ErrorType err;
   dd_rowset LL, ImL, RR, SS, Lbasis;
-  dd_rowrange i, iprev = 0;
+  dd_rowrange iprev = 0;
   dd_colrange j, dim;
   dd_LPSolutionPtr lps = NULL;
-  dd_boolean success = dd_FALSE;
   Obj result, current2, result_2;
   dd_MatrixPtr M;
 
@@ -780,7 +773,6 @@ static Obj CddInterface_FourierElimination(Obj self, Obj main)
   dd_MatrixPtr M, A, G;
   dd_PolyhedraPtr poly;
   dd_ErrorType err;
-  Obj current;
   err = dd_NoError;
   dd_set_global_constants();
 
@@ -835,9 +827,7 @@ static Obj CddInterface_DimAndInteriorPoint(Obj self, Obj main)
 
 static Obj CddInterface_Canonicalize(Obj self, Obj main)
 {
-  dd_MatrixPtr M, A;
-  char d[dd_linelenmax];
-  Obj linearity_array;
+  dd_MatrixPtr M;
   dd_set_global_constants();
   M = GapInputToMatrixPtr(main);
   dd_rowset impl_linset, redset;
@@ -856,8 +846,6 @@ static Obj CddInterface_Compute_H_rep(Obj self, Obj main)
   err = dd_NoError;
   dd_set_global_constants();
   M = GapInputToMatrixPtr(main);
-  dd_rowset impl_linset, redset;
-  dd_rowindex newpos;
 
   poly = dd_DDMatrix2Poly(M, &err);
   A = dd_CopyInequalities(poly);
@@ -873,8 +861,6 @@ static Obj CddInterface_Compute_V_rep(Obj self, Obj main)
   err = dd_NoError;
   dd_set_global_constants();
   M = GapInputToMatrixPtr(main);
-  dd_rowset impl_linset, redset;
-  dd_rowindex newpos;
 
   poly = dd_DDMatrix2Poly(M, &err);
   A = dd_CopyGenerators(poly);
@@ -886,8 +872,6 @@ static Obj CddInterface_Compute_V_rep(Obj self, Obj main)
 static Obj CddInterface_LpSolution(Obj self, Obj main)
 {
   dd_MatrixPtr M;
-  mpz_t u, v;
-  long int z1, z2;
   dd_ErrorType err;
   dd_LPPtr lp;
   dd_LPSolutionPtr lps;
