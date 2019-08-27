@@ -17,11 +17,9 @@
 * 
 * ********************************************************/
 static long int result[dd_linelenmax];
-static mytype value;
 
 static void reset_global_variables(){
   memset(result, 0, 1 );
-  dd_init( value );
 }
 
 extern void dd_SetLinearity(dd_MatrixPtr, char *);
@@ -148,7 +146,7 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
   
   pch = strtok(k_matrixx, " ,.{}][");
   int uu,vv;
-  
+
   for (uu = 0; uu < k_rowrange; uu++){
   for (vv = 0; vv < k_colrange; vv++){
   	//fprintf(stdout, "uu:%d: ", uu );
@@ -157,8 +155,7 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
     	strcpy(k_value, pch);
     	dd_init(rational_value);
     	dd_sread_rational_value(k_value, rational_value);
-    	dd_set(value, rational_value);
-    	dd_set(M->matrix[uu][vv], value);
+    	dd_set(M->matrix[uu][vv], rational_value);
     	dd_clear(rational_value);
     	pch = strtok(NULL, " ,.{}][");
   }
@@ -185,9 +182,8 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
       strcpy(k_value, pch);
       dd_init(rational_value);
       dd_sread_rational_value(k_value, rational_value);
-      dd_set(value, rational_value);
+      dd_set(M->rowvec[u], rational_value);
       dd_clear(rational_value);
-      dd_set(M->rowvec[u], value);
       pch = strtok(NULL, " ,.{}][");
     }
   }
