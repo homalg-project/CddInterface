@@ -349,7 +349,6 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
   current = INTOBJ_INT(ddG_ColSize(M));
   ASS_LIST(result, 5, current);
 
-  size_t i1, size1;
   int i, j, size;
   mpz_t u, v;
 
@@ -364,9 +363,8 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
   Ma = M->matrix;
 
   size = 2 * s * r;
-  size1 = size;
 
-  current = NEW_PLIST(T_PLIST_CYC, size1);
+  current = NEW_PLIST(T_PLIST_CYC, size);
 
   mpz_init(u);
   mpz_init(v);
@@ -506,19 +504,17 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
 
     ASS_LIST(result, 1, INTOBJ_INT(dim));
 
-    size_t i1;
     int i;
-    Obj current, r;
+    Obj r;
 
     ASS_LIST(result, 2, ddG_LinearityPtr(M));
 
-    size_t j1, n;
+    size_t n;
     n = (lps->d) - 2;
     current2 = NEW_PLIST((n > 0) ? T_PLIST_CYC : T_PLIST, n);
     for (j = 1; j <= n; j++)
     {
-      j1 = j;
-      ASS_LIST(current2, j1, MPQ_TO_GAPOBJ(lps->sol[j]));
+      ASS_LIST(current2, j, MPQ_TO_GAPOBJ(lps->sol[j]));
     }
 
     ASS_LIST(result, 3, current2);
@@ -535,7 +531,6 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
 
       for (i = 1; i <= M->rowsize; i++)
       {
-        i1 = i;
         if (!set_member(i, M->linset) && !set_member(i, S))
         {
           set_addelem(RR, i);
@@ -547,11 +542,11 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
           }
           iprev = i;
           r = FaceWithDimAndInteriorPoint(M, RR, SS, mindim);
-          ASS_LIST(result_2, i1 + 1, r);
+          ASS_LIST(result_2, i + 1, r);
         }
         else
         {
-          ASS_LIST(result_2, i1 + 1, INTOBJ_INT(2019));
+          ASS_LIST(result_2, i + 1, INTOBJ_INT(2019));
         }
       }
 
@@ -603,7 +598,6 @@ static Obj CddInterface_DimAndInteriorPoint(Obj self, Obj main)
   Obj result;
 
   long int *interior_point;
-  size_t i1, size1;
   int i, size;
 
   dd_PolyhedraPtr poly;
@@ -619,16 +613,14 @@ static Obj CddInterface_DimAndInteriorPoint(Obj self, Obj main)
 
   interior_point = ddG_InteriorPoint(M);
   size = ddG_ColSize(M);
-  size1 = size;
 
-  result = NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
+  result = NEW_PLIST((size > 0) ? T_PLIST_CYC : T_PLIST, size);
 
   ASS_LIST(result, 1, INTOBJ_INT(*(interior_point)));
 
   for (i = 1; i < size; i++)
   {
-    i1 = i;
-    ASS_LIST(result, i1 + 1, QUO(INTOBJ_INT(*(interior_point + 2 * i - 1)), INTOBJ_INT(*(interior_point + 2 * i))));
+    ASS_LIST(result, i + 1, QUO(INTOBJ_INT(*(interior_point + 2 * i - 1)), INTOBJ_INT(*(interior_point + 2 * i))));
   }
 
   dd_free_global_constants();
@@ -687,7 +679,7 @@ static Obj CddInterface_LpSolution(Obj self, Obj main)
   dd_LPPtr lp;
   dd_LPSolutionPtr lps;
   dd_LPSolverType solver;
-  size_t n, i;
+  size_t n;
   dd_colrange j;
   dd_set_global_constants();
   solver = dd_DualSimplex;
@@ -704,16 +696,13 @@ static Obj CddInterface_LpSolution(Obj self, Obj main)
   {
 
     n = lps->d - 1;
-    res = NEW_PLIST(T_PLIST_CYC, 2);
-
     current = NEW_PLIST(T_PLIST_CYC, n);
-
     for (j = 1; j <= n; j++)
     {
-      i = j;
-      ASS_LIST(current, i, MPQ_TO_GAPOBJ(lps->sol[j]));
+      ASS_LIST(current, j, MPQ_TO_GAPOBJ(lps->sol[j]));
     }
 
+    res = NEW_PLIST(T_PLIST_CYC, 2);
     ASS_LIST(res, 1, current);
     ASS_LIST(res, 2, MPQ_TO_GAPOBJ(lps->optvalue));
 
