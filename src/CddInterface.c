@@ -16,14 +16,14 @@
 *    Auxiliary functions to be used inside C 
 * 
 * ********************************************************/
-int str_len;
-int lin_array[dd_linelenmax];
-long int RowVec_array[dd_linelenmax];
-long int result[dd_linelenmax];
-int array[dd_linelenmax];
-mytype value;
+static int str_len;
+static int lin_array[dd_linelenmax];
+static long int RowVec_array[dd_linelenmax];
+static long int result[dd_linelenmax];
+static int array[dd_linelenmax];
+static mytype value;
 
-void reset_global_variables(){
+static void reset_global_variables(){
   str_len = 0;
   memset(lin_array, 0, 1);
   memset(RowVec_array, 0, 1 );
@@ -32,7 +32,7 @@ void reset_global_variables(){
   dd_init( value );
 }
 
-void dd_SetLinearity(dd_MatrixPtr, char *);
+extern void dd_SetLinearity(dd_MatrixPtr, char *);
 
 // Old implementation
 // Obj MPZ_TO_GAPOBJ(mpz_t x)
@@ -73,7 +73,7 @@ static Obj MPZ_TO_GAPOBJ( const mpz_t x)
     return res;
 }
 
-Obj MPQ_TO_GAPOBJ(const mpq_t x)
+static Obj MPQ_TO_GAPOBJ(const mpq_t x)
 {
   mpz_t num, den;
   //gmp_printf ("a hex rational: %#40Qx\n", x);
@@ -91,7 +91,7 @@ Obj MPQ_TO_GAPOBJ(const mpq_t x)
 * ********************************************************/
 
 
-Obj CINTLISTPtr_TOGAPPLIST(int *list, int n1)
+static Obj CINTLISTPtr_TOGAPPLIST(int *list, int n1)
 {
   size_t i, n;
   Obj M;
@@ -134,7 +134,7 @@ Obj CINTLISTPtr_TOGAPPLIST(int *list, int n1)
 // }
 
 //
-dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_rowrange k_rowrange,
+static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_rowrange k_rowrange,
                                   dd_colrange k_colrange, char k_linearity_array[dd_linelenmax],
                                   char k_matrix[str_len], int k_LPobject, char k_rowvec[dd_linelenmax])
 {
@@ -249,7 +249,7 @@ dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_
   return M;
 }
 
-dd_LPSolutionPtr ddG_LPSolutionPtr(dd_MatrixPtr M)
+static dd_LPSolutionPtr ddG_LPSolutionPtr(dd_MatrixPtr M)
 {
   dd_ErrorType err = dd_NoError;
   dd_LPPtr lp;
@@ -265,22 +265,22 @@ dd_LPSolutionPtr ddG_LPSolutionPtr(dd_MatrixPtr M)
   return lps;
 }
 
-dd_rowrange ddG_RowSize(dd_MatrixPtr M)
+static dd_rowrange ddG_RowSize(dd_MatrixPtr M)
 {
   return M->rowsize;
 }
 
-dd_colrange ddG_ColSize(dd_MatrixPtr M)
+static dd_colrange ddG_ColSize(dd_MatrixPtr M)
 {
   return M->colsize;
 }
 
-dd_rowset ddG_RowSet(dd_MatrixPtr M)
+static dd_rowset ddG_RowSet(dd_MatrixPtr M)
 {
   return M->linset;
 }
 
-int ddG_LinearitySize(dd_MatrixPtr M)
+static int ddG_LinearitySize(dd_MatrixPtr M)
 {
   dd_rowrange r;
   dd_rowset s;
@@ -299,7 +299,7 @@ int ddG_LinearitySize(dd_MatrixPtr M)
   return u;
 }
 
-int *ddG_LinearityPtr(dd_MatrixPtr M)
+static int *ddG_LinearityPtr(dd_MatrixPtr M)
 {
   dd_rowrange r;
   dd_rowset s;
@@ -319,7 +319,7 @@ int *ddG_LinearityPtr(dd_MatrixPtr M)
   return lin_array;
 }
 
-long int *ddG_RowVecPtr(dd_MatrixPtr M)
+static long int *ddG_RowVecPtr(dd_MatrixPtr M)
 {
   mpz_t u, v;
   long int i, z1, z2;
@@ -344,7 +344,7 @@ long int *ddG_RowVecPtr(dd_MatrixPtr M)
   return RowVec_array;
 }
 
-long int *ddG_InteriorPoint(dd_MatrixPtr M)
+static long int *ddG_InteriorPoint(dd_MatrixPtr M)
 {
   dd_rowset R, S;
   dd_rowset LL, ImL, RR, SS, Lbasis;
@@ -408,22 +408,22 @@ long int *ddG_InteriorPoint(dd_MatrixPtr M)
   return result;
 }
 
-int ddG_RepresentationType(dd_MatrixPtr M)
+static int ddG_RepresentationType(dd_MatrixPtr M)
 {
   return M->representation;
 }
 
-int ddG_NumberType(dd_MatrixPtr M)
+static int ddG_NumberType(dd_MatrixPtr M)
 {
   return M->numbtype;
 }
 
-dd_Amatrix ddG_Matrix(dd_MatrixPtr M)
+static dd_Amatrix ddG_Matrix(dd_MatrixPtr M)
 {
   return M->matrix;
 }
 
-int ddG_IsOptimal(dd_MatrixPtr M)
+static int ddG_IsOptimal(dd_MatrixPtr M)
 {
   dd_LPSolutionPtr lps;
   lps = ddG_LPSolutionPtr(M);
