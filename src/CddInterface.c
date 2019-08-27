@@ -60,13 +60,9 @@ static Obj MPZ_TO_GAPOBJ( const mpz_t x)
 
 static Obj MPQ_TO_GAPOBJ(const mpq_t x)
 {
-  mpz_t num, den;
-  //gmp_printf ("a hex rational: %#40Qx\n", x);
-  mpz_init(num);
-  mpz_init(den);
-  mpq_get_num(num, x);
-  mpq_get_den(den, x);
-  return QUO(MPZ_TO_GAPOBJ(num), MPZ_TO_GAPOBJ(den));
+  Obj num = MPZ_TO_GAPOBJ(mpq_numref(x));
+  Obj den = MPZ_TO_GAPOBJ(mpq_denref(x));
+  return QUO(num, den);
 }
 
 /**********************************************************
