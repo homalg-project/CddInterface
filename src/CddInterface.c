@@ -637,22 +637,6 @@ static Obj CddInterface_FacesWithDimensionAndInteriorPoints(Obj self, Obj main, 
   return FaceWithDimAndInteriorPoint(M, R, S, INT_INTOBJ(mindim));
 }
 
-static Obj take_poly_and_give_it_back(Obj self, Obj main)
-{
-  dd_MatrixPtr M;
-  dd_rowset R, S;
-
-  M = GapInputToMatrixPtr(main);
-
-  set_initialize(&R, M->rowsize);
-  set_initialize(&S, M->rowsize);
-
-  dd_WriteMatrix(stdout, M);
-
-  FacesOfPolyhedron(M, R, S, 0);
-
-  return INTOBJ_INT(0);
-}
 /******************************************************************/
 
 typedef Obj (*GVarFunc)(/*arguments*/);
@@ -674,8 +658,6 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_DimAndInteriorPoint, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_FourierElimination, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_FacesWithDimensionAndInteriorPoints, 2, "main, mindim"),
-
-    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_poly_and_give_it_back, 1, "list"),
 
     {0} /* Finish with an empty entry */
 
