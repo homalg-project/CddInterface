@@ -16,12 +16,10 @@
 *    Auxiliary functions to be used inside C 
 * 
 * ********************************************************/
-static int lin_array[dd_linelenmax];
 static long int result[dd_linelenmax];
 static mytype value;
 
 static void reset_global_variables(){
-  memset(lin_array, 0, 1);
   memset(result, 0, 1 );
   dd_init( value );
 }
@@ -231,25 +229,24 @@ static int ddG_LinearitySize(dd_MatrixPtr M)
   return u;
 }
 
-static int *ddG_LinearityPtr(dd_MatrixPtr M)
+static Obj ddG_LinearityPtr(dd_MatrixPtr M)
 {
   dd_rowrange r;
   dd_rowset s;
-  int i, u;
+  int i;
 
   r = ddG_RowSize(M);
   s = ddG_RowSet(M);
 
-  u = 0;
+  Obj current = NEW_PLIST(T_PLIST, 16);
   for (i = 1; i <= r; i++)
     if (set_member(i, s))
-    {
-      lin_array[u] = i;
-      u = u + 1;
-    }
+      AddPlist(current, INTOBJ_INT(i));
 
-  return lin_array;
+  return current;
 }
+
+
 
 static long int *ddG_InteriorPoint(dd_MatrixPtr M)
 {
@@ -354,22 +351,9 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
 
   size_t i1, size1;
   int i, j, size;
-  int *lin;
   mpz_t u, v;
 
-  lin = ddG_LinearityPtr(M);
-  size = ddG_LinearitySize(M);
-  size1 = size;
-
-  current = NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
-
-  for (i = 0; i < size; i++)
-  {
-    i1 = i;
-    ASS_LIST(current, i1 + 1, INTOBJ_INT(*(lin + i)));
-  }
-
-  ASS_LIST(result, 6, current);
+  ASS_LIST(result, 6, ddG_LinearityPtr(M));
 
   dd_rowrange r;
   dd_colrange s;
@@ -522,21 +506,11 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
 
     ASS_LIST(result, 1, INTOBJ_INT(dim));
 
-    size_t i1, size1;
-    int i, size;
-    int *lin;
+    size_t i1;
+    int i;
     Obj current, r;
-    lin = ddG_LinearityPtr(M);
-    size = ddG_LinearitySize(M);
-    size1 = size;
-    current = NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
-    for (i = 0; i < size; i++)
-    {
-      i1 = i;
-      ASS_LIST(current, i1 + 1, INTOBJ_INT(*(lin + i)));
-    }
 
-    ASS_LIST(result, 2, current);
+    ASS_LIST(result, 2, ddG_LinearityPtr(M));
 
     size_t j1, n;
     n = (lps->d) - 2;
@@ -557,7 +531,6 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
     {
 
       result_2 = NEW_PLIST(T_PLIST_CYC, 1 + M->rowsize);
-      size1 = M->rowsize;
       ASS_LIST(result_2, 1, result);
 
       for (i = 1; i <= M->rowsize; i++)
