@@ -8,7 +8,6 @@ echo "Building cdd"
 cd cddlib
 make clean
 ./bootstrap.sh
-./bootstrap.sh
 mkdir build
 ./configure --prefix=$(pwd)/build
 make
