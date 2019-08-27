@@ -3,8 +3,8 @@
  */
 
 #include "src/compiled.h" /* GAP headers */
-#include "../cddlib/lib-src-gmp/setoper.h"
-#include "../cddlib/lib-src-gmp/cdd.h"
+#include "../current_cddlib/lib-src/setoper.h"
+#include "../current_cddlib/lib-src/cdd.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
