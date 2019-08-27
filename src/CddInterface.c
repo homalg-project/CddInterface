@@ -595,14 +595,13 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
                               k_colrange, k_linearity_array, k_matrix, k_LPobject, k_rowvec);
 }
 
-static dd_boolean FacesOfPolyhedron(dd_MatrixPtr M, dd_rowset R, dd_rowset S, dd_colrange mindim)
+static void FacesOfPolyhedron(dd_MatrixPtr M, dd_rowset R, dd_rowset S, dd_colrange mindim)
 {
   dd_ErrorType err;
   dd_rowset LL, ImL, RR, SS, Lbasis;
   dd_rowrange i, iprev = 0;
   dd_colrange j, dim;
   dd_LPSolutionPtr lps = NULL;
-  dd_boolean success = dd_FALSE;
 
   set_initialize(&LL, M->rowsize);
   set_initialize(&RR, M->rowsize);
@@ -645,10 +644,7 @@ static dd_boolean FacesOfPolyhedron(dd_MatrixPtr M, dd_rowset R, dd_rowset S, dd
       set_free(LL);
       set_free(RR);
       set_free(SS);
-      return success;
     }
-    else
-    success = dd_TRUE;
 }
 
 static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S, dd_colrange mindim)
