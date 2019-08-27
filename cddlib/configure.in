@@ -5,6 +5,7 @@ dnl Init automake.
 AM_INIT_AUTOMAKE(cddlib, 0.94)
 
 dnl Checks for programs.
+AM_PROG_AR
 AC_PROG_CC
 AC_PROG_INSTALL
 LT_INIT
