@@ -71,91 +71,6 @@ static Obj MPQ_TO_GAPOBJ(const mpq_t x)
 * 
 * ********************************************************/
 
-
-//
-static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_rowrange k_rowrange,
-                                  dd_colrange k_colrange, char k_linearity_arrayx[dd_linelenmax],
-                                  char k_matrixx[], int k_LPobject, char k_rowvecx[dd_linelenmax])
-{
-
-  char k_value[dd_linelenmax];
-  char *pch;
-  int u;
-  dd_MatrixPtr M = NULL;
-  mytype rational_value;
-
-  // // creating the matrix with these two dimesnions
-  M = dd_CreateMatrix(k_rowrange, k_colrange);
-  // controling if the given representation is H or V.
-  if (k_rep == 2)
-    M->representation = dd_Generator;
-  else if (k_rep == 1)
-    M->representation = dd_Inequality;
-  else
-    M->representation = dd_Unspecified;
-
-  //
-  // controling the numbertype in the matrix
-  if (k_numtype == 3)
-    M->numbtype = dd_Integer;
-  else if (k_numtype == 2)
-    M->numbtype = dd_Rational;
-  else if (k_numtype == 1)
-    M->numbtype = dd_Real;
-  else
-    M->numbtype = dd_Unknown;
-
-  //
-  //  controling the linearity of the given polygon.
-  if (k_linearity == 1)
-  {
-    dd_SetLinearity(M, k_linearity_arrayx);
-  }
-  //
-  // // filling the matrix with elements scanned from the string k_matrix
-  //
-  
-  pch = strtok(k_matrixx, " ,.{}][");
-  int uu,vv;
-
-  for (uu = 0; uu < k_rowrange; uu++){
-  for (vv = 0; vv < k_colrange; vv++){
-  	//fprintf(stdout, "uu:%d: ", uu );
-  	//fprintf(stdout, "vv:%d: ", vv );
-
-    	strcpy(k_value, pch);
-    	dd_init(rational_value);
-    	dd_sread_rational_value(k_value, rational_value);
-    	dd_set(M->matrix[uu][vv], rational_value);
-    	dd_clear(rational_value);
-    	pch = strtok(NULL, " ,.{}][");
-  }
-  } 
-
-  if (k_LPobject == 0)
-    M->objective = dd_LPnone;
-  else if (k_LPobject == 1)
-    M->objective = dd_LPmax;
-  else
-    M->objective = dd_LPmin;
-
-  if (M->objective == dd_LPmax || M->objective == dd_LPmin)
-  {
-    pch = strtok(k_rowvecx, " ,.{}][");
-    for (u = 0; u < M->colsize; u++)
-    {
-      strcpy(k_value, pch);
-      dd_init(rational_value);
-      dd_sread_rational_value(k_value, rational_value);
-      dd_set(M->rowvec[u], rational_value);
-      dd_clear(rational_value);
-      pch = strtok(NULL, " ,.{}][");
-    }
-  }
-
-  return M;
-}
-
 static Obj ddG_LinearityPtr(dd_MatrixPtr M)
 {
   dd_rowrange r;
@@ -292,8 +207,82 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
   strcpy(k_matrix, CSTR_STRING(ELM_PLIST(input, 7)));
   strcpy(k_rowvec, CSTR_STRING(ELM_PLIST(input, 9)));
 
-  return ddG_PolyInput2Matrix(k_rep, k_numtype, k_linearity, k_rowrange,
-                              k_colrange, k_linearity_array, k_matrix, k_LPobject, k_rowvec);
+  char k_value[dd_linelenmax];
+  char *pch;
+  int u;
+  dd_MatrixPtr M = NULL;
+  mytype rational_value;
+
+  // // creating the matrix with these two dimesnions
+  M = dd_CreateMatrix(k_rowrange, k_colrange);
+  // controling if the given representation is H or V.
+  if (k_rep == 2)
+    M->representation = dd_Generator;
+  else if (k_rep == 1)
+    M->representation = dd_Inequality;
+  else
+    M->representation = dd_Unspecified;
+
+  //
+  // controling the numbertype in the matrix
+  if (k_numtype == 3)
+    M->numbtype = dd_Integer;
+  else if (k_numtype == 2)
+    M->numbtype = dd_Rational;
+  else if (k_numtype == 1)
+    M->numbtype = dd_Real;
+  else
+    M->numbtype = dd_Unknown;
+
+  //
+  //  controling the linearity of the given polygon.
+  if (k_linearity == 1)
+  {
+    dd_SetLinearity(M, k_linearity_array);
+  }
+  //
+  // // filling the matrix with elements scanned from the string k_matrix
+  //
+  
+  pch = strtok(k_matrix, " ,.{}][");
+  int uu,vv;
+
+  for (uu = 0; uu < k_rowrange; uu++){
+  for (vv = 0; vv < k_colrange; vv++){
+  	//fprintf(stdout, "uu:%d: ", uu );
+  	//fprintf(stdout, "vv:%d: ", vv );
+
+    	strcpy(k_value, pch);
+    	dd_init(rational_value);
+    	dd_sread_rational_value(k_value, rational_value);
+    	dd_set(M->matrix[uu][vv], rational_value);
+    	dd_clear(rational_value);
+    	pch = strtok(NULL, " ,.{}][");
+  }
+  } 
+
+  if (k_LPobject == 0)
+    M->objective = dd_LPnone;
+  else if (k_LPobject == 1)
+    M->objective = dd_LPmax;
+  else
+    M->objective = dd_LPmin;
+
+  if (M->objective == dd_LPmax || M->objective == dd_LPmin)
+  {
+    pch = strtok(k_rowvec, " ,.{}][");
+    for (u = 0; u < M->colsize; u++)
+    {
+      strcpy(k_value, pch);
+      dd_init(rational_value);
+      dd_sread_rational_value(k_value, rational_value);
+      dd_set(M->rowvec[u], rational_value);
+      dd_clear(rational_value);
+      pch = strtok(NULL, " ,.{}][");
+    }
+  }
+
+  return M;
 }
 
 static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S, dd_colrange mindim)
