@@ -78,53 +78,33 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
                                   char k_matrixx[], int k_LPobject, char k_rowvecx[dd_linelenmax])
 {
 
-  char numbtype[dd_linelenmax], k_value[dd_linelenmax];
+  char k_value[dd_linelenmax];
   char *pch;
   int u;
   dd_MatrixPtr M = NULL;
-  dd_RepresentationType rep;
-  dd_NumberType NT;
   mytype rational_value;
 
   // // creating the matrix with these two dimesnions
   M = dd_CreateMatrix(k_rowrange, k_colrange);
   // controling if the given representation is H or V.
   if (k_rep == 2)
-  {
-    rep = dd_Generator;
-  }
+    M->representation = dd_Generator;
   else if (k_rep == 1)
-  {
-    rep = dd_Inequality;
-  }
+    M->representation = dd_Inequality;
   else
-  {
-    rep = dd_Unspecified;
-  }
+    M->representation = dd_Unspecified;
 
-  M->representation = rep;
   //
   // controling the numbertype in the matrix
   if (k_numtype == 3)
-  {
-    strcpy(numbtype, "integer");
-  }
+    M->numbtype = dd_Integer;
   else if (k_numtype == 2)
-  {
-    strcpy(numbtype, "rational");
-  }
+    M->numbtype = dd_Rational;
   else if (k_numtype == 1)
-  {
-    strcpy(numbtype, "real");
-  }
+    M->numbtype = dd_Real;
   else
-  {
-    strcpy(numbtype, "unspecified");
-  }
+    M->numbtype = dd_Unknown;
 
-  NT = dd_GetNumberType(numbtype);
-  //
-  M->numbtype = NT;
   //
   //  controling the linearity of the given polygon.
   if (k_linearity == 1)
@@ -153,19 +133,13 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
   } 
 
   if (k_LPobject == 0)
-  {
     M->objective = dd_LPnone;
-  }
   else if (k_LPobject == 1)
-  {
     M->objective = dd_LPmax;
-  }
   else
-  {
     M->objective = dd_LPmin;
-  }
 
-  if (k_LPobject == 1 || k_LPobject == 2)
+  if (M->objective == dd_LPmax || M->objective == dd_LPmin)
   {
     pch = strtok(k_rowvecx, " ,.{}][");
     for (u = 0; u < M->colsize; u++)
@@ -307,9 +281,7 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
   k_LPobject = INT_INTOBJ(ELM_PLIST(input, 8));
   Obj string = ELM_PLIST(input, 7);
   if (k_colrange == 0)
-  {
-    ErrorMayQuit("This should not happen, please report this!", 0, 0);
-  }
+    ErrorMayQuit("k_colrange == 0 should not happen, please report this!", 0, 0);
 
   int str_len = GET_LEN_STRING(string);
   //fprintf(stdout, "%d: ", str_len);
