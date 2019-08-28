@@ -173,17 +173,10 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
   dd_rowrange nrRows = M->rowsize;
   dd_colrange nrCols = M->colsize;
 
-  //dd_WriteMatrix(stdout, M);
   result = NEW_PLIST(T_PLIST_CYC, 7);
 
-  // reading the representation of M
   ASS_LIST(result, 1, INTOBJ_INT(M->representation));
-
-  // reading the number type
-  ASS_LIST(result, 2, INTOBJ_INT(M->numbtype));
-
-  // entry 3 is left unbound on purpose
-
+  // entry 2 & 3 are intentionally left unbound
   ASS_LIST(result, 4, INTOBJ_INT(nrRows));
   ASS_LIST(result, 5, INTOBJ_INT(nrCols));
   ASS_LIST(result, 6, ddG_LinearityPtr(M));
@@ -227,9 +220,10 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
 
   dd_MatrixPtr M = NULL;
 
-  // // creating the matrix with these two dimesnions
+  // creating the matrix with the given dimensions
   M = dd_CreateMatrix(k_rowrange, k_colrange);
-  // controling if the given representation is H or V.
+
+  // check whether the given representation is H or V
   if (k_rep == 2)
     M->representation = dd_Generator;
   else if (k_rep == 1)
@@ -237,12 +231,10 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
   else
     M->representation = dd_Unspecified;
 
-  //
-  // controling the numbertype in the matrix
+  // set the numbertype of the matrix
   M->numbtype = dd_Rational;
 
-  //
-  //  controling the linearity of the given polygon.
+  // set the linearity of the given polygon
   const Int len = LEN_LIST(k_linearity_array);
   for (int i = 1; i <= len; i++)
   {
@@ -250,9 +242,7 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
     set_addelem(M->linset, INT_INTOBJ(val));
   }
 
-  //
-  // // filling the matrix with elements scanned from the string k_matrix
-  //
+  // fill the matrix with elements scanned from the GAP matrix k_matrix
   for (int uu = 0; uu < k_rowrange; uu++){
     Obj row = ELM_LIST(k_matrix, uu + 1);
     for (int vv = 0; vv < k_colrange; vv++){
@@ -388,14 +378,14 @@ static Obj CddInterface_FourierElimination(Obj self, Obj main)
 {
   dd_MatrixPtr M, A, G;
   dd_PolyhedraPtr poly;
-  dd_ErrorType err;
-  err = dd_NoError;
-  dd_set_global_constants();
+  dd_ErrorType err = dd_NoError;
 
+  dd_set_global_constants();
   M = GapInputToMatrixPtr(main);
   A = dd_FourierElimination(M, &err);
   poly = dd_DDMatrix2Poly(A, &err);
   G = dd_CopyInequalities(poly);
+  dd_free_global_constants();
   return MatPtrToGapObj(G);
 }
 
@@ -403,33 +393,27 @@ static Obj CddInterface_DimAndInteriorPoint(Obj self, Obj main)
 {
   dd_MatrixPtr M;
   Obj result;
-
   dd_PolyhedraPtr poly;
-  dd_ErrorType err;
-  err = dd_NoError;
-  dd_set_global_constants();
+  dd_ErrorType err = dd_NoError;
 
+  dd_set_global_constants();
   M = GapInputToMatrixPtr(main);
-  //dd_WriteMatrix( stdout, M );
   poly = dd_DDMatrix2Poly(M, &err);
   M = dd_CopyInequalities(poly);
-  //dd_WriteMatrix( stdout, M );
-
   result = ddG_InteriorPoint(M);
-
   dd_free_global_constants();
-
   return result;
 }
 
 static Obj CddInterface_Canonicalize(Obj self, Obj main)
 {
   dd_MatrixPtr M;
-  dd_set_global_constants();
-  M = GapInputToMatrixPtr(main);
   dd_rowset impl_linset, redset;
   dd_rowindex newpos;
-  dd_ErrorType err;
+  dd_ErrorType err = dd_NoError;
+
+  dd_set_global_constants();
+  M = GapInputToMatrixPtr(main);
   dd_MatrixCanonicalize(&M, &impl_linset, &redset, &newpos, &err);
   dd_free_global_constants();
   return MatPtrToGapObj(M);
@@ -439,11 +423,10 @@ static Obj CddInterface_Compute_H_rep(Obj self, Obj main)
 {
   dd_MatrixPtr M, A;
   dd_PolyhedraPtr poly;
-  dd_ErrorType err;
-  err = dd_NoError;
+  dd_ErrorType err = dd_NoError;
+
   dd_set_global_constants();
   M = GapInputToMatrixPtr(main);
-
   poly = dd_DDMatrix2Poly(M, &err);
   A = dd_CopyInequalities(poly);
   dd_free_global_constants();
@@ -454,37 +437,33 @@ static Obj CddInterface_Compute_V_rep(Obj self, Obj main)
 {
   dd_MatrixPtr M, A;
   dd_PolyhedraPtr poly;
-  dd_ErrorType err;
-  err = dd_NoError;
+  dd_ErrorType err = dd_NoError;
+
   dd_set_global_constants();
   M = GapInputToMatrixPtr(main);
-
   poly = dd_DDMatrix2Poly(M, &err);
   A = dd_CopyGenerators(poly);
   dd_free_global_constants();
-
   return MatPtrToGapObj(A);
 }
 
 static Obj CddInterface_LpSolution(Obj self, Obj main)
 {
   dd_MatrixPtr M;
-  dd_ErrorType err;
+  dd_ErrorType err = dd_NoError;
   dd_LPPtr lp;
   dd_LPSolutionPtr lps;
-  dd_LPSolverType solver;
+  dd_LPSolverType solver = dd_DualSimplex;
   size_t n;
   dd_colrange j;
-  dd_set_global_constants();
-  solver = dd_DualSimplex;
-  err = dd_NoError;
   Obj current, res;
 
+  dd_set_global_constants();
   M = GapInputToMatrixPtr(main);
   lp = dd_Matrix2LP(M, &err);
-
   dd_LPSolve(lp, solver, &err);
   lps = dd_CopyLPSolution(lp);
+  dd_free_global_constants();
 
   if (lps->LPS == dd_Optimal)
   {
@@ -499,26 +478,27 @@ static Obj CddInterface_LpSolution(Obj self, Obj main)
     res = NEW_PLIST(T_PLIST_CYC, 2);
     ASS_LIST(res, 1, current);
     ASS_LIST(res, 2, MPQ_TO_GAPOBJ(lps->optvalue));
-
-    return res;
   }
-
   else
+    res = Fail;
 
-    return Fail;
+
+  return res;
 }
 
 static Obj CddInterface_FacesWithDimensionAndInteriorPoints(Obj self, Obj main, Obj mindim)
 {
   dd_MatrixPtr M;
   dd_rowset R, S;
+  Obj result;
 
+  dd_set_global_constants();
   M = GapInputToMatrixPtr(main);
-
   set_initialize(&R, M->rowsize);
   set_initialize(&S, M->rowsize);
-
-  return FaceWithDimAndInteriorPoint(M, R, S, INT_INTOBJ(mindim));
+  result = FaceWithDimAndInteriorPoint(M, R, S, INT_INTOBJ(mindim));
+  dd_free_global_constants();
+  return result;
 }
 
 /******************************************************************/
