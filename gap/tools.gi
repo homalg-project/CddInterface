@@ -109,10 +109,12 @@ InstallMethod( IsCompatiblePolyhedronList,
     
     fi;
     
-    if not ( Length( list[ 7 ]  ) = 2 * list[ 4 ] * list[ 5 ] ) then
-      
-      return Error( "The matrix is not compatible" );
+    if NrRows( list[ 7 ] ) <> list[ 4 ] then
+      return Error( "The matrix has the wrong number of rows" );
+    fi;
     
+    if NrCols( list[ 7 ] ) <> list[ 5 ] then
+      return Error( "The matrix has the wrong number of columns" );
     fi;
     
     for i in list[ 6 ] do
@@ -130,51 +132,6 @@ InstallMethod( IsCompatiblePolyhedronList,
 end );
 
 ##
-InstallMethod( ConvertRatListToIntList,
-            [ IsList ],
-  function( list )
-    local i, res;
-    
-    res:= [];
-    
-    for i in [1..Length( list ) ] do
-      
-      Add( res, NumeratorRat( list[ i ] ) );
-      
-      Add( res, DenominatorRat( list[ i ] ) );
-    
-    od;
-    
-    return res;
-    
-end );
-
-##
-InstallMethod( ConvertIntListToRatList,
-        [ IsList ],
-  function( list )
-    
-    return List( [ 1 .. Length( list ) / 2 ], i -> list[ 2 * i - 1] / list[ 2 * i ] );
-    
-end );
-
-##
-InstallMethod( ConvertListToListOfVectors,
-        [IsList, IsInt ],
- function( list, size )
-   
-   if Length( list ) mod size <> 0 then
-     
-     return Error( "Not compatible" );
-   
-   fi;
-   
-   return List( [ 1 .. Length( list )/ size ],
-        i -> List( [ 1 .. size ], j -> list[ size * ( i - 1 ) + j ] ) );
-   
-end );
-
-##
 InstallMethod( LcmOfDenominatorRatInList,
                [ IsList ],
                
@@ -188,7 +145,7 @@ end );
 InstallMethod( ListToPoly,
                [ IsList ],
   function( list )
-    local numtype, matrix, temp, L, temp1, temp2, temp3, temp4, p, i;
+    local numtype, matrix, L, temp1, temp2, temp3, temp4, p, i;
     
     if not IsCompatiblePolyhedronList( list ) then
       
@@ -198,9 +155,7 @@ InstallMethod( ListToPoly,
     
     if Length( list[ 7 ] ) <> 0 then
       
-      temp:= ConvertIntListToRatList( list[ 7 ] );
-      
-      matrix:= ConvertListToListOfVectors( temp, list[ 5 ] );
+      matrix:= list[ 7 ];
       
       matrix:= CanonicalizeList( matrix, list[ 1 ] );
     

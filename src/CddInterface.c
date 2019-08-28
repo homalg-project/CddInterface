@@ -16,17 +16,6 @@
 *    Auxiliary functions to be used inside C 
 * 
 * ********************************************************/
-static int str_len;
-static int lin_array[dd_linelenmax];
-static long int result[dd_linelenmax];
-static mytype value;
-
-static void reset_global_variables(){
-  str_len = 0;
-  memset(lin_array, 0, 1);
-  memset(result, 0, 1 );
-  dd_init( value );
-}
 
 extern void dd_SetLinearity(dd_MatrixPtr, char *);
 
@@ -38,8 +27,8 @@ extern void dd_SetLinearity(dd_MatrixPtr, char *);
 // }
 
 // The following conversion has been taken from
-// https://github.com/gap-packages/NormalizInterface/src
-// Thanks to Sebastian Gutsche
+// https://github.com/gap-packages/NormalizInterface
+// Thanks to Max Horn
 static Obj MPZ_TO_GAPOBJ( const mpz_t x)
 {
     Obj res;
@@ -71,13 +60,9 @@ static Obj MPZ_TO_GAPOBJ( const mpz_t x)
 
 static Obj MPQ_TO_GAPOBJ(const mpq_t x)
 {
-  mpz_t num, den;
-  //gmp_printf ("a hex rational: %#40Qx\n", x);
-  mpz_init(num);
-  mpz_init(den);
-  mpq_get_num(num, x);
-  mpq_get_den(den, x);
-  return QUO(MPZ_TO_GAPOBJ(num), MPZ_TO_GAPOBJ(den));
+  Obj num = MPZ_TO_GAPOBJ(mpq_numref(x));
+  Obj den = MPZ_TO_GAPOBJ(mpq_denref(x));
+  return QUO(num, den);
 }
 
 /**********************************************************
@@ -89,21 +74,17 @@ static Obj MPQ_TO_GAPOBJ(const mpq_t x)
 
 //
 static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_linearity, dd_rowrange k_rowrange,
-                                  dd_colrange k_colrange, char k_linearity_array[dd_linelenmax],
-                                  char k_matrix[str_len], int k_LPobject, char k_rowvec[dd_linelenmax])
+                                  dd_colrange k_colrange, char k_linearity_arrayx[dd_linelenmax],
+                                  char k_matrixx[], int k_LPobject, char k_rowvecx[dd_linelenmax])
 {
 
-  char numbtype[dd_linelenmax], k_value[dd_linelenmax], k_matrixx[str_len], k_linearity_arrayx[dd_linelenmax], k_rowvecx[dd_linelenmax];
+  char numbtype[dd_linelenmax], k_value[dd_linelenmax];
   char *pch;
   int u;
   dd_MatrixPtr M = NULL;
   dd_RepresentationType rep;
   dd_NumberType NT;
   mytype rational_value;
-
-  strcpy(k_matrixx, k_matrix);
-  strcpy(k_linearity_arrayx, k_linearity_array);
-  strcpy(k_rowvecx, k_rowvec);
 
   // // creating the matrix with these two dimesnions
   M = dd_CreateMatrix(k_rowrange, k_colrange);
@@ -156,7 +137,7 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
   
   pch = strtok(k_matrixx, " ,.{}][");
   int uu,vv;
-  
+
   for (uu = 0; uu < k_rowrange; uu++){
   for (vv = 0; vv < k_colrange; vv++){
   	//fprintf(stdout, "uu:%d: ", uu );
@@ -165,8 +146,7 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
     	strcpy(k_value, pch);
     	dd_init(rational_value);
     	dd_sread_rational_value(k_value, rational_value);
-    	dd_set(value, rational_value);
-    	dd_set(M->matrix[uu][vv], value);
+    	dd_set(M->matrix[uu][vv], rational_value);
     	dd_clear(rational_value);
     	pch = strtok(NULL, " ,.{}][");
   }
@@ -193,29 +173,13 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
       strcpy(k_value, pch);
       dd_init(rational_value);
       dd_sread_rational_value(k_value, rational_value);
-      dd_set(value, rational_value);
+      dd_set(M->rowvec[u], rational_value);
       dd_clear(rational_value);
-      dd_set(M->rowvec[u], value);
       pch = strtok(NULL, " ,.{}][");
     }
   }
 
   return M;
-}
-
-static dd_rowrange ddG_RowSize(dd_MatrixPtr M)
-{
-  return M->rowsize;
-}
-
-static dd_colrange ddG_ColSize(dd_MatrixPtr M)
-{
-  return M->colsize;
-}
-
-static dd_rowset ddG_RowSet(dd_MatrixPtr M)
-{
-  return M->linset;
 }
 
 static int ddG_LinearitySize(dd_MatrixPtr M)
@@ -224,50 +188,41 @@ static int ddG_LinearitySize(dd_MatrixPtr M)
   dd_rowset s;
   int i, u;
 
-  r = ddG_RowSize(M);
-  s = ddG_RowSet(M);
+  r = M->rowsize;
+  s = M->linset;
 
   u = 0;
   for (i = 1; i <= r; i++)
     if (set_member(i, s))
-    {
-      u = u + 1;
-    }
+      u++;
 
   return u;
 }
 
-static int *ddG_LinearityPtr(dd_MatrixPtr M)
+static Obj ddG_LinearityPtr(dd_MatrixPtr M)
 {
   dd_rowrange r;
   dd_rowset s;
-  int i, u;
+  int i;
 
-  r = ddG_RowSize(M);
-  s = ddG_RowSet(M);
+  r = M->rowsize;
+  s = M->linset;
 
-  u = 0;
+  Obj current = NEW_PLIST(T_PLIST, 16);
   for (i = 1; i <= r; i++)
     if (set_member(i, s))
-    {
-      lin_array[u] = i;
-      u = u + 1;
-    }
+      AddPlist(current, INTOBJ_INT(i));
 
-  return lin_array;
+  return current;
 }
 
-static long int *ddG_InteriorPoint(dd_MatrixPtr M)
+static Obj ddG_InteriorPoint(dd_MatrixPtr M)
 {
   dd_rowset R, S;
   dd_rowset LL, ImL, RR, SS, Lbasis;
   dd_LPSolutionPtr lps = NULL;
   dd_ErrorType err;
-  long int j, z1, z2, dim;
-  mpz_t u, v;
-
-  mpz_init(u);
-  mpz_init(v);
+  long int j, dim;
 
   set_initialize(&R, M->rowsize);
   set_initialize(&S, M->rowsize);
@@ -278,23 +233,20 @@ static long int *ddG_InteriorPoint(dd_MatrixPtr M)
   set_copy(RR, R);         /* copy of R. */
   set_copy(SS, S);         /* copy of S. */
 
+  Obj result;
+
   if (dd_ExistsRestrictedFace(M, R, S, &err))
   {
     set_uni(M->linset, M->linset, R);
     dd_FindRelativeInterior(M, &ImL, &Lbasis, &lps, &err);
     dim = M->colsize - set_card(Lbasis) - 1;
     set_uni(M->linset, M->linset, ImL);
-    result[0] = dim;
+
+    result = NEW_PLIST(T_PLIST_EMPTY, lps->d);
+    ASS_LIST(result, 1, INTOBJ_INT(dim));
     for (j = 1; j < (lps->d) - 1; j++)
     {
-
-      mpq_get_num(u, lps->sol[j]);
-      mpq_get_den(v, lps->sol[j]);
-      z1 = mpz_get_si(u);
-      z2 = mpz_get_si(v);
-
-      result[2 * (j - 1) + 1] = z1;
-      result[2 * (j - 1) + 2] = z2;
+      ASS_LIST(result, j + 1, MPQ_TO_GAPOBJ(lps->sol[j]));
     }
 
     dd_FreeLPSolution(lps);
@@ -303,14 +255,8 @@ static long int *ddG_InteriorPoint(dd_MatrixPtr M)
   }
   else
   {
-
-    result[0] = -1;
-
-    for (j = 1; j < 2 * ddG_ColSize(M) + 1; j++)
-    {
-
-      result[j] = 0;
-    }
+    result = NEW_PLIST(T_PLIST_EMPTY, 1);
+    ASS_LIST(result, 1, INTOBJ_INT(-1));
   }
 
   set_copy(M->linset, LL); /* restore the linset */
@@ -321,102 +267,44 @@ static long int *ddG_InteriorPoint(dd_MatrixPtr M)
   return result;
 }
 
-static int ddG_RepresentationType(dd_MatrixPtr M)
-{
-  return M->representation;
-}
-
-static int ddG_NumberType(dd_MatrixPtr M)
-{
-  return M->numbtype;
-}
-
-static char *RATPLIST_STR(Obj string)
-{
-  char *input_string = CSTR_STRING(string);
-  return input_string;
-}
-
-static char *PLIST_STR(Obj string)
-{
-  char *input_string = CSTR_STRING(string);
-  return input_string;
-}
-
 static Obj MatPtrToGapObj(dd_MatrixPtr M)
 {
   Obj current, result;
   dd_Amatrix Ma;
+  dd_rowrange nrRows = M->rowsize;
+  dd_colrange nrCols = M->colsize;
 
   //dd_WriteMatrix(stdout, M);
   result = NEW_PLIST(T_PLIST_CYC, 7);
 
   // reading the representation of M
-  current = INTOBJ_INT(ddG_RepresentationType(M));
-  ASS_LIST(result, 1, current);
+  ASS_LIST(result, 1, INTOBJ_INT(M->representation));
 
   // reading the number type
-  current = INTOBJ_INT(ddG_NumberType(M));
-  ASS_LIST(result, 2, current);
+  ASS_LIST(result, 2, INTOBJ_INT(M->numbtype));
 
   if (ddG_LinearitySize(M) == 0)
     ASS_LIST(result, 3, INTOBJ_INT(0));
   else
     ASS_LIST(result, 3, INTOBJ_INT(1));
 
-  current = INTOBJ_INT(ddG_RowSize(M));
-  ASS_LIST(result, 4, current);
-
-  current = INTOBJ_INT(ddG_ColSize(M));
-  ASS_LIST(result, 5, current);
-
-  size_t i1, size1;
-  int i, j, size;
-  int *lin;
-  mpz_t u, v;
-
-  lin = ddG_LinearityPtr(M);
-  size = ddG_LinearitySize(M);
-  size1 = size;
-
-  current = NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
-
-  for (i = 0; i < size; i++)
-  {
-    i1 = i;
-    ASS_LIST(current, i1 + 1, INTOBJ_INT(*(lin + i)));
-  }
-
-  ASS_LIST(result, 6, current);
-
-  dd_rowrange r;
-  dd_colrange s;
-
-  r = ddG_RowSize(M);
-  s = ddG_ColSize(M);
+  ASS_LIST(result, 4, INTOBJ_INT(nrRows));
+  ASS_LIST(result, 5, INTOBJ_INT(nrCols));
+  ASS_LIST(result, 6, ddG_LinearityPtr(M));
 
   Ma = M->matrix;
 
-  size = 2 * s * r;
-  size1 = size;
+  current = NEW_PLIST(T_PLIST_CYC, nrRows);
 
-  current = NEW_PLIST(T_PLIST_CYC, size1);
-
-  mpz_init(u);
-  mpz_init(v);
-
-  for (i = 0; i < r; i++)
-    for (j = 0; j < s; j++)
+  for (int i = 0; i < nrRows; i++)
+  {
+    Obj row = NEW_PLIST(T_PLIST_CYC, nrCols);
+    ASS_LIST(current, i+1, row);
+    for (int j = 0; j < nrCols; j++)
     {
-      mpq_get_num(u, *(*(Ma + i) + j));
-      mpq_get_den(v, *(*(Ma + i) + j));
-
-      //gmp_printf ("%s is an mpz %Zd\n", " u = ", u);
-      //gmp_printf ("%s is an mpz %Zd\n", " v = ", v);
-
-      ASS_LIST(current, 2 * (i * s + j) + 1, MPZ_TO_GAPOBJ(u));
-      ASS_LIST(current, 2 * (i * s + j) + 2, MPZ_TO_GAPOBJ(v));
+      ASS_LIST(row, j+1, MPQ_TO_GAPOBJ(Ma[i][j]));
     }
+  }
 
   ASS_LIST(result, 7, current);
   return result;
@@ -430,7 +318,6 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
 
   // reset the global variable, before defining it again to be used in the current session.
   dd_set_global_constants();
-  reset_global_variables( );
 
   k_rep = INT_INTOBJ(ELM_PLIST(input, 1));
   k_numtype = INT_INTOBJ(ELM_PLIST(input, 2));
@@ -444,23 +331,14 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
     ErrorMayQuit("This should not happen, please report this!", 0, 0);
   }
 
-  str_len = GET_LEN_STRING(string);
+  int str_len = GET_LEN_STRING(string);
   //fprintf(stdout, "%d: ", str_len);
   //ErrorMayQuit( "j", 0, 0 );
 
   char k_matrix[str_len];
-  strcpy(k_linearity_array, PLIST_STR(ELM_PLIST(input, 6)));
-
-  if (k_numtype == 3)
-  {
-    strcpy(k_matrix, PLIST_STR(ELM_PLIST(input, 7)));
-  }
-  else
-  {
-    strcpy(k_matrix, RATPLIST_STR(ELM_PLIST(input, 7)));
-  }
-
-  strcpy(k_rowvec, RATPLIST_STR(ELM_PLIST(input, 9)));
+  strcpy(k_linearity_array, CSTR_STRING(ELM_PLIST(input, 6)));
+  strcpy(k_matrix, CSTR_STRING(ELM_PLIST(input, 7)));
+  strcpy(k_rowvec, CSTR_STRING(ELM_PLIST(input, 9)));
 
   return ddG_PolyInput2Matrix(k_rep, k_numtype, k_linearity, k_rowrange,
                               k_colrange, k_linearity_array, k_matrix, k_LPobject, k_rowvec);
@@ -549,29 +427,17 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
 
     ASS_LIST(result, 1, INTOBJ_INT(dim));
 
-    size_t i1, size1;
-    int i, size;
-    int *lin;
-    Obj current, r;
-    lin = ddG_LinearityPtr(M);
-    size = ddG_LinearitySize(M);
-    size1 = size;
-    current = NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
-    for (i = 0; i < size; i++)
-    {
-      i1 = i;
-      ASS_LIST(current, i1 + 1, INTOBJ_INT(*(lin + i)));
-    }
+    int i;
+    Obj r;
 
-    ASS_LIST(result, 2, current);
+    ASS_LIST(result, 2, ddG_LinearityPtr(M));
 
-    size_t j1, n;
+    size_t n;
     n = (lps->d) - 2;
     current2 = NEW_PLIST((n > 0) ? T_PLIST_CYC : T_PLIST, n);
     for (j = 1; j <= n; j++)
     {
-      j1 = j;
-      ASS_LIST(current2, j1, MPQ_TO_GAPOBJ(lps->sol[j]));
+      ASS_LIST(current2, j, MPQ_TO_GAPOBJ(lps->sol[j]));
     }
 
     ASS_LIST(result, 3, current2);
@@ -584,12 +450,10 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
     {
 
       result_2 = NEW_PLIST(T_PLIST_CYC, 1 + M->rowsize);
-      size1 = M->rowsize;
       ASS_LIST(result_2, 1, result);
 
       for (i = 1; i <= M->rowsize; i++)
       {
-        i1 = i;
         if (!set_member(i, M->linset) && !set_member(i, S))
         {
           set_addelem(RR, i);
@@ -601,11 +465,11 @@ static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S,
           }
           iprev = i;
           r = FaceWithDimAndInteriorPoint(M, RR, SS, mindim);
-          ASS_LIST(result_2, i1 + 1, r);
+          ASS_LIST(result_2, i + 1, r);
         }
         else
         {
-          ASS_LIST(result_2, i1 + 1, INTOBJ_INT(2019));
+          ASS_LIST(result_2, i + 1, INTOBJ_INT(2019));
         }
       }
 
@@ -656,10 +520,6 @@ static Obj CddInterface_DimAndInteriorPoint(Obj self, Obj main)
   dd_MatrixPtr M;
   Obj result;
 
-  long int *interior_point;
-  size_t i1, size1;
-  int i, size;
-
   dd_PolyhedraPtr poly;
   dd_ErrorType err;
   err = dd_NoError;
@@ -671,19 +531,7 @@ static Obj CddInterface_DimAndInteriorPoint(Obj self, Obj main)
   M = dd_CopyInequalities(poly);
   //dd_WriteMatrix( stdout, M );
 
-  interior_point = ddG_InteriorPoint(M);
-  size = ddG_ColSize(M);
-  size1 = size;
-
-  result = NEW_PLIST((size1 > 0) ? T_PLIST_CYC : T_PLIST, size1);
-
-  ASS_LIST(result, 1, INTOBJ_INT(*(interior_point)));
-
-  for (i = 1; i < size; i++)
-  {
-    i1 = i;
-    ASS_LIST(result, i1 + 1, QUO(INTOBJ_INT(*(interior_point + 2 * i - 1)), INTOBJ_INT(*(interior_point + 2 * i))));
-  }
+  result = ddG_InteriorPoint(M);
 
   dd_free_global_constants();
 
@@ -741,7 +589,7 @@ static Obj CddInterface_LpSolution(Obj self, Obj main)
   dd_LPPtr lp;
   dd_LPSolutionPtr lps;
   dd_LPSolverType solver;
-  size_t n, i;
+  size_t n;
   dd_colrange j;
   dd_set_global_constants();
   solver = dd_DualSimplex;
@@ -758,16 +606,13 @@ static Obj CddInterface_LpSolution(Obj self, Obj main)
   {
 
     n = lps->d - 1;
-    res = NEW_PLIST(T_PLIST_CYC, 2);
-
     current = NEW_PLIST(T_PLIST_CYC, n);
-
     for (j = 1; j <= n; j++)
     {
-      i = j;
-      ASS_LIST(current, i, MPQ_TO_GAPOBJ(lps->sol[j]));
+      ASS_LIST(current, j, MPQ_TO_GAPOBJ(lps->sol[j]));
     }
 
+    res = NEW_PLIST(T_PLIST_CYC, 2);
     ASS_LIST(res, 1, current);
     ASS_LIST(res, 2, MPQ_TO_GAPOBJ(lps->optvalue));
 
@@ -792,22 +637,6 @@ static Obj CddInterface_FacesWithDimensionAndInteriorPoints(Obj self, Obj main, 
   return FaceWithDimAndInteriorPoint(M, R, S, INT_INTOBJ(mindim));
 }
 
-static Obj take_poly_and_give_it_back(Obj self, Obj main)
-{
-  dd_MatrixPtr M;
-  dd_rowset R, S;
-
-  M = GapInputToMatrixPtr(main);
-
-  set_initialize(&R, M->rowsize);
-  set_initialize(&S, M->rowsize);
-
-  dd_WriteMatrix(stdout, M);
-
-  FacesOfPolyhedron(M, R, S, 0);
-
-  return INTOBJ_INT(0);
-}
 /******************************************************************/
 
 typedef Obj (*GVarFunc)(/*arguments*/);
@@ -829,8 +658,6 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_DimAndInteriorPoint, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_FourierElimination, 1, "main"),
     GVAR_FUNC_TABLE_ENTRY("CddInterface.c", CddInterface_FacesWithDimensionAndInteriorPoints, 2, "main, mindim"),
-
-    GVAR_FUNC_TABLE_ENTRY("CddInterface.c", take_poly_and_give_it_back, 1, "list"),
 
     {0} /* Finish with an empty entry */
 
