@@ -227,53 +227,40 @@ InstallMethod( PolyToList,
     L := [  ];
     
     if (poly!.rep_type= "H-rep" ) then
-      
-      Add( L, 1 );
-    
+      L[1] := 1;
     else
-    
-      Add( L, 2 ) ;
-    
+      L[1] := 2;
     fi;
     
     # the functions in c should be changned so that this can be deleted
-    Add( L, 2 );
+    L[2] := 2;
     
     if Length( poly!.linearity ) = 0 then
-      
-      Add( L, 0 );
-    
+      L[3] := 0;
     else
-      
-      Add( L, 1 );
-    
+      L[3] := 1;
     fi;
     
     matrix := poly!.matrix;
     
     if poly!.rep_type= "V-rep" and IsZero( matrix ) then
-      
       matrix := DuplicateFreeList( matrix );
-      
-      matrix[ 1 ][ 1 ] := 1;
-    
+      matrix[ 1, 1 ] := 1;
     fi;
     
-    Add( L, NrRows( matrix ) );
-    
-    Add( L, NrCols( matrix ) );
+    L[4] := NrRows( matrix );
+    L[5] := NrCols( matrix );
     
     lin := poly!.linearity;
     
     temp:= [ Length( lin ) ];
-    
     Append( temp, lin );
+    L[6] := ListToString( [ temp ] );
     
-    Add( L, ListToString( [ temp ] ) );
+    L[7] := ReplacedString( String( matrix ), ",", ""  );
     
-    Add( L, ReplacedString( String( matrix ), ",", ""  ) );
-    
-    Append( L, [ 0, [  ] ] );
+    L[8] := 0;
+    L[9] := [ ];
     
     return L;
     
