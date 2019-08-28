@@ -324,58 +324,6 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
                               k_colrange, k_linearity_array, k_matrix, k_LPobject, k_rowvec);
 }
 
-static void FacesOfPolyhedron(dd_MatrixPtr M, dd_rowset R, dd_rowset S, dd_colrange mindim)
-{
-  dd_ErrorType err;
-  dd_rowset LL, ImL, RR, SS, Lbasis;
-  dd_rowrange i, iprev = 0;
-  dd_colrange dim;
-  dd_LPSolutionPtr lps = NULL;
-
-  set_initialize(&LL, M->rowsize);
-  set_initialize(&RR, M->rowsize);
-  set_initialize(&SS, M->rowsize);
-  set_copy(LL, M->linset); /* rememer the linset. */
-  set_copy(RR, R);         /* copy of R. */
-  set_copy(SS, S);         /* copy of S. */
-  if (dd_ExistsRestrictedFace(M, R, S, &err))
-  {
-    set_uni(M->linset, M->linset, R);
-    dd_FindRelativeInterior(M, &ImL, &Lbasis, &lps, &err);
-    dim = M->colsize - set_card(Lbasis) - 1;
-    set_uni(M->linset, M->linset, ImL);
-    fprintf(stdout, "%ld: ", dim);
-    set_fwrite(stdout, M->linset);
-
-    if (dim > mindim)
-    {
-      for (i = 1; i <= M->rowsize; i++)
-      {
-        if (!set_member(i, M->linset) && !set_member(i, S))
-        {
-          set_addelem(RR, i);
-          if (iprev)
-          {
-            set_delelem(RR, iprev);
-            set_delelem(M->linset, iprev);
-            set_addelem(SS, iprev);
-          }
-          iprev = i;
-          FacesOfPolyhedron(M, RR, SS, mindim);
-        }
-      }
-    }
-  }
-  else
-    if (err != dd_NoError)
-    {
-      set_copy(M->linset, LL); /* restore the linset */
-      set_free(LL);
-      set_free(RR);
-      set_free(SS);
-    }
-}
-
 static Obj FaceWithDimAndInteriorPoint(dd_MatrixPtr N, dd_rowset R, dd_rowset S, dd_colrange mindim)
 {
   dd_ErrorType err;
