@@ -64,7 +64,6 @@ To create the documentation:
 
 To run the test files
 
-    gap maketest.g
     gap tst/testall.g
     
 ## Update
