@@ -90,17 +90,8 @@ InstallMethod( IsCompatiblePolyhedronList,
   function ( list )
     local i;
     
-    if not( list[ 1 ] >= 0 and list[ 2 ] >= 0
-          and list[ 3 ] >= 0 and list[ 4 ] >= 0 and list[ 5 ] >= 0 ) then
-      return Error( "The first five entries should be all positive" );
-    
-    fi;
-    
-    if not( IsInt( list[ 1 ] ) and IsInt( list[ 2 ] )
-          and IsInt( list[ 3 ] ) and  IsInt( list[ 4 ] ) and IsInt( list[ 5 ] ) ) then
-      
-      return Error( "The first  five arguments should be integrs" );
-    
+    if not ForAll( [1,2,4,5], i -> list[i] in NonnegativeIntegers) then
+      return Error( "The first five entries must be non-negative integers" );
     fi;
     
     if not( IsList( list[6]) and IsList( list[7] ) ) then
@@ -198,7 +189,7 @@ InstallMethod( ListToPoly,
             
           od;
           
-          if list[ 3 ] = 0 then
+          if Length( list[ 6 ] ) = 0 then
             
             return Cdd_PolyhedronByGenerators( temp3 );
           
@@ -210,7 +201,7 @@ InstallMethod( ListToPoly,
           
         fi;
         
-        if list[ 3 ] = 0 then
+        if Length( list[ 6 ] ) = 0 then
           
           return Cdd_PolyhedronByGenerators( matrix );
         
@@ -232,7 +223,7 @@ InstallMethod( ListToPoly,
         
       fi;
       
-      if list[ 3 ] = 0 then
+      if Length( list[ 6 ] ) = 0 then
         
         return Cdd_PolyhedronByInequalities( matrix );
       

@@ -182,23 +182,6 @@ static dd_MatrixPtr ddG_PolyInput2Matrix(int k_rep, int k_numtype, int k_lineari
   return M;
 }
 
-static int ddG_LinearitySize(dd_MatrixPtr M)
-{
-  dd_rowrange r;
-  dd_rowset s;
-  int i, u;
-
-  r = M->rowsize;
-  s = M->linset;
-
-  u = 0;
-  for (i = 1; i <= r; i++)
-    if (set_member(i, s))
-      u++;
-
-  return u;
-}
-
 static Obj ddG_LinearityPtr(dd_MatrixPtr M)
 {
   dd_rowrange r;
@@ -283,10 +266,7 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
   // reading the number type
   ASS_LIST(result, 2, INTOBJ_INT(M->numbtype));
 
-  if (ddG_LinearitySize(M) == 0)
-    ASS_LIST(result, 3, INTOBJ_INT(0));
-  else
-    ASS_LIST(result, 3, INTOBJ_INT(1));
+  // entry 3 is left unbound on purpose
 
   ASS_LIST(result, 4, INTOBJ_INT(nrRows));
   ASS_LIST(result, 5, INTOBJ_INT(nrCols));
