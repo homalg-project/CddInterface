@@ -182,14 +182,13 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
 static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
 {
 
-  int k_rep, k_numtype, k_linearity, k_rowrange, k_colrange, k_LPobject;
+  int k_rep, k_linearity, k_rowrange, k_colrange, k_LPobject;
   char k_linearity_array[dd_linelenmax], k_rowvec[dd_linelenmax];
 
   // reset the global variable, before defining it again to be used in the current session.
   dd_set_global_constants();
 
   k_rep = INT_INTOBJ(ELM_PLIST(input, 1));
-  k_numtype = INT_INTOBJ(ELM_PLIST(input, 2));
   k_linearity = INT_INTOBJ(ELM_PLIST(input, 3));
   k_rowrange = INT_INTOBJ(ELM_PLIST(input, 4));
   k_colrange = INT_INTOBJ(ELM_PLIST(input, 5));
@@ -225,14 +224,7 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
 
   //
   // controling the numbertype in the matrix
-  if (k_numtype == 3)
-    M->numbtype = dd_Integer;
-  else if (k_numtype == 2)
-    M->numbtype = dd_Rational;
-  else if (k_numtype == 1)
-    M->numbtype = dd_Real;
-  else
-    M->numbtype = dd_Unknown;
+  M->numbtype = dd_Rational;
 
   //
   //  controling the linearity of the given polygon.

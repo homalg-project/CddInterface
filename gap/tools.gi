@@ -232,8 +232,7 @@ InstallMethod( PolyToList,
       L[1] := 2;
     fi;
     
-    # the functions in c should be changned so that this can be deleted
-    L[2] := 2;
+    #L[2] := 2; # unused
     
     if Length( poly!.linearity ) = 0 then
       L[3] := 0;
