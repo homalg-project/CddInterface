@@ -19,17 +19,10 @@
 
 extern void dd_SetLinearity(dd_MatrixPtr, char *);
 
-// Old implementation
-// Obj MPZ_TO_GAPOBJ(mpz_t x)
-// {
-//   //gmp_printf ("%s is an mpz %Zd\n", "here", x);
-//   return INTOBJ_INT(mpz_get_si(x));
-// }
-
 // The following conversion has been taken from
 // https://github.com/gap-packages/NormalizInterface
 // Thanks to Max Horn
-static Obj MPZ_TO_GAPOBJ( const mpz_t x)
+static Obj MPZ_TO_GAPOBJ(const mpz_t x)
 {
     Obj res;
     Int size = x->_mp_size;
@@ -63,6 +56,40 @@ static Obj MPQ_TO_GAPOBJ(const mpq_t x)
   Obj num = MPZ_TO_GAPOBJ(mpq_numref(x));
   Obj den = MPZ_TO_GAPOBJ(mpq_denref(x));
   return QUO(num, den);
+}
+
+static void GAPOBJ_TO_MPZ(mpz_t out, Obj x)
+{
+    if (IS_INTOBJ(x)) {
+        mpz_set_si(out, INT_INTOBJ(x));
+    }
+    else if (TNUM_OBJ(x) == T_INTPOS || TNUM_OBJ(x) == T_INTNEG) {
+        UInt    size = SIZE_INT(x);
+        mpz_realloc2(out, size * GMP_NUMB_BITS);
+        memcpy(out->_mp_d, ADDR_INT(x), sizeof(mp_limb_t) * size);
+        out->_mp_size = (TNUM_OBJ(x) == T_INTPOS) ? (Int)size : -(Int)size;
+    }
+    else {
+        ErrorMayQuit("expected a GAP integer object", 0, 0);
+    }
+}
+
+static void GAPOBJ_TO_MPQ(mpq_t out, Obj x)
+{
+    if (IS_INTOBJ(x)) {
+        mpq_set_si(out, INT_INTOBJ(x), 1);
+    }
+    else if (TNUM_OBJ(x) == T_INTPOS || TNUM_OBJ(x) == T_INTNEG) {
+        GAPOBJ_TO_MPZ(mpq_numref(out), x);
+        mpz_set_si(mpq_denref(out), 1);
+    }
+    else if (TNUM_OBJ(x) == T_RAT) {
+        GAPOBJ_TO_MPZ(mpq_numref(out), NUM_RAT(x));
+        GAPOBJ_TO_MPZ(mpq_denref(out), DEN_RAT(x));
+    }
+    else {
+        ErrorMayQuit("expected a GAP integer or rational object", 0, 0);
+    }
 }
 
 /**********************************************************
@@ -181,36 +208,24 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
 
 static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
 {
-
-  int k_rep, k_linearity, k_rowrange, k_colrange, k_LPobject;
-  char k_linearity_array[dd_linelenmax], k_rowvec[dd_linelenmax];
+  int k_rep, k_rowrange, k_colrange, k_LPobject;
+  Obj k_linearity_array, k_rowvec, k_matrix;
 
   // reset the global variable, before defining it again to be used in the current session.
   dd_set_global_constants();
 
   k_rep = INT_INTOBJ(ELM_PLIST(input, 1));
-  k_linearity = INT_INTOBJ(ELM_PLIST(input, 3));
   k_rowrange = INT_INTOBJ(ELM_PLIST(input, 4));
   k_colrange = INT_INTOBJ(ELM_PLIST(input, 5));
+  k_linearity_array = ELM_PLIST(input, 6);
+  k_matrix = ELM_PLIST(input, 7);
   k_LPobject = INT_INTOBJ(ELM_PLIST(input, 8));
-  Obj string = ELM_PLIST(input, 7);
+  k_rowvec = ELM_PLIST(input, 9);
+
   if (k_colrange == 0)
     ErrorMayQuit("k_colrange == 0 should not happen, please report this!", 0, 0);
 
-  int str_len = GET_LEN_STRING(string);
-  //fprintf(stdout, "%d: ", str_len);
-  //ErrorMayQuit( "j", 0, 0 );
-
-  char k_matrix[str_len];
-  strcpy(k_linearity_array, CSTR_STRING(ELM_PLIST(input, 6)));
-  strcpy(k_matrix, CSTR_STRING(ELM_PLIST(input, 7)));
-  strcpy(k_rowvec, CSTR_STRING(ELM_PLIST(input, 9)));
-
-  char k_value[dd_linelenmax];
-  char *pch;
-  int u;
   dd_MatrixPtr M = NULL;
-  mytype rational_value;
 
   // // creating the matrix with these two dimesnions
   M = dd_CreateMatrix(k_rowrange, k_colrange);
@@ -228,30 +243,23 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
 
   //
   //  controling the linearity of the given polygon.
-  if (k_linearity == 1)
+  const Int len = LEN_LIST(k_linearity_array);
+  for (int i = 1; i <= len; i++)
   {
-    dd_SetLinearity(M, k_linearity_array);
+    Obj val = ELM_LIST(k_linearity_array, i);
+    set_addelem(M->linset, INT_INTOBJ(val));
   }
+
   //
   // // filling the matrix with elements scanned from the string k_matrix
   //
-  
-  pch = strtok(k_matrix, " ,.{}][");
-  int uu,vv;
-
-  for (uu = 0; uu < k_rowrange; uu++){
-  for (vv = 0; vv < k_colrange; vv++){
-  	//fprintf(stdout, "uu:%d: ", uu );
-  	//fprintf(stdout, "vv:%d: ", vv );
-
-    	strcpy(k_value, pch);
-    	dd_init(rational_value);
-    	dd_sread_rational_value(k_value, rational_value);
-    	dd_set(M->matrix[uu][vv], rational_value);
-    	dd_clear(rational_value);
-    	pch = strtok(NULL, " ,.{}][");
+  for (int uu = 0; uu < k_rowrange; uu++){
+    Obj row = ELM_LIST(k_matrix, uu + 1);
+    for (int vv = 0; vv < k_colrange; vv++){
+      Obj val = ELM_LIST(row, vv + 1);
+      GAPOBJ_TO_MPQ(M->matrix[uu][vv], val);
+    }
   }
-  } 
 
   if (k_LPobject == 0)
     M->objective = dd_LPnone;
@@ -262,15 +270,10 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
 
   if (M->objective == dd_LPmax || M->objective == dd_LPmin)
   {
-    pch = strtok(k_rowvec, " ,.{}][");
-    for (u = 0; u < M->colsize; u++)
+    for (int u = 0; u < M->colsize; u++)
     {
-      strcpy(k_value, pch);
-      dd_init(rational_value);
-      dd_sread_rational_value(k_value, rational_value);
-      dd_set(M->rowvec[u], rational_value);
-      dd_clear(rational_value);
-      pch = strtok(NULL, " ,.{}][");
+      Obj val = ELM_LIST(k_rowvec, u + 1);
+      GAPOBJ_TO_MPQ(M->rowvec[u], val);
     }
   }
 

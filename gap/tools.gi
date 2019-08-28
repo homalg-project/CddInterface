@@ -232,14 +232,6 @@ InstallMethod( PolyToList,
       L[1] := 2;
     fi;
     
-    #L[2] := 2; # unused
-    
-    if Length( poly!.linearity ) = 0 then
-      L[3] := 0;
-    else
-      L[3] := 1;
-    fi;
-    
     matrix := poly!.matrix;
     
     if poly!.rep_type= "V-rep" and IsZero( matrix ) then
@@ -249,15 +241,8 @@ InstallMethod( PolyToList,
     
     L[4] := NrRows( matrix );
     L[5] := NrCols( matrix );
-    
-    lin := poly!.linearity;
-    
-    temp:= [ Length( lin ) ];
-    Append( temp, lin );
-    L[6] := ListToString( [ temp ] );
-    
-    L[7] := ReplacedString( String( matrix ), ",", ""  );
-    
+    L[6] := poly!.linearity;
+    L[7] := matrix;
     L[8] := 0;
     L[9] := [ ];
     
@@ -335,7 +320,7 @@ InstallMethod( LinearProgramToList,
     
     fi;
     
-    result[ 9 ] := ListToString( [ lp!.rowvector ] );
+    result[ 9 ] := lp!.rowvector;
     
     return result;
     
@@ -461,28 +446,6 @@ function( poly )
   
   return Cdd_PolyhedronByInequalities( temp );
   
-end );
-
-##
-InstallGlobalFunction( ListToString,
-                       [ IsList ],
-  function( l )
-    local i, j, s;
-    
-    s := " ";
-    
-    for i in [ 1 .. Length( l ) ] do
-      
-      for j in [ 1 .. Length( l[ 1 ] ) ] do
-        
-        s := Concatenation( [ s, String( l[i][j] ), " " ] );
-      
-      od;
-    
-    od;
-    
-    return s;
-    
 end );
 
 ##
