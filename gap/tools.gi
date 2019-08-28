@@ -144,16 +144,9 @@ InstallMethod( ListToPoly,
     
     fi;
     
-    if Length( list[ 7 ] ) <> 0 then
-      
-      matrix:= list[ 7 ];
-      
+    matrix:= list[ 7 ];
+    if NrRows( matrix ) > 0 then
       matrix:= CanonicalizeList( matrix, list[ 1 ] );
-    
-    else
-      
-      matrix := [ ];
-    
     fi;
     
     if list[ 1 ] = 2 then
@@ -161,7 +154,7 @@ InstallMethod( ListToPoly,
       temp2:= GiveGeneratingVerticesAndGeneratingRays( matrix, [ ] )[ 1 ];
         
         if temp2= [ List( [ 2..list[ 5 ] ], i -> 0 ) ] and
-            not Length( matrix ) = 1 then
+            not NrRows( matrix ) = 1 then
 
           temp3:= StructuralCopy( matrix );
           
@@ -175,18 +168,8 @@ InstallMethod( ListToPoly,
           
           Remove( temp3, p );
           
-          for i in [ 1..Length( temp4 ) ] do
-            
-            if i<p then 
-              
-              temp4[ i ] := temp4[ i ];
-            
-            else
-              
-              temp4[ i ]:= temp4[ i ] - 1;
-            
-            fi;
-            
+          for i in [ p..Length( temp4 ) ] do
+            temp4[ i ]:= temp4[ i ] - 1;
           od;
           
           if Length( list[ 6 ] ) = 0 then
@@ -215,10 +198,8 @@ InstallMethod( ListToPoly,
       
       if list[ 4 ]=0 then
         
-        L:= [ 1 ];
-        
-        Append( L, List( [ 2 .. list[ 5 ] ], i -> 0 ) );
-        
+        L := ListWithIdenticalEntries( list[ 5 ], 0 );
+        L[1] := 1;
         return Cdd_PolyhedronByInequalities( [ L ] );
         
       fi;
@@ -278,9 +259,9 @@ InstallMethod( PolyToList,
     
     fi;
     
-    Add( L, Length( matrix ) );
+    Add( L, NrRows( matrix ) );
     
-    Add( L, Length( matrix[ 1 ] ) );
+    Add( L, NrCols( matrix ) );
     
     lin := poly!.linearity;
     
