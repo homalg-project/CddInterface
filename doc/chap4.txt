@@ -1,0 +1,275 @@
+  
+  [1X4 [33X[0;0YAttributes and properties[133X[101X
+  
+  
+  [1X4.1 [33X[0;0YAttributes and properties of polyhedron[133X[101X
+  
+  [1X4.1-1 Cdd_Canonicalize[101X
+  
+  [33X[1;0Y[29X[2XCdd_Canonicalize[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CddPolyhedron[133X
+  
+  [33X[0;0YThe  function  takes  a  polyhedron  and  reduces  its defining inequalities
+  (generators set) by deleting all redundant inequalities (generators).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:= Cdd_PolyhedronByInequalities( [ [ 0, 2, 6 ], [ 0, 1, 3 ], [1, 4, 10 ] ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XB:= Cdd_Canonicalize( A );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( B );[127X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   0   1   3[128X[104X
+    [4X[28X   1   4  10[128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-2 Cdd_V_Rep[101X
+  
+  [33X[1;0Y[29X[2XCdd_V_Rep[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CddPolyhedron[133X
+  
+  [33X[0;0YThe function takes a polyhedron and returns its reduced [23XV[123X-representation.[133X
+  
+  [1X4.1-3 Cdd_H_Rep[101X
+  
+  [33X[1;0Y[29X[2XCdd_H_Rep[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CddPolyhedron[133X
+  
+  [33X[0;0YThe function takes a polyhedron and returns its reduced [23XH[123X-representation.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 1 ], [ 0, 5, 5 ] ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XB:= Cdd_V_Rep( A );[127X[104X
+    [4X[28X<Polyhedron given by its V-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( B );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xlinearity 1, [ 2 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   0   1   0[128X[104X
+    [4X[28X   0  -1   1[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XC:= Cdd_H_Rep( B );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( C );[127X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   1 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   0  1  1[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XD:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 1, 34, 22, 43 ],[127X[104X
+    [4X[25X>[125X [27X[ 11, 2, 2, 54, 53, 221 ], [33, 23, 45, 2, 40, 11 ] ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XCdd_V_Rep( D );[127X[104X
+    [4X[28X<Polyhedron given by its V-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( last );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xlinearity 2, [ 5, 6 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   6 X 6  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   1  -743/14   369/14    11/14        0        0[128X[104X
+    [4X[28X   0    -1213      619       22        0        0[128X[104X
+    [4X[28X   0       -1        1        0        0        0[128X[104X
+    [4X[28X   0      764     -390      -11        0        0[128X[104X
+    [4X[28X   0   -13526     6772       99      154        0[128X[104X
+    [4X[28X   0  -116608    59496     1485        0      154[128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-4 Cdd_AmbientSpaceDimension[101X
+  
+  [33X[1;0Y[29X[2XCdd_AmbientSpaceDimension[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe  dimension  of  the  ambient space of the polyhedron(i.e., the
+            space that contains [23XP[123X).[133X
+  
+  [1X4.1-5 Cdd_Dimension[101X
+  
+  [33X[1;0Y[29X[2XCdd_Dimension[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe   dimension   of   the   polyhedron,   where   the  dimension,
+            [23X\mathrm{dim}(P)[123X,  of  a  polyhedron  [23XP[123X  is  the  maximum number of
+            affinely independent points in [23XP[123X minus 1.[133X
+  
+  [1X4.1-6 Cdd_GeneratingVertices[101X
+  
+  [33X[1;0Y[29X[2XCdd_GeneratingVertices[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YThe reduced generating vertices of the polyhedron[133X
+  
+  [1X4.1-7 Cdd_GeneratingRays[101X
+  
+  [33X[1;0Y[29X[2XCdd_GeneratingRays[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ylist[133X
+  
+  [33X[0;0YThe output is the reduced generating rays of the polyhedron[133X
+  
+  [1X4.1-8 Cdd_Equalities[101X
+  
+  [33X[1;0Y[29X[2XCdd_Equalities[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe output is the reduced equalities of the polyhedron.[133X
+  
+  [1X4.1-9 Cdd_Inequalities[101X
+  
+  [33X[1;0Y[29X[2XCdd_Inequalities[102X( [3XP[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe output is the reduced inequalities of the polyhedron.[133X
+  
+  [1X4.1-10 Cdd_InteriorPoint[101X
+  
+  [33X[1;0Y[29X[2XCdd_InteriorPoint[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThe output is an interior point in the polyhedron[133X
+  
+  [1X4.1-11 Cdd_Faces[101X
+  
+  [33X[1;0Y[29X[2XCdd_Faces[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThis  function  takes a [23XH[123X-represented polyhedron [13XP[113X and returns a list. Every
+  entry  in  this list is a again a list, contains the dimension and linearity
+  of the face defined as a polyhedron over the same system of inequalities.[133X
+  
+  [1X4.1-12 Cdd_FacesWithFixedDimension[101X
+  
+  [33X[1;0Y[29X[2XCdd_FacesWithFixedDimension[102X( [3XP[103X, [3Xd[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThis  function  takes a [23XH[123X-represented polyhedron [13XP[113X and a positive integer [13Xd[113X.
+  The  output  is  a  list. Every entry in this list is the linearity of an [13Xd[113X-
+  dimensional  face  of  [13XP[113X  defined  as  a  polyhedron over the same system of
+  inequalities.[133X
+  
+  [1X4.1-13 Cdd_FacesWithInteriorPoints[101X
+  
+  [33X[1;0Y[29X[2XCdd_FacesWithInteriorPoints[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThis  function  takes a [23XH[123X-represented polyhedron [13XP[113X and returns a list. Every
+  entry  in  this list is a again a list, contains the dimension, linearity of
+  the face defined as a polyhedron over the same system of inequalities and an
+  interior point in the face.[133X
+  
+  [1X4.1-14 Cdd_FacesWithFixedDimensionAndInteriorPoints[101X
+  
+  [33X[1;0Y[29X[2XCdd_FacesWithFixedDimensionAndInteriorPoints[102X( [3XP[103X, [3Xd[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThis  function  takes a [23XH[123X-represented polyhedron [13XP[113X and a positive integer [13Xd[113X.
+  The  output  is a list. Every entry in this list is a again a list, contains
+  the  linearity  of  the face defined as a polyhedron over the same system of
+  inequalities and an interior point in this face.[133X
+  
+  [1X4.1-15 Cdd_Facets[101X
+  
+  [33X[1;0Y[29X[2XCdd_Facets[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThis  function  takes a [23XH[123X-represented polyhedron [13XP[113X and returns a list. Every
+  entry  in  this is the linearity of a facet defined as a polyhedron over the
+  same system of inequalities.[133X
+  
+  [1X4.1-16 Cdd_Lines[101X
+  
+  [33X[1;0Y[29X[2XCdd_Lines[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThis  function  takes a [23XH[123X-represented polyhedron [13XP[113X and returns a list. Every
+  entry  in  this  is the linearity of a ray ([23X1[123X-dimensional face) defined as a
+  polyhedron over the same system of inequalities.[133X
+  
+  [1X4.1-17 Cdd_Vertices[101X
+  
+  [33X[1;0Y[29X[2XCdd_Vertices[102X( [3XP[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list[133X
+  
+  [33X[0;0YThis  function  takes a [23XH[123X-represented polyhedron [13XP[113X and returns a list. Every
+  entry in this list is the linearity of a vertex defined as a polyhedron over
+  the same system of inequalities.[133X
+  
+  [1X4.1-18 Cdd_IsEmpty[101X
+  
+  [33X[1;0Y[29X[2XCdd_IsEmpty[102X( [3XP[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe output is [10Xtrue[110X if the polyhedron is empty and [10Xfalse[110X otherwise[133X
+  
+  [1X4.1-19 Cdd_IsCone[101X
+  
+  [33X[1;0Y[29X[2XCdd_IsCone[102X( [3XP[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe output is [10Xtrue[110X if the polyhedron is cone and [10Xfalse[110X otherwise[133X
+  
+  [1X4.1-20 Cdd_IsPointed[101X
+  
+  [33X[1;0Y[29X[2XCdd_IsPointed[102X( [3XP[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe output is [10Xtrue[110X if the polyhedron is pointed and [10Xfalse[110X otherwise[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpoly:= Cdd_PolyhedronByInequalities( [ [ 1, 3, 4, 5, 7 ], [ 1, 3, 5, 12, 34 ],[127X[104X
+    [4X[25X>[125X [27X[ 9, 3, 0, 2, 13 ]  ], [ 1 ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XCdd_InteriorPoint( poly );[127X[104X
+    [4X[28X[ -194/75, 46/25, -3/25, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_FacesWithInteriorPoints( poly );[127X[104X
+    [4X[28X[ [ 3, [ 1 ], [ -194/75, 46/25, -3/25, 0 ] ], [ 2, [ 1, 2 ],[128X[104X
+    [4X[28X[ -62/25, 49/25, -7/25, 0 ] ], [ 1, [ 1, 2, 3 ],[128X[104X
+    [4X[28X[ -209/75, 56/25, -8/25, 0 ] ], [ 2, [ 1, 3 ], [ -217/75, 53/25, -4/25, 0 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_Dimension( poly );[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XCdd_IsPointed( poly );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XCdd_IsEmpty( poly );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XCdd_Faces( poly );[127X[104X
+    [4X[28X[ [ 3, [ 1 ] ], [ 2, [ 1, 2 ] ], [ 1, [ 1, 2, 3 ] ], [ 2, [ 1, 3  ] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xpoly1 := Cdd_ExtendLinearity( poly, [ 1, 2, 3 ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( poly1 );[127X[104X
+    [4X[28XH-representation [128X[104X
+    [4X[28Xlinearity 3, [ 1, 2, 3 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   3 X 5  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   1   3   4   5   7 [128X[104X
+    [4X[28X   1   3   5  12  34 [128X[104X
+    [4X[28X   9   3   0   2  13 [128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XCdd_Dimension( poly1 );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XCdd_Facets( poly );[127X[104X
+    [4X[28X[ [ 1, 2 ], [ 1, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_GeneratingVertices( poly );[127X[104X
+    [4X[28X[ [ -209/75, 56/25, -8/25, 0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_GeneratingRays( poly );[127X[104X
+    [4X[28X[ [ -97, 369, -342, 75 ], [ -8, -9, 12, 0 ],[128X[104X
+    [4X[28X[ 23, -21, 3, 0 ], [ 97, -369, 342, -75 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_Inequalities( poly );[127X[104X
+    [4X[28X[ [ 1, 3, 5, 12, 34 ], [ 9, 3, 0, 2, 13 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_Equalities( poly );[127X[104X
+    [4X[28X[ [ 1, 3, 4, 5, 7 ] ][128X[104X
+    [4X[25Xgap>[125X [27XP := Cdd_FourierProjection( poly, 2);[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( P );[127X[104X
+    [4X[28XH-representation [128X[104X
+    [4X[28Xlinearity 1, [ 3 ][128X[104X
+    [4X[28Xbegin [128X[104X
+    [4X[28X   3 X 5  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X    9    3    0    2   13 [128X[104X
+    [4X[28X   -1   -3    0   23  101 [128X[104X
+    [4X[28X    0    0    1    0    0 [128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  

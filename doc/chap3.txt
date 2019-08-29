@@ -1,0 +1,88 @@
+  
+  [1X3 [33X[0;0YLinear Programs[133X[101X
+  
+  
+  [1X3.1 [33X[0;0YCreating and solving linear programs[133X[101X
+  
+  [1X3.1-1 Cdd_LinearProgram[101X
+  
+  [33X[1;0Y[29X[2XCdd_LinearProgram[102X( [3XP[103X, [3Xstr[103X, [3Xobj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya [13XCddLinearProgram[113X Object[133X
+  
+  [33X[0;0YThe  function  takes  three  variables.  The first is a polyhedron [13Xpoly[113X, the
+  second  [13Xstr[113X  should  be  "max"  or  "min" and the third [13Xobj[113X is the objective
+  function.[133X
+  
+  [1X3.1-2 Cdd_SolveLinearProgram[101X
+  
+  [33X[1;0Y[29X[2XCdd_SolveLinearProgram[102X( [3Xlp[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list if the program is optimal, otherwise returns the value 0[133X
+  
+  [33X[0;0YThe function takes a linear program. If the program is optimal, the function
+  returns  a list of two entries, the solution vector and the optimal value of
+  the objective, otherwise it returns [3Xfail[103X.[133X
+  
+  [33X[0;0Y[23X\newline[123X To illustrate the using of these functions, let us solve the linear
+  program  given  by:  [23X\textbf{Maximize}\;\;\;  P(x,y)= 1-2x+5y[123X, with [23X\newline[123X
+  [23X100\leq   x   \leq   200   \newline[123X   [23X80\leq   y\leq  170  \newline[123X  [23Xy  \geq
+  -x+200\newline\newline[123X  We bring the inequalities to the form [23Xb+AX\geq 0[123X, we
+  get:  [23X\newline  -100+x\geq  0  \newline[123X  [23X200-x  \geq 0 \newline[123X [23X-80+y \geq 0
+  \newline[123X [23X170 -y \geq 0 \newline[123X [23X-200 +x+y \geq 0 \newline[123X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:= Cdd_PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ],[127X[104X
+    [4X[25X>[125X [27X[ -80, 0, 1 ], [ 170, 0, -1 ], [ -200, 1, 1 ] ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27Xlp1:= Cdd_LinearProgram( A, "max", [1, -2, 5 ] );[127X[104X
+    [4X[28X<Linear program>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( lp1 );[127X[104X
+    [4X[28XLinear program given by:[128X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   5 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   -100     1     0[128X[104X
+    [4X[28X    200    -1     0[128X[104X
+    [4X[28X    -80     0     1[128X[104X
+    [4X[28X    170     0    -1[128X[104X
+    [4X[28X   -200     1     1[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[28Xmax  [ 1, -2, 5 ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_SolveLinearProgram( lp1 );[127X[104X
+    [4X[28X[ [ 100, 170 ], 651 ][128X[104X
+    [4X[25Xgap>[125X [27Xlp2:= Cdd_LinearProgram( A, "min", [ 1, -2, 5 ] );[127X[104X
+    [4X[28X<Linear program>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( lp2 );[127X[104X
+    [4X[28XLinear program given by:[128X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   5 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   -100     1     0[128X[104X
+    [4X[28X    200    -1     0[128X[104X
+    [4X[28X    -80     0     1[128X[104X
+    [4X[28X    170     0    -1[128X[104X
+    [4X[28X   -200     1     1[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[28Xmin  [ 1, -2, 5 ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_SolveLinearProgram( lp2 );[127X[104X
+    [4X[28X[ [ 200, 80 ], 1 ][128X[104X
+    [4X[25Xgap>[125X [27XB:= Cdd_V_Rep( A );[127X[104X
+    [4X[28X<Polyhedron given by its V-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( B );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   5 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   1  100  170[128X[104X
+    [4X[28X   1  100  100[128X[104X
+    [4X[28X   1  120   80[128X[104X
+    [4X[28X   1  200   80[128X[104X
+    [4X[28X   1  200  170[128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSo the optimal solution for [23X\texttt{lp1}[123X is [23X(x=100,y=170)[123X with optimal value
+  [23Xp=1-2(100)+5(170)=651[123X  and  for  [23X\texttt{lp2}[123X  is  [23X(x=200,y=80)[123X with optimal
+  value [23Xp=1-2(200)+5(80)=1[123X.[133X
+  

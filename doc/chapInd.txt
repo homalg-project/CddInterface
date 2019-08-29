@@ -1,0 +1,35 @@
+  
+  
+  [1XIndex[101X
+  
+  [2X\+[102X, for IsCddPolyhedron, IsCddPolyhedron 2.3-3 
+  [2XCdd_AmbientSpaceDimension[102X, for IsCddPolyhedron 4.1-4 
+  [2XCdd_Canonicalize[102X, for IsCddPolyhedron 4.1-1 
+  [2XCdd_Dimension[102X, for IsCddPolyhedron 4.1-5 
+  [2XCdd_Equalities[102X, for IsCddPolyhedron 4.1-8 
+  [2XCdd_Faces[102X, for IsCddPolyhedron 4.1-11 
+  [2XCdd_FacesWithFixedDimension[102X, for IsCddPolyhedron, IsInt 4.1-12 
+  [2XCdd_FacesWithFixedDimensionAndInteriorPoints[102X, for IsCddPolyhedron, IsInt 4.1-14 
+  [2XCdd_FacesWithInteriorPoints[102X, for IsCddPolyhedron 4.1-13 
+  [2XCdd_Facets[102X, for IsCddPolyhedron 4.1-15 
+  [2XCdd_FourierProjection[102X, for IsCddPolyhedron, IsInt 2.2-1 
+  [2XCdd_GeneratingRays[102X, for IsCddPolyhedron 4.1-7 
+  [2XCdd_GeneratingVertices[102X, for IsCddPolyhedron 4.1-6 
+  [2XCdd_H_Rep[102X, for IsCddPolyhedron 4.1-3 
+  [2XCdd_Inequalities[102X, for IsCddPolyhedron 4.1-9 
+  [2XCdd_InteriorPoint[102X, for IsCddPolyhedron 4.1-10 
+  [2XCdd_Intersection[102X, for IsCddPolyhedron, IsCddPolyhedron 2.3-2 
+  [2XCdd_IsCone[102X, for IsCddPolyhedron 4.1-19 
+  [2XCdd_IsContained[102X, for IsCddPolyhedron, IsCddPolyhedron 2.3-1 
+  [2XCdd_IsEmpty[102X, for IsCddPolyhedron 4.1-18 
+  [2XCdd_IsPointed[102X, for IsCddPolyhedron 4.1-20 
+  [2XCdd_LinearProgram[102X, for IsCddPolyhedron, IsString, IsList 3.1-1 
+  [2XCdd_Lines[102X, for IsCddPolyhedron 4.1-16 
+  [2XCdd_PolyhedronByGenerators[102X 2.1-2 
+  [2XCdd_PolyhedronByInequalities[102X 2.1-1 
+  [2XCdd_SolveLinearProgram[102X, for IsCddLinearProgram 3.1-2 
+  [2XCdd_V_Rep[102X, for IsCddPolyhedron 4.1-2 
+  [2XCdd_Vertices[102X, for IsCddPolyhedron 4.1-17 
+  
+  
+  -------------------------------------------------------

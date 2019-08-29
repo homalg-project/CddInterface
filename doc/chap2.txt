@@ -1,0 +1,283 @@
+  
+  [1X2 [33X[0;0YCreating polyhedra and their Operations[133X[101X
+  
+  
+  [1X2.1 [33X[0;0YCreating a polyhedron[133X[101X
+  
+  [1X2.1-1 Cdd_PolyhedronByInequalities[101X
+  
+  [33X[1;0Y[29X[2XCdd_PolyhedronByInequalities[102X( [3Xineq[103X[, [3Xlinearities_list[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya CddPolyhedron[133X
+  
+  [33X[0;0YThe  function takes a list in which every entry represents an inequality (or
+  equality).  In  case  we want some entries to represent equalities we should
+  refer in a second list to their indices.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( A );[127X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   0   1   0[128X[104X
+    [4X[28X   0   1  -1[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XB:= Cdd_PolyhedronByInequalities( [ [ 0, 1, 0 ], [ 0, 1, -1 ] ], [ 2 ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( B );[127X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xlinearity 1, [ 2 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   0   1   0[128X[104X
+    [4X[28X   0   1  -1[128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-2 Cdd_PolyhedronByGenerators[101X
+  
+  [33X[1;0Y[29X[2XCdd_PolyhedronByGenerators[102X( [3Xgenes[103X[, [3Xlinearities_list[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya CddPolyhedron[133X
+  
+  [33X[0;0YThe  function  takes  a list in which every entry represents a vertex in the
+  ambient  vector  space. In case we want some vertices to be free (the vertex
+  and  its negative belong to the polyhedron) we should refer in a second list
+  to their indices .[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA:= Cdd_PolyhedronByGenerators( [ [ 0, 1, 3 ], [ 1, 4, 5 ] ] );[127X[104X
+    [4X[28X<Polyhedron given by its V-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( A );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   0  1  3[128X[104X
+    [4X[28X   1  4  5[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XB:= Cdd_PolyhedronByGenerators( [ [ 0, 1, 3 ] ], [ 1 ] );[127X[104X
+    [4X[28X<Polyhedron given by its V-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( B );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xlinearity 1, [ 1 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   1 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   0  1  3[128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.2 [33X[0;0YSome operations on a polyhedron[133X[101X
+  
+  [1X2.2-1 Cdd_FourierProjection[101X
+  
+  [33X[1;0Y[29X[2XCdd_FourierProjection[102X( [3XP[103X, [3Xi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya CddPolyhedron[133X
+  
+  [33X[0;0YThe  function  returns  the  Fourier  projection  of  the  polyhedron in the
+  subspace  [23X(O,x_1,\dots,x_{i-1},x_{i+1},\dots,x_n)[123X after applying the Fourier
+  elemination algorithm to get rid of the variable [23Xx_{i}[123X.[133X
+  
+  [33X[0;0YTo  illustrate  this  projection,  Let  [23XP=  \mathrm{conv}( (1,2), (4,5) )[123X in
+  [23X\mathbb{Q}^2[123X.  [23X\newline[123X  To find its projection on the subspace [23X(O, x_1)[123X, we
+  apply the Fourier elemination to get rid of [23Xx_2[123X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP := Cdd_PolyhedronByGenerators( [ [ 1, 1, 2 ], [ 1, 4, 5 ] ] );[127X[104X
+    [4X[28X<Polyhedron given by its V-representation>[128X[104X
+    [4X[25Xgap>[125X [27XH := Cdd_H_Rep( P );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( H );[127X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xlinearity 1, [ 3 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   3 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X    4  -1   0 [128X[104X
+    [4X[28X   -1   1   0 [128X[104X
+    [4X[28X   -1  -1   1 [128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XP_x1 := Cdd_FourierProjection( H, 2);[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( P_x1 );[127X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xlinearity 1, [ 3 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   3 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X    4  -1   0[128X[104X
+    [4X[28X   -1   1   0[128X[104X
+    [4X[28X    0   0   1[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Cdd_V_Rep( P_x1 ) );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   1  1  0[128X[104X
+    [4X[28X   1  4  0[128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YLet again [23XQ= Conv( (2,3,4), (2,4,5) )+ nonneg( (1,1,1) )[123X, and let us compute
+  its projection on [23X(O,x_2,x_3)[123X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XQ := Cdd_PolyhedronByGenerators( [ [ 1, 2, 3, 4 ],[ 1, 2, 4, 5 ], [ 0, 1, 1, 1 ] ] );[127X[104X
+    [4X[28X<Polyhedron given by its V-representation>[128X[104X
+    [4X[25Xgap>[125X [27XR := Cdd_H_Rep( Q );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( R );[127X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xlinearity 1, [ 4 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   4 X 4  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X    2   1  -1   0 [128X[104X
+    [4X[28X   -2   1   0   0 [128X[104X
+    [4X[28X   -1  -1   1   0 [128X[104X
+    [4X[28X   -1   0  -1   1 [128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XP_x2_x3 := Cdd_FourierProjection( R, 1);[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( P_x2_x3 );[127X[104X
+    [4X[28XH-representation[128X[104X
+    [4X[28Xlinearity 2, [ 1, 3 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   3 X 4  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   -1   0  -1   1 [128X[104X
+    [4X[28X   -3   0   1   0 [128X[104X
+    [4X[28X    0   1   0   0 [128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Cdd_V_Rep( last ) ) ;[127X[104X
+    [4X[28XV-representation [128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 4  rational[128X[104X
+    [4X[28X               [128X[104X
+    [4X[28X   0  0  1  1 [128X[104X
+    [4X[28X   1  0  3  4 [128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3 [33X[0;0YSome operations on two polyhedrons[133X[101X
+  
+  [1X2.3-1 Cdd_IsContained[101X
+  
+  [33X[1;0Y[29X[2XCdd_IsContained[102X( [3XP1[103X, [3XP2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  function  returns  [10Xtrue[110X  if  [23XP_1[123X is contained in [23XP_2[123X, otherwise returns
+  [10Xfalse[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA := Cdd_PolyhedronByInequalities( [ [ 10, -1, 1, 0 ],[127X[104X
+    [4X[25X>[125X [27X[ -24, 9, 2, 0 ], [ 1, 1, -1, 0 ], [ -23, -12, 1, 11 ] ], [ 4 ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XB := Cdd_PolyhedronByInequalities( [ [ 1, 0, 0, 0 ],[127X[104X
+    [4X[25X>[125X [27X[ -4, 1, 0, 0 ], [ 10, -1, 1, 0 ], [ -3, -1, 0, 1 ] ], [ 3, 4 ] );[127X[104X
+    [4X[28X<Polyhedron given by its H-representation>[128X[104X
+    [4X[25Xgap>[125X [27XCdd_IsContained( B, A );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Cdd_V_Rep( A ) );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   3 X 4  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   1   2   3   4[128X[104X
+    [4X[28X   1   4  -6   7[128X[104X
+    [4X[28X   0   1   1   1[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Cdd_V_Rep( B ) );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 4  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   1   4  -6   7[128X[104X
+    [4X[28X   0   1   1   1[128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  
+  [1X2.3-2 Cdd_Intersection[101X
+  
+  [33X[1;0Y[29X[2XCdd_Intersection[102X( [3XP1[103X, [3XP2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya CddPolyhedron[133X
+  
+  [33X[0;0YThe function returns the intersection of [23XP_1[123X and [23XP_2[123X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XA := Cdd_PolyhedronByInequalities( [ [ 3, 4, 5 ] ], [ 1 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XB := Cdd_PolyhedronByInequalities( [ [ 9, 7, 2 ] ], [ 1 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XC := Cdd_Intersection( A, B );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( Cdd_V_Rep( A ) );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xlinearity 1, [ 2 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   1  -3/4     0[128X[104X
+    [4X[28X   0    -5     4[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Cdd_V_Rep( B ) );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xlinearity 1, [ 2 ][128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   2 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   1  -9/7     0[128X[104X
+    [4X[28X   0    -2     7[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Cdd_V_Rep( C ) );[127X[104X
+    [4X[28XV-representation[128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   1 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   1  -13/9    5/9[128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
+  
+  [1X2.3-3 \+[101X
+  
+  [33X[1;0Y[29X[2X\+[102X( [3XP1[103X, [3XP2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya CddPolyhedron[133X
+  
+  [33X[0;0YThe function returns the Minkuwski sum of [23XP_1[123X and [23XP_2[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XP := Cdd_PolyhedronByGenerators( [ [ 1, 2, 5 ], [ 0, 1, 2 ] ] );[127X[104X
+    [4X[28X< Polyhedron given by its V-representation >[128X[104X
+    [4X[25Xgap>[125X [27XQ := Cdd_PolyhedronByGenerators( [ [ 1, 4, 6 ], [ 1, 3, 7 ], [ 0, 3, 1 ] ] );[127X[104X
+    [4X[28X< Polyhedron given by its V-representation >[128X[104X
+    [4X[25Xgap>[125X [27XS := P+Q;[127X[104X
+    [4X[28X< Polyhedron given by its H-representation >[128X[104X
+    [4X[25Xgap>[125X [27XV := Cdd_V_Rep( S );[127X[104X
+    [4X[28X< Polyhedron given by its V-representation >[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( V );[127X[104X
+    [4X[28XV-representation [128X[104X
+    [4X[28Xbegin[128X[104X
+    [4X[28X   4 X 3  rational[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X   0   3   1 [128X[104X
+    [4X[28X   1   6  11 [128X[104X
+    [4X[28X   1   5  12 [128X[104X
+    [4X[28X   0   1   2 [128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27XCdd_GeneratingVertices( P ); [127X[104X
+    [4X[28X[ [ 2, 5 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_GeneratingVertices( Q );[127X[104X
+    [4X[28X[ [ 3, 7 ], [ 4, 6 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_GeneratingVertices( S );[127X[104X
+    [4X[28X[ [ 5, 12 ], [ 6, 11 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_GeneratingRays( P );[127X[104X
+    [4X[28X[ [ 1, 2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_GeneratingRays( Q );[127X[104X
+    [4X[28X[ [ 3, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCdd_GeneratingRays( S );[127X[104X
+    [4X[28X[ [ 1, 2 ], [ 3, 1 ] ][128X[104X
+  [4X[32X[104X
+  
