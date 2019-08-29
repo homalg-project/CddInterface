@@ -90,7 +90,7 @@ InstallMethod( IsCompatiblePolyhedronList,
   function ( list )
     local i;
     
-    if not ForAll( [1,2,4,5], i -> list[i] in NonnegativeIntegers) then
+    if not ForAll( [1,4,5], i -> list[i] in NonnegativeIntegers) then
       return Error( "The first five entries must be non-negative integers" );
     fi;
     
