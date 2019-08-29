@@ -34,7 +34,7 @@ Persons := [
   ),
 ],
 
-PackageWWWHome := "https://kamalsaleh.github.io/CddInterface",
+PackageWWWHome := "https://homalg-project.github.io/CddInterface",
 
 SourceRepository := rec(
     Type := "git",
