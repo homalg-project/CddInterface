@@ -190,4 +190,4 @@ GeneratePackageYML:=function(pkg)
 end;
 Read("PackageInfo.g");
 GeneratePackageYML(GAPInfo.PackageInfoCurrent);
-QUIT;
+FORCE_QUIT_GAP();
