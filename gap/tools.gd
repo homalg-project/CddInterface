@@ -1,4 +1,3 @@
-
 DeclareOperation("PTM", [ IsMatrix ] );
 DeclareOperation( "IsCompatiblePolyhedronList", [IsList] );
 DeclareOperation( "GiveGeneratingVerticesAndGeneratingRays", [ IsList, IsList ] );
@@ -10,5 +9,4 @@ DeclareAttribute( "PolyToList", IsCddPolyhedron  );
 DeclareOperation( "GetRidOfLinearity", [ IsCddPolyhedron ] );
 DeclareOperation( "LinearProgramToList", [ IsCddLinearProgram ] );
 DeclareGlobalFunction( "NumberOfDigitsOfTheNumber" );
-DeclareGlobalFunction( "ListToString" );
 DeclareGlobalFunction( "CanonicalizeListOfFacesAndInteriorPoints" );

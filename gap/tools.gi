@@ -90,17 +90,8 @@ InstallMethod( IsCompatiblePolyhedronList,
   function ( list )
     local i;
     
-    if not( list[ 1 ] >= 0 and list[ 2 ] >= 0
-          and list[ 3 ] >= 0 and list[ 4 ] >= 0 and list[ 5 ] >= 0 ) then
-      return Error( "The first five entries should be all positive" );
-    
-    fi;
-    
-    if not( IsInt( list[ 1 ] ) and IsInt( list[ 2 ] )
-          and IsInt( list[ 3 ] ) and  IsInt( list[ 4 ] ) and IsInt( list[ 5 ] ) ) then
-      
-      return Error( "The first  five arguments should be integrs" );
-    
+    if not ForAll( [1,4,5], i -> list[i] in NonnegativeIntegers) then
+      return Error( "The first five entries must be non-negative integers" );
     fi;
     
     if not( IsList( list[6]) and IsList( list[7] ) ) then
@@ -153,16 +144,9 @@ InstallMethod( ListToPoly,
     
     fi;
     
-    if Length( list[ 7 ] ) <> 0 then
-      
-      matrix:= list[ 7 ];
-      
+    matrix:= list[ 7 ];
+    if NrRows( matrix ) > 0 then
       matrix:= CanonicalizeList( matrix, list[ 1 ] );
-    
-    else
-      
-      matrix := [ ];
-    
     fi;
     
     if list[ 1 ] = 2 then
@@ -170,7 +154,7 @@ InstallMethod( ListToPoly,
       temp2:= GiveGeneratingVerticesAndGeneratingRays( matrix, [ ] )[ 1 ];
         
         if temp2= [ List( [ 2..list[ 5 ] ], i -> 0 ) ] and
-            not Length( matrix ) = 1 then
+            not NrRows( matrix ) = 1 then
 
           temp3:= StructuralCopy( matrix );
           
@@ -184,21 +168,11 @@ InstallMethod( ListToPoly,
           
           Remove( temp3, p );
           
-          for i in [ 1..Length( temp4 ) ] do
-            
-            if i<p then 
-              
-              temp4[ i ] := temp4[ i ];
-            
-            else
-              
-              temp4[ i ]:= temp4[ i ] - 1;
-            
-            fi;
-            
+          for i in [ p..Length( temp4 ) ] do
+            temp4[ i ]:= temp4[ i ] - 1;
           od;
           
-          if list[ 3 ] = 0 then
+          if Length( list[ 6 ] ) = 0 then
             
             return Cdd_PolyhedronByGenerators( temp3 );
           
@@ -210,7 +184,7 @@ InstallMethod( ListToPoly,
           
         fi;
         
-        if list[ 3 ] = 0 then
+        if Length( list[ 6 ] ) = 0 then
           
           return Cdd_PolyhedronByGenerators( matrix );
         
@@ -224,15 +198,13 @@ InstallMethod( ListToPoly,
       
       if list[ 4 ]=0 then
         
-        L:= [ 1 ];
-        
-        Append( L, List( [ 2 .. list[ 5 ] ], i -> 0 ) );
-        
+        L := ListWithIdenticalEntries( list[ 5 ], 0 );
+        L[1] := 1;
         return Cdd_PolyhedronByInequalities( [ L ] );
         
       fi;
       
-      if list[ 3 ] = 0 then
+      if Length( list[ 6 ] ) = 0 then
         
         return Cdd_PolyhedronByInequalities( matrix );
       
@@ -255,53 +227,24 @@ InstallMethod( PolyToList,
     L := [  ];
     
     if (poly!.rep_type= "H-rep" ) then
-      
-      Add( L, 1 );
-    
+      L[1] := 1;
     else
-    
-      Add( L, 2 ) ;
-    
-    fi;
-    
-    # the functions in c should be changned so that this can be deleted
-    Add( L, 2 );
-    
-    if Length( poly!.linearity ) = 0 then
-      
-      Add( L, 0 );
-    
-    else
-      
-      Add( L, 1 );
-    
+      L[1] := 2;
     fi;
     
     matrix := poly!.matrix;
     
     if poly!.rep_type= "V-rep" and IsZero( matrix ) then
-      
       matrix := DuplicateFreeList( matrix );
-      
-      matrix[ 1 ][ 1 ] := 1;
-    
+      matrix[ 1, 1 ] := 1;
     fi;
     
-    Add( L, Length( matrix ) );
-    
-    Add( L, Length( matrix[ 1 ] ) );
-    
-    lin := poly!.linearity;
-    
-    temp:= [ Length( lin ) ];
-    
-    Append( temp, lin );
-    
-    Add( L, ListToString( [ temp ] ) );
-    
-    Add( L, ReplacedString( String( matrix ), ",", ""  ) );
-    
-    Append( L, [ 0, [  ] ] );
+    L[4] := NrRows( matrix );
+    L[5] := NrCols( matrix );
+    L[6] := poly!.linearity;
+    L[7] := matrix;
+    L[8] := 0;
+    L[9] := [ ];
     
     return L;
     
@@ -377,7 +320,7 @@ InstallMethod( LinearProgramToList,
     
     fi;
     
-    result[ 9 ] := ListToString( [ lp!.rowvector ] );
+    result[ 9 ] := lp!.rowvector;
     
     return result;
     
@@ -503,28 +446,6 @@ function( poly )
   
   return Cdd_PolyhedronByInequalities( temp );
   
-end );
-
-##
-InstallGlobalFunction( ListToString,
-                       [ IsList ],
-  function( l )
-    local i, j, s;
-    
-    s := " ";
-    
-    for i in [ 1 .. Length( l ) ] do
-      
-      for j in [ 1 .. Length( l[ 1 ] ) ] do
-        
-        s := Concatenation( [ s, String( l[i][j] ), " " ] );
-      
-      od;
-    
-    od;
-    
-    return s;
-    
 end );
 
 ##
