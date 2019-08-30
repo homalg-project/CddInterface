@@ -49,20 +49,24 @@ dnl ## Set cdd root dir
 dnl ##
 AC_ARG_WITH([cddlib],
     [AC_HELP_STRING([--with-cddlib=<path>], [specify the path of cdd installation])],
-    [CDD="$with_cddlib"],
-    [AC_MSG_ERROR([Must use --with-cddlib])]
-)
-CDD_CPPFLAGS="-I$CDD/include"
-CDD_LDPATH="$CDD/lib"
-CDD_LDFLAGS="-L$CDD_LDPATH -lcddgmp"
-AC_SUBST(CDD_LDPATH)
-AC_SUBST(CDD_LDFLAGS)
+    [], [with_cddlib=yes])
+AS_IF([test "x$with_cddlib" = "xno"], [AC_MSG_ERROR([cddlib is required and cannot be disabled])])
+AS_IF([test "x$with_cddlib" != "xyes"],[
+  # Debian and Ubuntu put the headers into PREFIX/include/cdd, while on other
+  # systems, the headers are directly in PREFIX/include/ -- so we just add
+  # both to the CPPFLAGS
+  AS_IF([test -d "$with_cddlib"],[],[AC_MSG_ERROR([the cddlib path is not a directory])])
+  CDD_CPPFLAGS="-I$with_cddlib/include/cdd -I$with_cddlib/include"
+  CDD_LDFLAGS="-L$with_cddlib/lib -lcddgmp"
+],[
+  CDD_CPPFLAGS="-I/usr/include/cdd"
+  CDD_LDFLAGS="-lcddgmp"
+])
 AC_SUBST(CDD_CPPFLAGS)
+AC_SUBST(CDD_LDFLAGS)
 
-dnl ##
-dnl ## Detect pointer size to distinguish 32 and 64 bit builds
-dnl ##
-AC_CHECK_SIZEOF([void **])
+# TODO: check that cddlib actually is usable
+#AC_CHECK_LIB([cddgmp],[dd_SetLinearity])
 
 dnl ##
 dnl ## Detect Windows resp. Cygwin
