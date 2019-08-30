@@ -100,12 +100,20 @@ InstallMethod( IsCompatiblePolyhedronList,
     
     fi;
     
-    if NrRows( list[ 7 ] ) <> list[ 4 ] then
-      return Error( "The matrix has the wrong number of rows" );
-    fi;
+    if not IsEmpty( list[ 7 ] ) then
+      
+      if NrRows( list[ 7 ] ) <> list[ 4 ] then
+        
+        return Error( "The matrix has the wrong number of rows" );
+      
+      fi;
+      
+      if NrCols( list[ 7 ] ) <> list[ 5 ] then
+        
+        return Error( "The matrix has the wrong number of columns" );
+      
+      fi;
     
-    if NrCols( list[ 7 ] ) <> list[ 5 ] then
-      return Error( "The matrix has the wrong number of columns" );
     fi;
     
     for i in list[ 6 ] do
@@ -145,8 +153,11 @@ InstallMethod( ListToPoly,
     fi;
     
     matrix:= list[ 7 ];
-    if NrRows( matrix ) > 0 then
+    
+    if not IsEmpty( matrix ) and NrRows( matrix ) > 0 then
+      
       matrix:= CanonicalizeList( matrix, list[ 1 ] );
+    
     fi;
     
     if list[ 1 ] = 2 then
