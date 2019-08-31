@@ -138,10 +138,17 @@ InstallGlobalFunction( Cdd_PolyhedronByGenerators,
      return Cdd_PolyhedronByGenerators( arg[ 1 ], [ ] );
      
     elif Length( arg ) = 2 and IsList( arg[ 1 ] ) and IsList( arg[ 2 ] ) then
-    
-      if IsEmpty( arg[ 1 ] ) or ForAny( arg[ 1 ], IsEmpty ) then 
+      
+      if IsEmpty( arg[ 1 ] ) or ForAny( arg[ 1 ], IsEmpty ) then
         
-        Error( "Wronge input: Please remove the empty lists from the input!" );
+        poly := rec(
+                matrix:= arg[ 1 ],
+                number_type := "rational",
+                rep_type := "V-rep" );
+        
+        ObjectifyWithAttributes( poly, TheTypeCddPolyhedron );
+        
+        return poly;
       
       fi;
       
@@ -368,7 +375,7 @@ InstallMethod( Cdd_H_Rep,
       
       if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
         
-        return Cdd_PolyhedronByInequalities( [ [0, 1 ], [-1, -1 ] ] );
+        return Cdd_PolyhedronByInequalities( [ [ 0, 1 ], [ -1, -1 ] ] );
       
       fi;
       
