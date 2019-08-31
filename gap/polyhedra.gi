@@ -47,16 +47,13 @@ DeclareRepresentation( "IsCddLinearProgramRep",
 BindGlobal( "CddObjectsFamily",
   NewFamily( "CddObjectsFamily", IsObject ) );
 
-  
-
 BindGlobal( "TheTypeCddPolyhedron", 
   NewType( CddObjectsFamily, 
                       IsCddPolyhedronRep ) );
-                      
+
 BindGlobal( "TheTypeCddLinearProgram",
   NewType( CddObjectsFamily, 
                       IsCddLinearProgramRep ) );
-
 
 ##################################
 ##
@@ -67,185 +64,131 @@ BindGlobal( "TheTypeCddLinearProgram",
 ###
 InstallGlobalFunction( Cdd_PolyhedronByInequalities,
                "constructor for polyhedron by inequalities",
-#              [IsMatrix, IsString],
-   function( arg )
-   local poly, i, temp, matrix, new_mat;
-   
-   if Length( arg )= 0 then 
-   
-       Error( "inappropriate input" );
-   
-   elif Length( arg )= 1 and IsList( arg[1] ) then
-   
-   if Length( arg[ 1 ] )=0 or arg[ 1 ] = [ [ ] ] then 
-   
-   poly := rec(    matrix:= [ [1, 0] ],
-                   inequalities:= [ [ 1, 0 ] ],
-                   equalities:= [  ],
-                   linearity:= [ ],
-                   number_type:= "rational",
-                   rep_type := "H-rep" );
-   
-      ObjectifyWithAttributes( 
-      poly, TheTypeCddPolyhedron
-      );
-   
-      return  poly;
+  #             [IsMatrix, IsString],
+  function( arg )
+    local poly, i, temp, matrix, dim;
+    
+    if Length( arg ) = 0 then 
       
+      Error( "Wronge input: Please provide some input!" );
+    
+    elif Length( arg ) = 1 and IsList( arg[ 1 ] ) then
       
-   fi; 
-   
-   
-   if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
-   
-      Error( "inappropriate input" );
+      return Cdd_PolyhedronByInequalities( arg[ 1 ], [ ] );
+      
+    elif Length( arg ) = 2 and IsList( arg[ 1 ] ) and IsList( arg[ 2 ] ) then
+      
+      if IsEmpty( arg[ 1 ] ) or ForAny( arg[ 1 ], IsEmpty ) then 
+        
+        Error( "Wronge input: Please remove the empty lists from the input!" );
+      
+      fi;
+      
+      if not IsMatrix( arg[ 1 ] ) then
+        
+        Error( "Wronge input: The first argument should be a Gap matrix!" );
        
-   fi;
-   
-   matrix := arg[ 1 ];
-   new_mat := [];
-
-   for i in [ 1 .. Length( arg[ 1 ] ) ] do 
-   
-       if IsZero( matrix[ i ] ) then
-       temp := StructuralCopy( matrix[ i ] );
-       temp[ 1 ] := 1;
-       Add( new_mat, temp );
-       else
-       Add( new_mat, matrix[ i ] );
-       fi;
-   od;
-   
-   temp := GiveInequalitiesAndEqualities( new_mat, [] );
-
-   poly := rec(    matrix:=new_mat,
-                   inequalities:= temp[1],
-                   equalities:= temp[2],
-                   linearity:= [],
-                   number_type:= "rational",
-                   rep_type := "H-rep" );
-   
-      ObjectifyWithAttributes( 
-      poly, TheTypeCddPolyhedron
-      );
-   
-      return  poly;
-   
-   
-   elif Length( arg )= 2 and IsList( arg[1] ) and IsInt( arg[2][1] ) then
-   
-   if false in List([1..Length(arg[1])],i-> Length(arg[1][1])= Length(arg[1][i])) then
-   
-       return Error( "inappropriate input" );
-       
-   fi;
-   
-   for i in [1..Length( arg[2] ) ] do
+      fi;
+      
+      if not ForAll( arg[ 2 ], i -> i in [ 1 .. NrRows( arg[ 1 ] ) ] ) then
+        
+        Error( "Wronge input for linearity" );
+      
+      fi;
+      
+      dim := Length( arg[ 1 ][ 1 ] ) - 1;
+      
+      matrix := Filtered( arg[ 1 ], row -> not IsZero( row ) );
+      
+      if IsEmpty( matrix ) then
+        
+        matrix := [ Concatenation( [ 1 ], ListWithIdenticalEntries( dim, 0 ) ) ];
+      
+      fi;
+      
+      temp := GiveInequalitiesAndEqualities( matrix, arg[ 2 ] );
+      
+      poly := rec( matrix := matrix,
+                inequalities := temp[ 1 ],
+                equalities := temp[ 2 ],
+                linearity := arg[ 2 ],
+                number_type := "rational",
+                rep_type := "H-rep" );
+      
+      ObjectifyWithAttributes( poly, TheTypeCddPolyhedron );
+      
+      return poly;
     
-       if arg[2][i]> Length( arg[1] ) or arg[2][i]<0 then Error("The linearity is not combatible");fi;
-   
-   od;
-   
-   matrix := arg[ 1 ];
-   new_mat := [];
-   
-   for i in [ 1 .. Length( arg[ 1 ] ) ] do 
-   
-       if IsZero( matrix[ i ] ) then
-       temp := StructuralCopy( matrix[ i ] );
-       temp[ 1 ] := 1;
-       Add( new_mat, temp );
-       else
-       Add( new_mat, matrix[ i ] );
-       fi;
-   od;
-
-   temp := GiveInequalitiesAndEqualities( new_mat, arg[2] );
-
-   poly := rec(    matrix:=new_mat,
-                   inequalities:= temp[1],
-                   equalities:= temp[2],
-                   linearity:= arg[2],
-                   number_type:= "rational",
-                   rep_type := "H-rep" );
-   
-   ObjectifyWithAttributes( 
-   poly, TheTypeCddPolyhedron
-   );
-   
-    return  poly;
+    fi;
     
-    
-   fi;
-   
-   end );   
+end );
 
 ###
 InstallGlobalFunction( Cdd_PolyhedronByGenerators,
-               "constructor for polyhedron by generators",
-   function( arg )
-   local poly,i, temp;
+               "Constructor for polyhedron by generators",
+  function( arg )
+    local poly, i, matrix, temp, dim;
    
-   if Length( arg )= 0 then Error( "inappropriate input" );
+    if Length( arg )= 0 then
+      
+      Error( "Wronge input" );
    
-   
-   elif Length( arg )= 1 and IsList( arg[1] ) then
-   
-   
-   for i in [1..Length( arg[1]) ] do
-   
-     if not ( arg[1][i][1] in [0,1] ) then Error("The first column of the matrix should be only 1's or 0's");fi;
-   
-   od;
-   
-   temp:= GiveGeneratingVerticesAndGeneratingRays( arg[1], [ ] );
-   
-   poly := rec( generating_vertices := temp[1],
-                generating_rays := temp[2],
-                matrix:=arg[1],
-                linearity:= [ ],
-                number_type:= "rational",
-                rep_type := "V-rep" );
-   
-   ObjectifyWithAttributes( 
-   poly, TheTypeCddPolyhedron
-   );
-   
-   return  poly;
-   
-   elif Length( arg )= 2 and IsList( arg[1] ) and IsInt( arg[2][1] ) then
-   
-   for i in [1..Length( arg[1]) ] do
-   
-       if not ( arg[1][i][1] in [0,1] ) then Error("The first column of the matrix should be only 1's or 0's");fi;
-   
-   od;
-   
-   for i in [1..Length( arg[2] ) ] do
+    elif Length( arg ) = 1 and IsList( arg[1] ) then
+     
+     return Cdd_PolyhedronByGenerators( arg[ 1 ], [ ] );
+     
+    elif Length( arg ) = 2 and IsList( arg[ 1 ] ) and IsList( arg[ 2 ] ) then
     
-               if arg[2][i]> Length( arg[1] ) or arg[2][i]<0 then Error("The linearity is not compatible");fi;
+      if IsEmpty( arg[ 1 ] ) or ForAny( arg[ 1 ], IsEmpty ) then 
+        
+        Error( "Wronge input: Please remove the empty lists from the input!" );
+      
+      fi;
+      
+      if not IsMatrix( arg[ 1 ] ) then
+        
+        Error( "Wronge input: The first argument should be a Gap matrix!" );
+       
+      fi;
+      
+      if not ForAll( arg[ 1 ], row -> row[ 1 ] in [ 0, 1 ] ) then
+        
+        Error( "Wronge input: Please see the documentation!" );
+        
+      fi;
+      
+      if not ForAll( arg[ 2 ], i -> i in [ 1 .. NrRows( arg[ 1 ] ) ] ) then
+        
+        Error( "Wronge input for linearity" );
+      
+      fi;
+      
+      dim := Length( arg[ 1 ][ 1 ] ) - 1;
+      
+      matrix := Filtered( arg[ 1 ], row -> not IsZero( row ) );
+      
+      if IsEmpty( matrix ) then
+        
+        Error( "Wronge input: Please make sure the input has sensable direction vectors!" );
+      
+      fi;
+      
+      temp:= GiveGeneratingVerticesAndGeneratingRays( arg[ 1 ], arg[ 2 ] );
    
-   od;
-   
-   
-   temp:= GiveGeneratingVerticesAndGeneratingRays( arg[ 1 ], arg[ 2 ] );
-   
-   poly := rec( generating_vertices := temp[1],
-                generating_rays := temp[2],
-                matrix:=arg[1],
+      poly := rec( generating_vertices := temp[ 1 ],
+                generating_rays := temp[ 2 ],
+                matrix:=arg[ 1 ],
                 linearity:= arg[ 2 ],
                 number_type:= "rational",
                 rep_type := "V-rep" );
                 
-   ObjectifyWithAttributes( 
-   poly, TheTypeCddPolyhedron
-   );
+      ObjectifyWithAttributes( poly, TheTypeCddPolyhedron );
    
-   return  poly;
+      return poly;
     
-   fi;
+    fi;
    
-   end );           
+end );           
    
 
 InstallMethod( Cdd_LinearProgram,
