@@ -29,5 +29,5 @@ begin
    0  1 
 end
 gap> C := Cdd_PolyhedronByInequalities( [ [ -2 , 1 ], [ 1, -1 ] ] );;
-gap> Display( Cdd_H_Rep( C ) );
+gap> Display( Cdd_V_Rep( C ) );
 The empty polyhedron
