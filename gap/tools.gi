@@ -141,41 +141,34 @@ InstallMethod( LcmOfDenominatorRatInList,
 end );
 
 ##
-InstallMethod( ListToPoly,
-               [ IsList ],
-  function( list )
+InstallGlobalFunction( LIST_TO_CDD_POLYHEDRON,
+  function( arg )
     local numtype, matrix, L, temp1, temp2, temp3, temp4, p, i;
     
-    if not IsCompatiblePolyhedronList( list ) then
-      
-      return Error( "The given list is not compatible" );
-    
-    fi;
-    
-    matrix:= list[ 7 ];
+    matrix := arg[ 5 ];
     
     if not IsEmpty( matrix ) and NrRows( matrix ) > 0 then
       
-      matrix:= CanonicalizeList( matrix, list[ 1 ] );
+      matrix := CanonicalizeList( matrix, arg[ 1 ] );
     
     fi;
     
-    if list[ 1 ] = 2 then
+    if arg[ 1 ] = 2 then
       
-      temp2:= GiveGeneratingVerticesAndGeneratingRays( matrix, [ ] )[ 1 ];
+      temp2 := GiveGeneratingVerticesAndGeneratingRays( matrix, [ ] )[ 1 ];
         
-        if temp2= [ List( [ 2..list[ 5 ] ], i -> 0 ) ] and
+        if temp2 = [ List( [ 2 .. arg[ 3 ] ], i -> 0 ) ] and
             not NrRows( matrix ) = 1 then
 
-          temp3:= StructuralCopy( matrix );
+          temp3 := StructuralCopy( matrix );
           
-          temp4:= StructuralCopy( list[ 6 ] );
+          temp4 := StructuralCopy( arg[ 4 ] );
           
-          temp1:= [ 1 ];
+          temp1 := [ 1 ];
           
           Append( temp1, temp2[ 1 ] );
           
-          p:= Position( temp3, temp1 );
+          p := Position( temp3, temp1 );
           
           Remove( temp3, p );
           
@@ -183,7 +176,7 @@ InstallMethod( ListToPoly,
             temp4[ i ]:= temp4[ i ] - 1;
           od;
           
-          if Length( list[ 6 ] ) = 0 then
+          if Length( arg[ 4 ] ) = 0 then
             
             return Cdd_PolyhedronByGenerators( temp3 );
           
@@ -195,33 +188,33 @@ InstallMethod( ListToPoly,
           
         fi;
         
-        if Length( list[ 6 ] ) = 0 then
+        if Length( arg[ 4 ] ) = 0 then
           
           return Cdd_PolyhedronByGenerators( matrix );
         
         else
           
-          return Cdd_PolyhedronByGenerators( matrix , list[ 6 ] );
+          return Cdd_PolyhedronByGenerators( matrix , arg[ 4 ] );
           
         fi;
     
     else 
       
-      if list[ 4 ]=0 then
+      if arg[ 2 ] = 0 then
         
-        L := ListWithIdenticalEntries( list[ 5 ], 0 );
-        L[1] := 1;
+        L := ListWithIdenticalEntries( arg[ 3 ], 0 );
+        L[ 1 ] := 1;
         return Cdd_PolyhedronByInequalities( [ L ] );
         
       fi;
       
-      if Length( list[ 6 ] ) = 0 then
+      if Length( arg[ 4 ] ) = 0 then
         
         return Cdd_PolyhedronByInequalities( matrix );
       
       else
         
-        return Cdd_PolyhedronByInequalities( matrix , list[ 6 ] );
+        return Cdd_PolyhedronByInequalities( matrix , arg[ 4 ] );
       
       fi;
     
@@ -230,32 +223,27 @@ InstallMethod( ListToPoly,
 end );
 
 ##
-InstallMethod( PolyToList,
+InstallMethod( CDD_POLYHEDRON_TO_LIST,
         [ IsCddPolyhedron ],
   function( poly )
     local L, matrix, lin, temp;
     
     L := [  ];
     
-    if (poly!.rep_type= "H-rep" ) then
-      L[1] := 1;
+    if (poly!.rep_type = "H-rep" ) then
+      L[ 1 ] := 1;
     else
-      L[1] := 2;
+      L[ 1 ] := 2;
     fi;
     
     matrix := poly!.matrix;
     
-    if poly!.rep_type= "V-rep" and IsZero( matrix ) then
-      matrix := DuplicateFreeList( matrix );
-      matrix[ 1, 1 ] := 1;
-    fi;
-    
-    L[4] := NrRows( matrix );
-    L[5] := NrCols( matrix );
-    L[6] := poly!.linearity;
-    L[7] := matrix;
-    L[8] := 0;
-    L[9] := [ ];
+    L[ 2 ] := NrRows( matrix );
+    L[ 3 ] := NrCols( matrix );
+    L[ 4 ] := poly!.linearity;
+    L[ 5 ] := matrix;
+    L[ 6 ] := 0;
+    L[ 7 ] := [ ];
     
     return L;
     
@@ -319,19 +307,19 @@ InstallMethod( LinearProgramToList,
   function( lp )
     local result;
     
-    result:= ShallowCopy( PolyToList( Cdd_H_Rep( lp!.polyhedron ) ) );
+    result:= ShallowCopy( CDD_POLYHEDRON_TO_LIST( Cdd_H_Rep( lp!.polyhedron ) ) );
     
     if lp!.objective = "max" then
       
-      result[ 8 ] := 1;
+      result[ 6 ] := 1;
     
     else
       
-      result[ 8 ] := 2;
+      result[ 6 ] := 2;
     
     fi;
     
-    result[ 9 ] := lp!.rowvector;
+    result[ 7 ] := lp!.rowvector;
     
     return result;
     
@@ -441,7 +429,7 @@ InstallMethod( GetRidOfLinearity,
 function( poly )
   local i, temp;
   
-  if poly!.rep_type= "V-rep" then
+  if poly!.rep_type = "V-rep" then
     
     Error( "This function is written for H-rep polyhedra" );
   

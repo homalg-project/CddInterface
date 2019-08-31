@@ -179,9 +179,9 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
 
   ASS_LIST(result, 1, INTOBJ_INT(M->representation));
   // entry 2 & 3 are intentionally left unbound
-  ASS_LIST(result, 4, INTOBJ_INT(nrRows));
-  ASS_LIST(result, 5, INTOBJ_INT(nrCols));
-  ASS_LIST(result, 6, ddG_LinearityPtr(M));
+  ASS_LIST(result, 2, INTOBJ_INT(nrRows));
+  ASS_LIST(result, 3, INTOBJ_INT(nrCols));
+  ASS_LIST(result, 4, ddG_LinearityPtr(M));
 
   Ma = M->matrix;
 
@@ -197,7 +197,7 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
     }
   }
 
-  ASS_LIST(result, 7, current);
+  ASS_LIST(result, 5, current);
   return result;
 }
 
@@ -210,12 +210,12 @@ static dd_MatrixPtr GapInputToMatrixPtr(Obj input)
   dd_set_global_constants();
 
   k_rep = INT_INTOBJ(ELM_PLIST(input, 1));
-  k_rowrange = INT_INTOBJ(ELM_PLIST(input, 4));
-  k_colrange = INT_INTOBJ(ELM_PLIST(input, 5));
-  k_linearity_array = ELM_PLIST(input, 6);
-  k_matrix = ELM_PLIST(input, 7);
-  k_LPobject = INT_INTOBJ(ELM_PLIST(input, 8));
-  k_rowvec = ELM_PLIST(input, 9);
+  k_rowrange = INT_INTOBJ(ELM_PLIST(input, 2));
+  k_colrange = INT_INTOBJ(ELM_PLIST(input, 3));
+  k_linearity_array = ELM_PLIST(input, 4);
+  k_matrix = ELM_PLIST(input, 5);
+  k_LPobject = INT_INTOBJ(ELM_PLIST(input, 6));
+  k_rowvec = ELM_PLIST(input, 7);
 
   if (k_colrange == 0)
     ErrorMayQuit("k_colrange == 0 should not happen, please report this!", 0, 0);

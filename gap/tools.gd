@@ -4,8 +4,8 @@ DeclareOperation( "GiveGeneratingVerticesAndGeneratingRays", [ IsList, IsList ] 
 DeclareOperation( "GiveInequalitiesAndEqualities", [ IsList, IsList ] );
 DeclareOperation( "LcmOfDenominatorRatInList", [IsList] );
 DeclareOperation( "CanonicalizeList", [IsList, IsInt] );
-DeclareOperation( "ListToPoly", [ IsList ] );
-DeclareAttribute( "PolyToList", IsCddPolyhedron  );
+DeclareGlobalFunction( "LIST_TO_CDD_POLYHEDRON" );
+DeclareAttribute( "CDD_POLYHEDRON_TO_LIST", IsCddPolyhedron  );
 DeclareOperation( "GetRidOfLinearity", [ IsCddPolyhedron ] );
 DeclareOperation( "LinearProgramToList", [ IsCddLinearProgram ] );
 DeclareGlobalFunction( "NumberOfDigitsOfTheNumber" );
