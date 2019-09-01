@@ -170,13 +170,13 @@ InstallGlobalFunction( Cdd_PolyhedronByGenerators,
       
       fi;
       
-      temp:= GiveGeneratingVerticesAndGeneratingRays( arg[ 1 ], arg[ 2 ] );
+      temp := GiveGeneratingVerticesAndGeneratingRays( arg[ 1 ], arg[ 2 ] );
    
       poly := rec( generating_vertices := temp[ 1 ],
                 generating_rays := temp[ 2 ],
-                matrix:=arg[ 1 ],
-                linearity:= arg[ 2 ],
-                number_type:= "rational",
+                matrix :=arg[ 1 ],
+                linearity := arg[ 2 ],
+                number_type := "rational",
                 rep_type := "V-rep" );
                 
       ObjectifyWithAttributes( poly, TheTypeCddPolyhedron );
@@ -194,13 +194,13 @@ InstallMethod( Cdd_LinearProgram,
   function( poly, obj, rowvec )
     local r;
     
-    if obj<> "max" and obj <> "min" then
+    if obj <> "max" and obj <> "min" then
       
       Error( "The second argument should be either 'max' or 'min' " );
     
     fi;
     
-    r := rec( polyhedron:=  poly , objective:= obj, rowvector:= rowvec );
+    r := rec( polyhedron:=  poly , objective := obj, rowvector := rowvec );
     
     ObjectifyWithAttributes( r, TheTypeCddLinearProgram );
     
@@ -363,7 +363,7 @@ InstallMethod( Cdd_H_Rep,
     
     else 
       
-      if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
+      if poly!.rep_type = "V-rep" and poly!.matrix = [] then
         
         return Cdd_PolyhedronByInequalities( [ [ 0, 1 ], [ -1, -1 ] ] );
       
@@ -386,42 +386,6 @@ InstallMethod( Cdd_SolveLinearProgram,
     
     return CddInterface_LpSolution( temp );
   
-end );
-
-## This implementations is old and slow
-BindGlobal( "Cdd_Faces_2",
-
-function( poly )
-local temp, comb, lin, result, current, i, face;
-
-if poly!.rep_type = "V-rep" then 
-
-    Error( "The input should be in H-rep " );
-    
-fi;
-
-temp := [ 1..Length( poly!.matrix ) ];
-
-lin:= StructuralCopy( poly!.linearity );
-
-SubtractSet(temp, lin );
-
-result:= [];
-
-comb := Combinations( temp );
-
-for i in comb do
-
-current:= Cdd_ExtendLinearity( poly, i );
-
-face := [ Cdd_Dimension( current ), current!.linearity ];
-
-if not face[1]=-1 then Add( result, face );fi;
-
-od;
-
-return result;
-
 end );
 
 ###
@@ -478,7 +442,7 @@ InstallMethod( Cdd_Facets,
     
     d := Cdd_Dimension( poly );
       
-      return Cdd_FacesWithFixedDimension( poly, d - 1 );
+    return Cdd_FacesWithFixedDimension( poly, d - 1 );
   
 end );
 
@@ -560,19 +524,19 @@ InstallMethod( Cdd_ExtendLinearity,
     
     fi;
     
-    temp:= StructuralCopy( poly!.linearity );
+    temp := StructuralCopy( poly!.linearity );
     
     Append( temp, lin );
     
-    temp:= List( Set( temp ) );
+    temp := List( Set( temp ) );
     
-    if temp=[] then 
+    if temp = [ ] then 
       
-      P:= Cdd_PolyhedronByInequalities( poly!.matrix );
+      P := Cdd_PolyhedronByInequalities( poly!.matrix );
     
     else
       
-      P:= Cdd_PolyhedronByInequalities( poly!.matrix, temp );
+      P := Cdd_PolyhedronByInequalities( poly!.matrix, temp );
     
     fi;
     
@@ -610,23 +574,27 @@ InstallMethod( Cdd_FourierProjection,
   function( poly, n )
     local f,temp_poly, temp, i,j,row_range, col_range, extra_row;
     
-    if Cdd_IsEmpty( poly ) then return poly; fi;
+    if Cdd_IsEmpty( poly ) then
+      
+      return poly;
     
-    temp_poly:= GetRidOfLinearity( Cdd_H_Rep( StructuralCopy( poly ) ) );
+    fi;
     
-    col_range:= Length( temp_poly!.matrix[1] );
+    temp_poly := GetRidOfLinearity( Cdd_H_Rep( StructuralCopy( poly ) ) );
     
-    row_range:= Length( temp_poly!.matrix );
+    col_range := Length( temp_poly!.matrix[1] );
     
-    temp:= temp_poly!.matrix;
+    row_range := Length( temp_poly!.matrix );
+    
+    temp := temp_poly!.matrix;
     
     if n >= col_range then
       
-      for j in [1..row_range] do
+      for j in [ 1 .. row_range ] do
         
-        for i in [col_range, n] do
+        for i in [ col_range, n ] do
           
-          Add( temp[j], 0 );
+          Add( temp[ j ], 0 );
         
         od;
       
@@ -634,28 +602,28 @@ InstallMethod( Cdd_FourierProjection,
      
     else
       
-      for i in [1..row_range] do
+      for i in [ 1 .. row_range ] do
         
-        Add( temp[i], temp[i][n+1] );
+        Add( temp[ i ], temp[ i, n + 1 ] );
         
-        Remove( temp[i], n+1 );
+        Remove( temp[ i ], n + 1 );
       
       od;
       
-      temp_poly:= Cdd_Canonicalize( 
+      temp_poly := Cdd_Canonicalize(
         CallFuncList(
           LIST_TO_CDD_POLYHEDRON,
           CddInterface_FourierElimination( CDD_POLYHEDRON_TO_LIST( Cdd_PolyhedronByInequalities( temp ) ) ) 
                     )
                                   );
       
-      temp:= temp_poly!.matrix;
+      temp := temp_poly!.matrix;
       
-      row_range:= Length( temp );
+      row_range := Length( temp );
       
-      for i in [1..row_range] do
+      for i in [ 1 .. row_range ] do
         
-        Add( temp[i],0,n+1 );
+        Add( temp[ i ], 0, n + 1 );
         
       od;
       
@@ -698,35 +666,35 @@ InstallMethod( \+,
     
     col_range := Cdd_AmbientSpaceDimension( poly1 );
     
-    g_vertices1:= ShallowCopy ( Cdd_GeneratingVertices( poly1 ) );
+    g_vertices1 := ShallowCopy ( Cdd_GeneratingVertices( poly1 ) );
     
-    if g_vertices1= [] then
+    if g_vertices1 = [ ] then
       
-      g_vertices1:= [ List( [1..col_range ], i-> 0 ) ];
+      g_vertices1 := [ List( [ 1 .. col_range ], i -> 0 ) ];
     
     fi;
     
-    g_vertices2:= ShallowCopy ( Cdd_GeneratingVertices( poly2 ) );
+    g_vertices2 := ShallowCopy( Cdd_GeneratingVertices( poly2 ) );
     
-    if g_vertices2= [] then
+    if g_vertices2 = [ ] then
       
-      g_vertices2:= [ List( [1..col_range ], i-> 0 ) ];
+      g_vertices2 := [ List( [ 1 .. col_range ], i -> 0 ) ];
     
     fi;
     
-    new_generating_vertices := [];
+    new_generating_vertices := [ ];
     
     for i in g_vertices1 do
       
       for j in g_vertices2 do
         
-        Add( new_generating_vertices, i+j );
+        Add( new_generating_vertices, i + j );
       
       od;
     
     od;
     
-    matrix:= [ ];
+    matrix := [ ];
     
     for i in new_generating_vertices do 
       
@@ -738,11 +706,11 @@ InstallMethod( \+,
       
     od;
     
-    g_rays1:= Cdd_GeneratingRays( poly1 );
+    g_rays1 := Cdd_GeneratingRays( poly1 );
     
-    g_rays2:= Cdd_GeneratingRays( poly2 );
+    g_rays2 := Cdd_GeneratingRays( poly2 );
     
-    new_generating_rays:= Union( g_rays1 ,g_rays2 );
+    new_generating_rays := Union( g_rays1 ,g_rays2 );
     
     for i in new_generating_rays do 
       
@@ -764,13 +732,13 @@ InstallMethod( \=,
   function( poly1, poly2 )
     local generating_vertices1, generating_vertices2, generating_rays1, generating_rays2;
     
-    generating_vertices1:= Set(Cdd_GeneratingVertices( poly1 ) );
+    generating_vertices1 := Set(Cdd_GeneratingVertices( poly1 ) );
     
-    generating_vertices2:= Set(Cdd_GeneratingVertices( poly2 ) );
+    generating_vertices2 := Set(Cdd_GeneratingVertices( poly2 ) );
     
-    generating_rays1:= Set( Cdd_GeneratingRays( poly1 ) );
+    generating_rays1 := Set( Cdd_GeneratingRays( poly1 ) );
     
-    generating_rays2:= Set( Cdd_GeneratingRays( poly2 ) );
+    generating_rays2 := Set( Cdd_GeneratingRays( poly2 ) );
     
     return generating_vertices1=generating_vertices2 and generating_rays1= generating_rays2;
   
@@ -783,21 +751,21 @@ InstallMethod( Cdd_Intersection,
   function( poly1, poly2 )
     local poly1_h, poly2_h, new_matrix, new_linearity, i, poly1_rowrange, poly2_rowrange;
     
-    poly1_h:= Cdd_H_Rep( poly1 );
+    poly1_h := Cdd_H_Rep( poly1 );
     
-    poly2_h:= Cdd_H_Rep( poly2 );
+    poly2_h := Cdd_H_Rep( poly2 );
     
     new_matrix := StructuralCopy( poly1_h!.matrix );
     
-    new_linearity:= StructuralCopy( poly1_h!.linearity );
+    new_linearity := StructuralCopy( poly1_h!.linearity );
     
     poly1_rowrange := Length( poly1_h!.matrix );
     
     poly2_rowrange := Length( poly2_h!.matrix );
     
-    for i in [ 1..poly2_rowrange ] do
+    for i in [ 1 .. poly2_rowrange ] do
       
-      Add(new_matrix, poly2_h!.matrix[ i ] );
+      Add( new_matrix, poly2_h!.matrix[ i ] );
       
       if i in poly2_h!.linearity then
         
@@ -807,7 +775,7 @@ InstallMethod( Cdd_Intersection,
     
     od;
     
-    if Length( new_linearity)=0 then 
+    if Length( new_linearity ) = 0 then
       
       return Cdd_Canonicalize( Cdd_PolyhedronByInequalities( new_matrix ) );
     
@@ -820,17 +788,16 @@ InstallMethod( Cdd_Intersection,
 end );
 ##
 InstallMethod( Cdd_IsContained,
-               [ IsCddPolyhedron, IsCddPolyhedron ],
+                [ IsCddPolyhedron, IsCddPolyhedron ],
                
   function( poly1, poly2 )
     local temp;
     
-    temp:= Cdd_Intersection( poly1, poly2 );
+    temp := Cdd_Intersection( poly1, poly2 );
     
     return temp = poly1;
   
 end );
-
 
 ##################################
 ##
@@ -862,7 +829,7 @@ InstallMethod( Display,
                [ IsCddPolyhedron ],
   function( poly )
     
-    if  poly!.rep_type= "V-rep" and poly!.matrix = [] then 
+    if poly!.rep_type = "V-rep" and poly!.matrix = [] then 
       
       Print( "The empty polyhedron" );
     
@@ -870,11 +837,15 @@ InstallMethod( Display,
       
       Print( poly!.rep_type, "resentation \n" );
       
-      if Length( poly!.linearity) <> 0 then Print( "linearity ", Length(poly!.linearity),", ",poly!.linearity,"\n");fi;
+      if Length( poly!.linearity) <> 0 then
+        
+        Print( "linearity ", Length( poly!.linearity ), ", ", poly!.linearity, "\n");
+      
+      fi;
       
       Print( "begin \n" );
       
-      Print("   ", Length( poly!.matrix)," X ", Length( poly!.matrix[1] ), "  ", poly!.number_type, "\n" );
+      Print( "   ", Length( poly!.matrix ), " X ", Length( poly!.matrix[ 1 ] ), "  ", poly!.number_type, "\n" );
       
       PTM( poly!.matrix );
       
@@ -893,7 +864,7 @@ InstallMethod( Display,
     
     Display( poly!.polyhedron );
     
-    Print( poly!.objective, "  ",poly!.rowvector );
+    Print( poly!.objective, "  ", poly!.rowvector );
   
 end );
 
