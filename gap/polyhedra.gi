@@ -131,7 +131,8 @@ InstallGlobalFunction( Cdd_PolyhedronByGenerators,
       
       if IsEmpty( arg[ 1 ] ) or ForAny( arg[ 1 ], IsEmpty ) then
         
-        poly := rec(
+        poly := rec( generating_vertices := [ ],
+                generating_rays := [ ],
                 matrix:= arg[ 1 ],
                 number_type := "rational",
                 rep_type := "V-rep" );
