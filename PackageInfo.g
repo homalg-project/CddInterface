@@ -57,7 +57,11 @@ ArchiveFormats := ".tar.gz",
 ##
 Status := "dev",
 
-AbstractHTML   :=  "",
+AbstractHTML   :=
+  "The <span class='pkgname'>CddInterface</span> package provides\
+ a GAP interface to <a href='https://inf.ethz.ch/personal/fukudak/cdd_home'>cdd</a>,\
+ enabling direct access to the most of the functionality of cddlib, such as\
+ translating between H,V- representations of a polyhedron and solving linear programming problems.",
 
 PackageDoc := rec(
   BookName  := "CddInterface",
