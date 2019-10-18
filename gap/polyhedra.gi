@@ -53,7 +53,7 @@ BindGlobal( "TheTypeCddLinearProgram",
 
 ###
 InstallGlobalFunction( Cdd_PolyhedronByInequalities,
-               "constructor for polyhedron by inequalities",
+  #             "constructor for polyhedron by inequalities",
   #             [IsMatrix, IsString],
   function( arg )
     local poly, i, temp, matrix, dim;
@@ -115,7 +115,7 @@ end );
 
 ###
 InstallGlobalFunction( Cdd_PolyhedronByGenerators,
-               "Constructor for polyhedron by generators",
+  #             "Constructor for polyhedron by generators",
   function( arg )
     local poly, i, matrix, temp, dim;
    
