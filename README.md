@@ -16,13 +16,22 @@ finite points and the nonnegative hull of finite directions. These are called H-
 [CddInterface](https://homalg-project.github.io/CddInterface/) is a gap interface with the C package [Cddlib
 ](https://www.inf.ethz.ch/personal/fukudak/cdd_home/) which among other things can translate between H,V- representations of a polyhedron P and solve linear programming problems over P, i.e. a problem of maximizing and minimizing a linear function over P. A list of all available operations can be found in the [manual.pdf](https://github.com/homalg-project/CddInterface/releases/latest/download/manual.pdf).
 
-# Install
+# Prerequisites
 
-Make sure you can update "configure" scriptes by installing `autoconf`
+Make sure you can update "configure" scriptes by installing `autoconf`:
     
+    sudo apt-get update
     sudo apt-get install autoconf
+
+You also need the package `libgmp-dev`:
+
+    sudo apt-get install libgmp-dev
     
-## Simple
+Moreover, you need the package `libtool`:
+
+    sudo apt-get install libtool
+    
+## Simple installation
 
 For a simplyfied installation, try the following two commands in the main CddInterface directory
 
@@ -32,9 +41,11 @@ or
 
     sudo ./install.sh <path-to-gaproot> (if root permission is needed)
 
-If that does not work, try the following
+where the `<path-to-gaproot> ` is the folder where you installed and compiled `Gap` and which contains the file `sysinfo.gap`. 
 
-## Advanced
+If that does not work, try the following:
+
+## Advanced installation
 
 Go inside the CddInterface directory and download some release of [cddlib](https://github.com/cddlib/cddlib/releases) and extract it. For example the release 0.94j:
     
