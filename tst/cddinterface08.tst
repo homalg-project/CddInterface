@@ -10,7 +10,7 @@
 #
 gap> START_TEST( "cddinterface08.tst");
 
-# doc/_Chapter_Linear_Programs.xml:44-95
+# doc/_Chunks.xml:257-308
 gap> A:= Cdd_PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ],
 > [ -80, 0, 1 ], [ 170, 0, -1 ], [ -200, 1, 1 ] ] );
 <Polyhedron given by its H-representation>
@@ -61,4 +61,6 @@ begin
    1  200   80
    1  200  170
 end
+
+#
 gap> STOP_TEST("cddinterface08.tst", 1 );

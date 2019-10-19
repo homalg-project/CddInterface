@@ -10,7 +10,7 @@
 #
 gap> START_TEST( "cddinterface05.tst");
 
-# doc/_Chapter_Creating_polyhedra_and_their_Operations.xml:199-225
+# doc/_Chunks.xml:176-202
 gap> A := Cdd_PolyhedronByInequalities( [ [ 10, -1, 1, 0 ],
 > [ -24, 9, 2, 0 ], [ 1, 1, -1, 0 ], [ -23, -12, 1, 11 ] ], [ 4 ] );
 <Polyhedron given by its H-representation>
@@ -36,4 +36,6 @@ begin
    1   4  -6   7
    0   1   1   1
 end
+
+#
 gap> STOP_TEST("cddinterface05.tst", 1 );

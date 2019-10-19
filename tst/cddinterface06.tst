@@ -10,7 +10,7 @@
 #
 gap> START_TEST( "cddinterface06.tst");
 
-# doc/_Chapter_Creating_polyhedra_and_their_Operations.xml:239-268
+# doc/_Chunks.xml:2-31
 gap> A := Cdd_PolyhedronByInequalities( [ [ 3, 4, 5 ] ], [ 1 ] );;
 gap> B := Cdd_PolyhedronByInequalities( [ [ 9, 7, 2 ] ], [ 1 ] );;
 gap> C := Cdd_Intersection( A, B );;
@@ -39,4 +39,6 @@ begin
 
    1  -13/9    5/9
 end
+
+#
 gap> STOP_TEST("cddinterface06.tst", 1 );

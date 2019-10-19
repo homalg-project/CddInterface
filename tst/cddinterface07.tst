@@ -10,7 +10,7 @@
 #
 gap> START_TEST( "cddinterface07.tst");
 
-# doc/_Chapter_Creating_polyhedra_and_their_Operations.xml:282-313
+# doc/_Chunks.xml:208-239
 gap> P := Cdd_PolyhedronByGenerators( [ [ 1, 2, 5 ], [ 0, 1, 2 ] ] );
 < Polyhedron given by its V-representation >
 gap> Q := Cdd_PolyhedronByGenerators( [ [ 1, 4, 6 ], [ 1, 3, 7 ], [ 0, 3, 1 ] ] );
@@ -41,4 +41,6 @@ gap> Cdd_GeneratingRays( Q );
 [ [ 3, 1 ] ]
 gap> Cdd_GeneratingRays( S );
 [ [ 1, 2 ], [ 3, 1 ] ]
+
+#
 gap> STOP_TEST("cddinterface07.tst", 1 );

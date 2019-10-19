@@ -10,7 +10,7 @@
 #
 gap> START_TEST( "cddinterface04.tst");
 
-# doc/_Chapter_Creating_polyhedra_and_their_Operations.xml:143-179
+# doc/_Chunks.xml:134-170
 gap> Q := Cdd_PolyhedronByGenerators( [ [ 1, 2, 3, 4 ],[ 1, 2, 4, 5 ], [ 0, 1, 1, 1 ] ] );
 <Polyhedron given by its V-representation>
 gap> R := Cdd_H_Rep( Q );
@@ -46,4 +46,6 @@ begin
    0  0  1  1 
    1  0  3  4 
 end
+
+#
 gap> STOP_TEST("cddinterface04.tst", 1 );
