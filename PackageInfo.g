@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "CddInterface",
 Subtitle := "Gap interface to Cdd package",
-Version := "2019.08.29",
+Version := "2019.12.04",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -57,7 +57,11 @@ ArchiveFormats := ".tar.gz",
 ##
 Status := "dev",
 
-AbstractHTML   :=  "",
+AbstractHTML   :=
+  "The <span class='pkgname'>CddInterface</span> package provides\
+ a GAP interface to <a href='https://inf.ethz.ch/personal/fukudak/cdd_home'>cdd</a>,\
+ enabling direct access to the most of the functionality of cddlib, such as\
+ translating between H,V- representations of a polyhedron and solving linear programming problems.",
 
 PackageDoc := rec(
   BookName  := "CddInterface",

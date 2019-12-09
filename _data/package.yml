@@ -1,6 +1,6 @@
 name: CddInterface
-version: "2019.08.29"
-date: 2019-08-29
+version: "2019.12.04"
+date: 2019-12-04
 description: |
     Gap interface to Cdd package
 
@@ -25,9 +25,10 @@ packageinfo: https://github.com/homalg-project/CddInterface/releases/latest/down
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/CddInterface/archive/2019.08.29.tar.gz
+      url: https://github.com/homalg-project/CddInterface/archive/2019.12.04.tar.gz
 
 abstract: |
+    The <span class='pkgname'>CddInterface</span> package provides a GAP interface to <a href='https://inf.ethz.ch/personal/fukudak/cdd_home'>cdd</a>, enabling direct access to the most of the functionality of cddlib, such as translating between H,V- representations of a polyhedron and solving linear programming problems.
 
 status: dev
 doc-html: doc/chap0.html
@@ -38,7 +39,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal19</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>CddInterface, Gap interface to Cdd package,
-             Version 2019.08.29</i>
+             Version 2019.12.04</i>
      (<span class='BibYear'>2019</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/CddInterface">https://homalg-project.github.io/CddInterface</a></span>.
@@ -46,14 +47,15 @@ citeas: |
     
 
 bibtex: |
-    @misc{ CddInterface2019.08.29,
+    @misc{ CddInterface2019.12.04,
       author =           {Saleh, K.},
-      title =            {{CddInterface}, Gap interface to Cdd package, {V}ersion 2019.08.29},
-      month =            {Aug},
+      title =            {{CddInterface}, Gap interface to Cdd package, {V}ersion 2019.12.04},
+      month =            {Dec},
       year =             {2019},
       note =             {GAP package},
-      howpublished =     {\href                                                         {https://homalg-project.github.io/CddInterface}
-                          {\texttt{https://homalg-project.github.io/}\discretionary {}{}{}\texttt{CddInterface}}},
+      howpublished =     {\href                                 {https://homalg-project.github.io/CddInterface}
+                          {\texttt{https://homalg-project.github.io/}\discretionary
+                          {}{}{}\texttt{CddInterface}}},
       keywords =         {cddlib; Polyhedra; Convex Geometry; NConvex},
       printedkey =       {Sal19}
     }
