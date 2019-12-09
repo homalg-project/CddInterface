@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "CddInterface",
 Subtitle := "Gap interface to Cdd package",
-Version := "2019.12.04",
+Version := "2019.12.06",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -34,17 +34,16 @@ Persons := [
   ),
 ],
 
-PackageWWWHome := "https://homalg-project.github.io/CddInterface",
-
 SourceRepository := rec(
     Type := "git",
-    URL := "https://github.com/homalg-project/CddInterface" ),
+    URL := Concatenation( "https://github.com/homalg-project/", ~.PackageName )
+),
 
+PackageWWWHome := Concatenation( "https://homalg-project.github.io/", ~.PackageName ),
+README_URL     := Concatenation( ~.PackageWWWHome, "/README.md" ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 ArchiveURL     := Concatenation( ~.SourceRepository.URL, "/archive/", ~.Version ),
-README_URL     := Concatenation( ~.SourceRepository.URL, "/releases/latest/download/README.md" ),
-PackageInfoURL := Concatenation( ~.SourceRepository.URL, "/releases/latest/download/PackageInfo.g" ),
-
 ArchiveFormats := ".tar.gz",
 
 ##  Status information. Currently the following cases are recognized:
