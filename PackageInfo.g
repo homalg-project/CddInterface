@@ -43,8 +43,10 @@ PackageWWWHome := Concatenation( "https://homalg-project.github.io/", ~.PackageN
 README_URL     := Concatenation( ~.PackageWWWHome, "/README.md" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-ArchiveURL     := Concatenation( ~.SourceRepository.URL, "/archive/", ~.Version ),
-ArchiveFormats := ".tar.gz",
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", ~.PackageName, "-", ~.Version ),
+ArchiveFormats  := ".tar.gz",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
