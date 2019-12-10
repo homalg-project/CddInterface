@@ -30,22 +30,26 @@ You also need the package `libgmp-dev`:
 Moreover, you need the package `libtool`:
 
     sudo apt-get install libtool
+
+## Simple installation (with the default cdd for you system):
     
-## Simple installation
+    sudo apt-get install libcdd-dev
+    ./autogen.sh
+    ./configure --with-gaproot=path-to-gaproot
+    make
+
+where the `<path-to-gaproot> ` is the path to the folder where you installed and compiled `Gap` and 
+which contains the file `sysinfo.gap`.
+
+## Simple installation (includes building the current cdd from source):
 
 For a simplyfied installation, try the following two commands in the main CddInterface directory
 
     ./install.sh <path-to-gaproot>
 
-or
-
-    sudo ./install.sh <path-to-gaproot> (if root permission is needed)
-
-where the `<path-to-gaproot> ` is the folder where you installed and compiled `Gap` and which contains the file `sysinfo.gap`. 
-
 If that does not work, try the following:
 
-## Advanced installation
+## Advanced installation (includes building the current cdd from source):
 
 Go inside the CddInterface directory and download some release of [cddlib](https://github.com/cddlib/cddlib/releases) and extract it. For example the release 0.94j:
     
