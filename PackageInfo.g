@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "CddInterface",
 Subtitle := "Gap interface to Cdd package",
-Version := "2019.12.07",
+Version := "2019.12.08",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -80,9 +80,30 @@ Dependencies := rec(
   ExternalConditions := [ ],
 ),
 
-AvailabilityTest := function()
-        return true;
-    end,
+AvailabilityTest := 
+  function()
+    local path, file;
+    
+    path:= DirectoriesPackagePrograms( "CddInterface" );
+    
+    file := Filename( path, "CddInterface.so" );
+    
+    if file = fail then
+      
+      LogPackageLoadingMessage( PACKAGE_WARNING,
+          [
+            "The library `libcdd' is not yet installed on the system,",
+            " or it is not correctly compiled!,",
+            "Please, see the installation instructions in README.md."
+          ] );
+      
+      return fail;
+    
+    fi;
+    
+    return true;
+      
+end,
 
 TestFile := "tst/testall.g",
 
