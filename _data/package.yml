@@ -1,6 +1,6 @@
 name: CddInterface
-version: "2019.12.08"
-date: 2019-12-08
+version: "2019.12.09"
+date: 2019-12-09
 description: |
     Gap interface to Cdd package
 
@@ -25,12 +25,12 @@ packageinfo: https://homalg-project.github.io/CddInterface/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/CddInterface/releases/download/v2019.12.08/CddInterface-2019.12.08.tar.gz
+      url: https://github.com/homalg-project/CddInterface/releases/download/v2019.12.09/CddInterface-2019.12.09.tar.gz
 
 abstract: |
     The <span class='pkgname'>CddInterface</span> package provides a GAP interface to <a href='https://inf.ethz.ch/personal/fukudak/cdd_home'>cdd</a>, enabling direct access to the most of the functionality of cddlib, such as translating between H,V- representations of a polyhedron and solving linear programming problems.
 
-status: dev
+status: deposited
 doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 keywords: |
@@ -39,7 +39,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal19</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>CddInterface, Gap interface to Cdd package,
-             Version 2019.12.08</i>
+             Version 2019.12.09</i>
      (<span class='BibYear'>2019</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/CddInterface">https://homalg-project.github.io/CddInterface</a></span>.
@@ -47,10 +47,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ CddInterface2019.12.08,
+    @misc{ CddInterface2019.12.09,
       author =           {Saleh, K.},
       title =            {{CddInterface},   Gap   interface   to   Cdd  package,
-                          {V}ersion 2019.12.08},
+                          {V}ersion 2019.12.09},
       month =            {Dec},
       year =             {2019},
       note =             {GAP package},
