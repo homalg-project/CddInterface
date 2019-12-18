@@ -10,7 +10,7 @@
 #
 gap> START_TEST( "cddinterface04.tst");
 
-# doc/_Chunks.xml:134-170
+# doc/_Chunks.xml:188-224
 gap> Q := Cdd_PolyhedronByGenerators( [ [ 1, 2, 3, 4 ],[ 1, 2, 4, 5 ], [ 0, 1, 1, 1 ] ] );
 <Polyhedron given by its V-representation>
 gap> R := Cdd_H_Rep( Q );
