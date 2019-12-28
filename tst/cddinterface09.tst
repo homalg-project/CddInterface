@@ -10,7 +10,7 @@
 #
 gap> START_TEST( "cddinterface09.tst");
 
-# doc/_Chunks.xml:370-383
+# doc/_Chunks.xml:363-376
 gap> A:= Cdd_PolyhedronByInequalities( [ [ 0, 2, 6 ], [ 0, 1, 3 ], [1, 4, 10 ] ] );
 <Polyhedron given by its H-representation>
 gap> B:= Cdd_Canonicalize( A );

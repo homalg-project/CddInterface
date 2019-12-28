@@ -10,7 +10,7 @@
 #
 gap> START_TEST( "cddinterface11.tst");
 
-# doc/_Chunks.xml:436-491
+# doc/_Chunks.xml:429-484
 gap> poly:= Cdd_PolyhedronByInequalities( [ [ 1, 3, 4, 5, 7 ], [ 1, 3, 5, 12, 34 ],
 > [ 9, 3, 0, 2, 13 ]  ], [ 1 ] );
 <Polyhedron given by its H-representation>

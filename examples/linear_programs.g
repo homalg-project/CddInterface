@@ -1,18 +1,11 @@
 LoadPackage( "CddInterface" );
 
 #! @Chunk Example5
-#! $\newline$
 #! To illustrate the using of these functions, let us solve the linear program given by:
-#! $\textbf{Maximize}\;\;\; P(x,y)= 1-2x+5y$, with $\newline$
-#! $100\leq x \leq 200 \newline$
-#! $80\leq y\leq 170 \newline$
-#! $y \geq -x+200\newline\newline$
-#! We bring the inequalities to the form $b+AX\geq 0$, we get:
-#! $\newline -100+x\geq 0 \newline$
-#! $200-x \geq 0 \newline$
-#! $-80+y \geq 0 \newline$
-#! $170 -y \geq 0 \newline$
-#! $-200 +x+y \geq 0 \newline$
+#! $$\textbf{Maximize}\;\;P(x,y)= 1-2x+5y,\;\mathrm{with}$$
+#! $$100\leq x \leq 200,80\leq y\leq 170,y \geq -x+200.$$
+#! We bring the inequalities to the form $b+AX\geq 0$ and get:
+#! $$-100+x\geq 0, 200-x \geq 0, -80+y \geq 0, 170 -y \geq 0,-200 +x+y \geq 0.$$
 #! @Example
 A:= Cdd_PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ],
 [ -80, 0, 1 ], [ 170, 0, -1 ], [ -200, 1, 1 ] ] );
