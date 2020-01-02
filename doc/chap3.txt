@@ -22,12 +22,25 @@
   returns  a list of two entries, the solution vector and the optimal value of
   the objective, otherwise it returns [3Xfail[103X.[133X
   
-  [33X[0;0Y[23X\newline[123X To illustrate the using of these functions, let us solve the linear
-  program  given  by:  [23X\textbf{Maximize}\;\;\;  P(x,y)= 1-2x+5y[123X, with [23X\newline[123X
-  [23X100\leq   x   \leq   200   \newline[123X   [23X80\leq   y\leq  170  \newline[123X  [23Xy  \geq
-  -x+200\newline\newline[123X  We bring the inequalities to the form [23Xb+AX\geq 0[123X, we
-  get:  [23X\newline  -100+x\geq  0  \newline[123X  [23X200-x  \geq 0 \newline[123X [23X-80+y \geq 0
-  \newline[123X [23X170 -y \geq 0 \newline[123X [23X-200 +x+y \geq 0 \newline[123X[133X
+  [33X[0;0YTo  illustrate the using of these functions, let us solve the linear program
+  given by:[133X
+  
+  
+  [24X[33X[0;6Y\textbf{Maximize}\;\;P(x,y)= 1-2x+5y,\;\mathrm{with}[133X
+  
+  [124X
+  
+  
+  [24X[33X[0;6Y100\leq x \leq 200,80\leq y\leq 170,y \geq -x+200.[133X
+  
+  [124X
+  
+  [33X[0;0YWe bring the inequalities to the form [23Xb+AX\geq 0[123X and get:[133X
+  
+  
+  [24X[33X[0;6Y-100+x\geq 0, 200-x \geq 0, -80+y \geq 0, 170 -y \geq 0,-200 +x+y \geq 0.[133X
+  
+  [124X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XA:= Cdd_PolyhedronByInequalities( [ [ -100, 1, 0 ], [ 200, -1, 0 ],[127X[104X

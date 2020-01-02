@@ -57,7 +57,15 @@
 
 <p>The function takes a linear program. If the program is optimal, the function returns a list of two entries, the solution vector and the optimal value of the objective, otherwise it returns <var class="Arg">fail</var>.</p>
 
-<p><span class="SimpleMath">\(\newline\)</span> To illustrate the using of these functions, let us solve the linear program given by: <span class="SimpleMath">\(\textbf{Maximize}\;\;\; P(x,y)= 1-2x+5y\)</span>, with <span class="SimpleMath">\(\newline\)</span> <span class="SimpleMath">\(100\leq x \leq 200 \newline\)</span> <span class="SimpleMath">\(80\leq y\leq 170 \newline\)</span> <span class="SimpleMath">\(y \geq -x+200\newline\newline\)</span> We bring the inequalities to the form <span class="SimpleMath">\(b+AX\geq 0\)</span>, we get: <span class="SimpleMath">\(\newline -100+x\geq 0 \newline\)</span> <span class="SimpleMath">\(200-x \geq 0 \newline\)</span> <span class="SimpleMath">\(-80+y \geq 0 \newline\)</span> <span class="SimpleMath">\(170 -y \geq 0 \newline\)</span> <span class="SimpleMath">\(-200 +x+y \geq 0 \newline\)</span></p>
+<p>To illustrate the using of these functions, let us solve the linear program given by:</p>
+
+<p class="center">\[\textbf{Maximize}\;\;P(x,y)= 1-2x+5y,\;\mathrm{with}\]</p>
+
+<p class="center">\[100\leq x \leq 200,80\leq y\leq 170,y \geq -x+200.\]</p>
+
+<p>We bring the inequalities to the form <span class="SimpleMath">\(b+AX\geq 0\)</span> and get:</p>
+
+<p class="center">\[-100+x\geq 0, 200-x \geq 0, -80+y \geq 0, 170 -y \geq 0,-200 +x+y \geq 0.\]</p>
 
 
 <div class="example"><pre>

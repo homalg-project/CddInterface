@@ -8,7 +8,7 @@
   intersection  of  finite  halfspaces  and  the other as Minkowski sum of the
   convex  hull of finite points and the nonnegative hull of finite directions.
   These   are  called  [23XH[123X-representation  and  [23XV[123X-representation,  respectively.
-  CddInterface  is  a  gap interface to the [23XC[123X package [10Xcddlib[110X which among other
+  CddInterface  is  a  gap interface to the C package [10Xcddlib[110X which among other
   things can translate between these two representations.[133X
   
   
