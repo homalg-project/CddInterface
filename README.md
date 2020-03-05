@@ -6,7 +6,7 @@ The GAP 4 package `CddInterface'
 
 # Version
 
-Current version: 2020.01.01
+Current version: 2020.03.02
 
 # Why CddInterface
 
@@ -18,7 +18,7 @@ finite points and the nonnegative hull of finite directions. These are called H-
 
 # Prerequisites
 
-Make sure you can update "configure" scriptes by installing `autoconf`:
+Make sure you can update "configure" scripts by installing `autoconf`:
     
     sudo apt-get update
     sudo apt-get install autoconf
@@ -43,7 +43,7 @@ which contains the file `sysinfo.gap`.
 
 ## Simple installation (includes building the current cdd from source):
 
-For a simplyfied installation, try the following two commands in the main CddInterface directory
+For a simplified installation, try the following two commands in the main CddInterface directory
 
     ./install.sh <path-to-gaproot>
 
