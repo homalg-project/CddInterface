@@ -38,12 +38,12 @@ Moreover, you need the package `libtool`:
     ./configure --with-gaproot=path-to-gaproot
     make
 
-where the `<path-to-gaproot> ` is the path to the folder where you installed and compiled `Gap` and 
-which contains the file `sysinfo.gap`.
+where the `<path-to-gaproot>` is the path to the folder where you installed and compiled `Gap` and 
+which contains the file `sysinfo.gap`. The default value is `../..`.
 
 ## Simple installation (includes building the current cdd from source):
 
-For a simplified installation, try the following two commands in the main CddInterface directory
+For a simplified installation, try the following command in the main CddInterface directory
 
     ./install.sh <path-to-gaproot>
 
