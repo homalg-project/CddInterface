@@ -6,7 +6,7 @@ The GAP 4 package `CddInterface'
 
 # Version
 
-Current version: 2020.05.21
+Current version: 2020.05.22
 
 # Why CddInterface
 
