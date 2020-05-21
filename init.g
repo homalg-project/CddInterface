@@ -11,3 +11,7 @@ Unbind(_PATH_SO);
 
 ReadPackage( "CddInterface", "gap/polyhedra.gd");
 ReadPackage( "CddInterface", "gap/tools.gd");
+
+if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
+    ReadPackage( "CddInterface", "gap/Julia.gd");
+fi;
