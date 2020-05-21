@@ -56,7 +56,7 @@ AS_IF([test "x$with_cddlib" != "xyes"],[
   # systems, the headers are directly in PREFIX/include/ -- so we just add
   # both to the CPPFLAGS
   AS_IF([test -d "$with_cddlib"],[],[AC_MSG_ERROR([the cddlib path is not a directory])])
-  CDD_CPPFLAGS="-I$with_cddlib/include/cdd -I$with_cddlib/include"
+  CDD_CPPFLAGS="-I$with_cddlib/include/cdd -I$with_cddlib/include/cddlib -I$with_cddlib/include"
   CDD_LDFLAGS="-L$with_cddlib/lib -lcddgmp"
 ],[
   CDD_CPPFLAGS="-I/usr/include/cdd"
