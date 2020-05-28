@@ -7,6 +7,8 @@
 #include "setoper.h"
 #include "cdd.h"
 
+#include "gmp.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

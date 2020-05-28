@@ -1,0 +1,14 @@
+#
+# Makefile rules for the CddInterface package
+#
+KEXT_NAME = CddInterface
+KEXT_SOURCES = src/CddInterface.cc
+
+KEXT_CFLAGS = -DGMPRATIONAL @CDD_CPPFLAGS@
+KEXT_LDFLAGS = @CDD_LDFLAGS@
+
+KEXT_USE_AUTOCONF = 1
+
+# include shared GAP package build system
+GAPPATH = @GAPROOT@
+include Makefile.gappkg
