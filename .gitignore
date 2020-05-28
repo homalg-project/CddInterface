@@ -7,29 +7,13 @@ current_cddlib
 *.lo
 *.o
 *~
-aclocal.m4
 autom4te.cache/
 bin/
-cnf/
-compile
-config.guess
 config.log
 config.status
-config.sub
 configure
-depcomp
-install-sh
-libtool
-ltmain.sh
-m4/libtool.m4
-m4/lt~obsolete.m4
-m4/ltoptions.m4
-m4/ltsugar.m4
-m4/ltversion.m4
+gen/
 Makefile
-Makefile.in
-missing
-src/pkgconfig.h
 
 /cddlib/ar-lib
 /cddlib/INSTALL
@@ -85,3 +69,6 @@ src/pkgconfig.h
 /doc/*.toc
 /doc/*.txt
 /doc/*.xml
+
+/tmp/
+/gh-pages/
