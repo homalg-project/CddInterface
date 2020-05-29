@@ -1,0 +1,40 @@
+I"ë<h1 id="gap-package-cddinterface">GAP Package CddInterface</h1>
+
+<p>The <span class="pkgname">CddInterface</span> package provides a GAP interface to <a href="https://inf.ethz.ch/personal/fukudak/cdd_home">cdd</a>, enabling direct access to the most of the functionality of cddlib, such as translating between H,V- representations of a polyhedron and solving linear programming problems.</p>
+
+<p>The current version of this package is version 2020.03.02, released on 2020-03-02.
+For more information, please refer to <a href="doc/chap0.html">the package manual</a>.
+There is also a <a href="README.html">README</a> file.</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<p>This package requires GAP version &gt;= 4.9</p>
+
+<p>The following other GAP packages are needed:</p>
+
+<ul>
+  <li><a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc</a> &gt;= 1.5</li>
+</ul>
+
+<h2 id="author">Author</h2>
+
+<p><a href="https://github.com/kamalsaleh">Kamal Saleh</a>.</p>
+
+<h2 id="citing">Citing</h2>
+
+<p>Please, cite this package as</p>
+
+<p class="BibEntry">
+[<span class="BibKey">Sal20</span>]   <b class="BibAuthor">Saleh, K.</b>,
+ <i class="BibTitle">CddInterface, Gap interface to Cdd package,
+         Version 2020.03.02</i>
+ (<span class="BibYear">2020</span>)<br />
+(<span class="BibNote">GAP package</span>),
+<span class="BibHowpublished"><a href="https://homalg-project.github.io/CddInterface">https://homalg-project.github.io/CddInterface</a></span>.
+</p>
+
+<p>You can get more info by typing <code class="highlighter-rouge">Cite("CddInterface");</code> in the gap prompt.</p>
+
+<p><button type="button" class="btn active" data-clipboard-text="@misc{ CddInterface2020.03.02,   author =           {Saleh, K.},   title =            {{CddInterface},   Gap   interface   to   Cdd  package,                       {V}ersion 2020.03.02},   month =            {Mar},   year =             {2020},   note =             {GAP package},   howpublished =     {\href  {https://homalg-project.github.io/CddInterface}                       {\texttt{https://homalg-project.github.io/}\discretionary                       {}{}{}\texttt{CddInterface}}},   keywords =         {cddlib; Polyhedra; Convex Geometry; NConvex},   printedkey =       {Sal20} } ">Copy BibTeX to clipboard</button></p>
+
+:ET

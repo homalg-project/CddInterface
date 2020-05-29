@@ -6,7 +6,7 @@ The GAP 4 package `CddInterface'
 
 # Version
 
-Current version: 2020.03.02
+Current version: 2020.05.23
 
 # Why CddInterface
 
@@ -27,7 +27,7 @@ You also need the package `libgmp-dev`:
 
     sudo apt-get install libgmp-dev
     
-Moreover, you need the package `libtool`:
+Moreover, you may need the package `libtool`:
 
     sudo apt-get install libtool
 
@@ -35,17 +35,17 @@ Moreover, you need the package `libtool`:
     
     sudo apt-get install libcdd-dev
     ./autogen.sh
-    ./configure --with-gaproot=path-to-gaproot
+    ./configure --with-gaproot=path/to/gaproot
     make
 
-where the `<path-to-gaproot> ` is the path to the folder where you installed and compiled `Gap` and 
-which contains the file `sysinfo.gap`.
+where the `path/to/gaproot` is the path to the folder where you installed and compiled `Gap` and 
+which contains the file `sysinfo.gap`. The default value is `../..`.
 
 ## Simple installation (includes building the current cdd from source):
 
-For a simplified installation, try the following two commands in the main CddInterface directory
+For a simplified installation, try the following command in the main CddInterface directory
 
-    ./install.sh <path-to-gaproot>
+    ./install.sh path/to/gaproot
 
 If that does not work, try the following:
 
@@ -108,5 +108,5 @@ Of course you are welcome to e-mail me if there are any questions, remarks, sugg
 Kamal Saleh e-mail: saleh@mathematik.uni-siegen.de
 
 ## License
-CddInterface is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+CddInterface is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your opinion) any later version.
 
