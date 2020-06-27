@@ -15,6 +15,12 @@ configure
 gen/
 Makefile
 
+/m4/
+/cnf/
+/src/pkgconfig.h
+/aclocal.m4
+/libtool
+
 /cddlib/ar-lib
 /cddlib/INSTALL
 /cddlib/build/
