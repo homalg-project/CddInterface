@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "CddInterface",
 Subtitle := "Gap interface to Cdd package",
-Version := "2020.05.23",
+Version := "2020.06.24",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
