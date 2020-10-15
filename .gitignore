@@ -14,7 +14,7 @@ config.status
 configure
 gen/
 Makefile
-
+tst/cddinter*
 /m4/
 /cnf/
 /src/pkgconfig.h
