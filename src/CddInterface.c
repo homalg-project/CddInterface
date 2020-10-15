@@ -180,15 +180,18 @@ static Obj MatPtrToGapObj(dd_MatrixPtr M)
   result = NEW_PLIST(T_PLIST_CYC, 7);
 
   ASS_LIST(result, 1, INTOBJ_INT(M->representation));
-  // entry 2 & 3 are intentionally left unbound
   ASS_LIST(result, 2, INTOBJ_INT(nrRows));
   ASS_LIST(result, 3, INTOBJ_INT(nrCols));
   ASS_LIST(result, 4, ddG_LinearityPtr(M));
 
   Ma = M->matrix;
 
-  current = NEW_PLIST(T_PLIST_CYC, nrRows);
-
+  
+  if (nrRows == 0)
+    current = NEW_PLIST(T_PLIST_EMPTY, 0);
+  else
+    current = NEW_PLIST(T_PLIST_CYC, nrRows);
+  
   for (int i = 0; i < nrRows; i++)
   {
     Obj row = NEW_PLIST(T_PLIST_CYC, nrCols);
