@@ -40,7 +40,7 @@ AS_IF([test "x$with_cddlib" != "xyes"],[
   CDD_CPPFLAGS="-I$with_cddlib/include/cdd -I$with_cddlib/include/cddlib -I$with_cddlib/include"
   CDD_LDFLAGS="-L$with_cddlib/lib -lcddgmp"
 ],[
-  CDD_CPPFLAGS="-I/usr/include/cdd"
+  CDD_CPPFLAGS="-I/usr/include/cdd -I/usr/include/cddlib"
   CDD_LDFLAGS="-lcddgmp"
 ])
 AC_SUBST(CDD_CPPFLAGS)
