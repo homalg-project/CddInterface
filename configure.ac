@@ -13,7 +13,7 @@ AC_INIT([CddInterface], [package])
 AC_CONFIG_SRCDIR([src/CddInterface.c])
 AC_CONFIG_MACRO_DIR([m4])
 m4_include([m4/find_gap.m4])
-
+AC_CONFIG_AUX_DIR([cnf])
 dnl ##
 dnl ## Set the language
 dnl ##
@@ -43,6 +43,18 @@ AS_IF([test "x$with_cddlib" != "xyes"],[
   CDD_CPPFLAGS="-I/usr/include/cdd -I/usr/include/cddlib"
   CDD_LDFLAGS="-lcddgmp"
 ])
+
+dnl ##
+dnl ## Detect Cygwin, as then we need to link against gmp
+dnl ##
+AC_CANONICAL_HOST
+
+case $host_os in
+  *cygwin* ) CDD_LDFLAGS="$CDD_LDFLAGS -lgmp";;
+         * ) ;;
+esac
+
+
 AC_SUBST(CDD_CPPFLAGS)
 AC_SUBST(CDD_LDFLAGS)
 

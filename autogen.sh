@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/sh -ex
 #
-# Regenerate configure from configure.ac. Requires GNU autoconf.
-set -ex
-autoconf -Wall -f
+# This file is part of the build system of a GAP kernel extension.
+# Requires GNU autoconf, GNU automake and GNU libtool.
+#
+autoreconf -vif `dirname "$0"`
