@@ -38,10 +38,10 @@ AS_IF([test "x$with_cddlib" != "xyes"],[
   # both to the CPPFLAGS
   AS_IF([test -d "$with_cddlib"],[],[AC_MSG_ERROR([the cddlib path is not a directory])])
   CDD_CPPFLAGS="-I$with_cddlib/include/cdd -I$with_cddlib/include/cddlib -I$with_cddlib/include"
-  CDD_LDFLAGS="-L$with_cddlib/lib -lcddgmp"
+  CDD_LDFLAGS="-L$with_cddlib/lib -lcddgmp -lgmp"
 ],[
-  CDD_CPPFLAGS="-I/usr/include/cdd"
-  CDD_LDFLAGS="-lcddgmp"
+  CDD_CPPFLAGS="-I/usr/include/cdd -I/usr/include/cddlib"
+  CDD_LDFLAGS="-lcddgmp -lgmp"
 ])
 AC_SUBST(CDD_CPPFLAGS)
 AC_SUBST(CDD_LDFLAGS)
