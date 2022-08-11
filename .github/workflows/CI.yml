@@ -33,10 +33,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: 'Install additional dependencies'
-        run: |
-          sudo apt-get update
-          sudo apt-get install libcdd-dev
       - uses: gap-actions/setup-gap@v2
         with:
           GAPBRANCH: ${{ matrix.gap-branch }}
@@ -53,11 +49,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - name: 'Install additional dependencies'
-        run: |
-          sudo apt-get update
-          sudo apt-get install libcdd-dev
       - uses: gap-actions/setup-gap@v2
       - uses: gap-actions/build-pkg-docs@v1
         with:
