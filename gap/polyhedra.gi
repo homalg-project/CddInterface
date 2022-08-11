@@ -636,7 +636,7 @@ InstallMethod( Cdd_FourierProjection,
             fi;
           end;
       
-      extra_row := List( [ 1 .. col_range ], i -> f( i ) );
+      extra_row := List( [ 1 .. col_range ], f );
       
       Add( temp, extra_row );
       
