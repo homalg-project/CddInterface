@@ -4,10 +4,6 @@
 The GAP 4 package `CddInterface'
 ==============================
 
-# Version
-
-Current version: 2020.06.24
-
 # Why CddInterface
 
 Every convex polyhedron P has two representations, one as the intersection of finite halfspaces and the other as Minkowski sum of the convex hull of
