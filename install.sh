@@ -25,7 +25,7 @@ cd $current_dir
 echo "## Setting variables"
 echo "I am now in $(pwd)"
 
-cddlib_VERSION=0.94j
+cddlib_VERSION=0.94m
 #cddlib_SHA256=?
 cddlib_BASE=cddlib-${cddlib_VERSION}
 cddlib_TAR=${cddlib_BASE}.tar.gz
@@ -62,4 +62,3 @@ cd $current_dir
 ./autogen.sh
 ./configure --with-gaproot=${gap_path} --with-cddlib=$(pwd)/current_cddlib/build
 make
-

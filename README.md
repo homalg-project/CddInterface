@@ -51,11 +51,13 @@ If that does not work, try the following:
 
 ## Advanced installation (includes building the current cdd from source):
 
-Go inside the CddInterface directory and download some release of [cddlib](https://github.com/cddlib/cddlib/releases) and extract it. For example the release 0.94j:
+Go inside the CddInterface directory and download some release of
+[cddlib](https://github.com/cddlib/cddlib/releases) and extract it. For
+example the release 0.94m:
     
-    wget https://github.com/cddlib/cddlib/releases/download/0.94j/cddlib-0.94j.tar.gz
-    tar xvf cddlib-0.94j.tar.gz
-    ln -sf $(pwd)/cddlib-0.94j $(pwd)/current_cddlib
+    wget https://github.com/cddlib/cddlib/releases/download/0.94m/cddlib-0.94m.tar.gz
+    tar xvf cddlib-0.94m.tar.gz
+    ln -sf $(pwd)/cddlib-0.94m $(pwd)/current_cddlib
 
 After that, compile cddlib via
     
