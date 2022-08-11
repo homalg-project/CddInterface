@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/homalg-project/CddInterface.svg?branch=master)](https://travis-ci.com/homalg-project/CddInterface)
+[![Build Status](https://github.com/homalg-project/CddInterface/workflows/CI/badge.svg?branch=master)](https://github.com/homalg-project/CddInterface/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/homalg-project/CddInterface/coverage.svg?branch=master&token=)](https://codecov.io/gh/homalg-project/CddInterface)
 
 The GAP 4 package `CddInterface'
