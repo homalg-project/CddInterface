@@ -1,12 +1,8 @@
-[![Build Status](https://travis-ci.com/homalg-project/CddInterface.svg?branch=master)](https://travis-ci.com/homalg-project/CddInterface)
+[![Build Status](https://github.com/homalg-project/CddInterface/workflows/CI/badge.svg?branch=master)](https://github.com/homalg-project/CddInterface/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/homalg-project/CddInterface/coverage.svg?branch=master&token=)](https://codecov.io/gh/homalg-project/CddInterface)
 
 The GAP 4 package `CddInterface'
 ==============================
-
-# Version
-
-Current version: 2020.06.24
 
 # Why CddInterface
 
@@ -51,11 +47,13 @@ If that does not work, try the following:
 
 ## Advanced installation (includes building the current cdd from source):
 
-Go inside the CddInterface directory and download some release of [cddlib](https://github.com/cddlib/cddlib/releases) and extract it. For example the release 0.94j:
+Go inside the CddInterface directory and download some release of
+[cddlib](https://github.com/cddlib/cddlib/releases) and extract it. For
+example the release 0.94m:
     
-    wget https://github.com/cddlib/cddlib/releases/download/0.94j/cddlib-0.94j.tar.gz
-    tar xvf cddlib-0.94j.tar.gz
-    ln -sf $(pwd)/cddlib-0.94j $(pwd)/current_cddlib
+    wget https://github.com/cddlib/cddlib/releases/download/0.94m/cddlib-0.94m.tar.gz
+    tar xvf cddlib-0.94m.tar.gz
+    ln -sf $(pwd)/cddlib-0.94m $(pwd)/current_cddlib
 
 After that, compile cddlib via
     
@@ -105,8 +103,11 @@ If you want to experiment online with the package you can use `notebook.ipynb` v
 
 Of course you are welcome to e-mail me if there are any questions, remarks, suggestions ;)
 
-Kamal Saleh e-mail: saleh@mathematik.uni-siegen.de
+Kamal Saleh e-mail: <saleh@mathematik.uni-siegen.de>
 
 ## License
-CddInterface is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your opinion) any later version.
 
+CddInterface is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2 of the License, or (at your option) any later
+version.
