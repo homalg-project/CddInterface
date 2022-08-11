@@ -91,12 +91,12 @@ InstallMethod( IsCompatiblePolyhedronList,
     local i;
     
     if not ForAll( [1,4,5], i -> list[i] in NonnegativeIntegers) then
-      return Error( "The first five entries must be non-negative integers" );
+      Error( "The first five entries must be non-negative integers" );
     fi;
     
     if not( IsList( list[6]) and IsList( list[7] ) ) then
       
-      return Error( "The last two arguments should be lists" );
+      Error( "The last two arguments should be lists" );
     
     fi;
     
@@ -104,13 +104,13 @@ InstallMethod( IsCompatiblePolyhedronList,
       
       if NrRows( list[ 7 ] ) <> list[ 4 ] then
         
-        return Error( "The matrix has the wrong number of rows" );
+        Error( "The matrix has the wrong number of rows" );
       
       fi;
       
       if NrCols( list[ 7 ] ) <> list[ 5 ] then
         
-        return Error( "The matrix has the wrong number of columns" );
+        Error( "The matrix has the wrong number of columns" );
       
       fi;
     
@@ -120,7 +120,7 @@ InstallMethod( IsCompatiblePolyhedronList,
        
        if i > list[ 4 ] then
          
-         return Error( "The linearity is not compatible" );
+         Error( "The linearity is not compatible" );
        
        fi;
     
