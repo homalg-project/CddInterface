@@ -136,7 +136,7 @@ InstallMethod( LcmOfDenominatorRatInList,
                
   function( list )
     
-    return Lcm( List( [ 1 .. Length( list ) ], i-> DenominatorRat( list[ i ] ) ) );
+    return Lcm( List( list, DenominatorRat ) );
     
 end );
 
@@ -458,13 +458,13 @@ InstallGlobalFunction( CanonicalizeListOfFacesAndInteriorPoints,
     
     elif IsList( L ) and Length( L ) = 3 and IsInt( L[ 1 ] ) then
       
-      new_L := List( L, l -> ShallowCopy( l ) );
+      new_L := List( L, ShallowCopy );
       
       return [ new_L ];
     
     else
       
-      return Concatenation( List( L, l -> CanonicalizeListOfFacesAndInteriorPoints( l ) ) );
+      return Concatenation( List( L, CanonicalizeListOfFacesAndInteriorPoints ) );
     
     fi;
 
