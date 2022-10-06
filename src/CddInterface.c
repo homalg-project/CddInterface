@@ -2,7 +2,7 @@
  * CddInterface: Gap interface to Cdd package
  */
 
-#include "src/compiled.h" /* GAP headers */
+#include "compiled.h" // GAP headers
 
 #include "setoper.h"
 #include "cdd.h"
