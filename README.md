@@ -1,10 +1,9 @@
 [![Build Status](https://github.com/homalg-project/CddInterface/workflows/CI/badge.svg?branch=master)](https://github.com/homalg-project/CddInterface/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/homalg-project/CddInterface/coverage.svg?branch=master&token=)](https://codecov.io/gh/homalg-project/CddInterface)
 
-The GAP 4 package `CddInterface'
-==============================
+# The GAP 4 package `CddInterface'
 
-# Why CddInterface
+## Why CddInterface
 
 Every convex polyhedron P has two representations, one as the intersection of finite halfspaces and the other as Minkowski sum of the convex hull of
 finite points and the nonnegative hull of finite directions. These are called H-representation and V-representation, respectively.
@@ -12,30 +11,58 @@ finite points and the nonnegative hull of finite directions. These are called H-
 [CddInterface](https://homalg-project.github.io/CddInterface/) is a gap interface with the C package [Cddlib
 ](https://www.inf.ethz.ch/personal/fukudak/cdd_home/) which among other things can translate between H,V- representations of a polyhedron P and solve linear programming problems over P, i.e. a problem of maximizing and minimizing a linear function over P. A list of all available operations can be found in the [manual.pdf](https://homalg-project.github.io/CddInterface/manual.pdf).
 
-# Prerequisites
+## Prerequisites
 
-Make sure you can update "configure" scripts by installing `autoconf`:
+To use CddInterace, it has to be compiled. That means you need at the very
+least a C compiler on your system. If you managed to install GAP, you probably
+already have one, so we won't cover this here. However, various other
+prerequisites are needed, described below.
+
+### ... when building from a `git` clone
+
+If you are building CddInterface directly from `git`, you first need
+to generate the `configure` script. This require autoconf. On
+Debian and Ubuntu, you can install it via
     
-    sudo apt-get update
     sudo apt-get install autoconf
 
-You also need the package `libgmp-dev`:
+On macOS, if you are using Homebrew, you can install it via
 
-    sudo apt-get install libgmp-dev
-    
-Moreover, you may need the package `libtool`:
+    brew install autoconf
 
-    sudo apt-get install libtool
+Then run
 
-## Simple installation (with the default cdd for you system):
-    
-    sudo apt-get install libcdd-dev
     ./autogen.sh
+
+Now proceed as in the next section
+
+### ... when building a release version
+
+Compiling CddInterface requires development headers for the GMP library as well
+as for cddlib. On Debian or Ubuntu, you can install these via
+
+    sudo apt-get install libgmp-dev libcdd-dev
+
+On macOS, if you are using Homebrew, you can install them via
+
+    brew install gmp cddlib
+
+Most other package managers include comparable packages, at least for GMP.
+For cddlib, if your package manager does not provide it, we describe
+further down how to install it yourself.
+
+
+## Installation
+
+Assuming the prerequisites are present (see the previous section),
+you can now build cddlib as follows:
+
     ./configure --with-gaproot=path/to/gaproot
     make
 
-where the `path/to/gaproot` is the path to the folder where you installed and compiled `Gap` and 
-which contains the file `sysinfo.gap`. The default value is `../..`.
+where the `path/to/gaproot` is the path to the folder where you installed and
+compiled GAP and which contains the file `sysinfo.gap`. The default value is
+`../..`.
 
 ## Simple installation (includes building the current cdd from source):
 
