@@ -32,10 +32,21 @@ AC_ARG_WITH([cddlib],
     [AS_HELP_STRING([--with-cddlib=<path>], [specify the path of cdd installation])],
     [], [with_cddlib=yes])
 AS_IF([test "x$with_cddlib" = "xno"], [AC_MSG_ERROR([cddlib is required and cannot be disabled])])
+
+# if no path was given. as a special consideration, detect if the user has cddlib
+# installed via Homebrew (on macOS), and if so, use that
+AS_IF([test "x$with_cddlib" = "xyes"],[
+  AS_IF([command -v brew >/dev/null 2>&1],[
+    AC_MSG_NOTICE([BREW detected])
+    with_cddlib=$(brew --prefix)
+  ])
+])
+
 AS_IF([test "x$with_cddlib" != "xyes"],[
-  # Debian and Ubuntu put the headers into PREFIX/include/cdd, while on other
-  # systems, the headers are directly in PREFIX/include/ -- so we just add
-  # both to the CPPFLAGS
+  # Debian and Ubuntu put the headers into PREFIX/include/cdd, while on
+  # e.g. homebrew the headers are in PREFIX/include/cddlib. Finally in
+  # some cases, the headers are directly in PREFIX/include/ -- so we
+  # just add all three to the CPPFLAGS
   AS_IF([test -d "$with_cddlib"],[],[AC_MSG_ERROR([the cddlib path is not a directory])])
   CDD_CPPFLAGS="-I$with_cddlib/include/cdd -I$with_cddlib/include/cddlib -I$with_cddlib/include"
   CDD_LDFLAGS="-L$with_cddlib/lib -lcddgmp -lgmp"
