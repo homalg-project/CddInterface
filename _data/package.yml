@@ -1,6 +1,6 @@
 name: CddInterface
-version: "2022.11.01"
-date: 2022-11-01
+version: "2024.08.27"
+date: 2024-08-27
 description: |
     Gap interface to Cdd package
 
@@ -12,12 +12,12 @@ maintainers:
     - name: Kamal Saleh
       url: https://github.com/kamalsaleh
 
-GAP: ">= 4.9"
+GAP: ">= 4.12"
 
 needed-pkgs:
     - name: "GAPDoc"
       version: ">= 1.5"
-      url: "http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
+      url: "https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
 
 www: https://homalg-project.github.io/CddInterface
 readme: README.md
@@ -25,7 +25,7 @@ packageinfo: https://homalg-project.github.io/CddInterface/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/CddInterface/releases/download/v2022.11.01/CddInterface-2022.11.01.tar.gz
+      url: https://github.com/homalg-project/CddInterface/releases/download/v2024.08.27/CddInterface-2024.08.27.tar.gz
 
 abstract: |
     The <span class='pkgname'>CddInterface</span> package provides a GAP interface to <a href='https://inf.ethz.ch/personal/fukudak/cdd_home'>cdd</a>, enabling direct access to the most of the functionality of cddlib, such as translating between H,V- representations of a polyhedron and solving linear programming problems.
@@ -37,27 +37,27 @@ keywords: |
     cddlib, Polyhedra, Convex Geometry, NConvex.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal24</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>CddInterface, Gap interface to Cdd package,
-             Version 2022.11.01</i>
-     (<span class='BibYear'>2022</span>)<br />
+             Version 2024.08.27</i>
+     (<span class='BibYear'>2024</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/CddInterface">https://homalg-project.github.io/CddInterface</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ CddInterface2022.11.01,
+    @misc{ CddInterface,
       author =           {Saleh, K.},
       title =            {{CddInterface},   Gap   interface   to   Cdd  package,
-                          {V}ersion 2022.11.01},
-      month =            {Nov},
-      year =             {2022},
+                          {V}ersion 2024.08.27},
+      month =            {Aug},
+      year =             {2024},
       note =             {GAP package},
       howpublished =     {\href  {https://homalg-project.github.io/CddInterface}
-                          {\texttt{https://homalg-project.github.io/}\discretionary
+                          {\texttt{https://homalg\texttt{\symbol{45}}project.github.io/}\discretionary
                           {}{}{}\texttt{CddInterface}}},
       keywords =         {cddlib; Polyhedra; Convex Geometry; NConvex},
-      printedkey =       {Sal22}
+      printedkey =       {Sal24}
     }
 
