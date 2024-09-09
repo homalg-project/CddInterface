@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/homalg-project/CddInterface/workflows/CI/badge.svg?branch=master)](https://github.com/homalg-project/CddInterface/actions?query=workflow%3ACI+branch%3Amaster)
+[![Build Status](https://github.com/homalg-project/CddInterface/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/homalg-project/CddInterface/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/homalg-project/CddInterface/coverage.svg?branch=master&token=)](https://codecov.io/gh/homalg-project/CddInterface)
 
 # The GAP 4 package `CddInterface'
