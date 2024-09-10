@@ -6,6 +6,9 @@ on:
     branches:
       - master
   pull_request:
+  schedule:
+    # Runs at night every day
+    - cron: '0 2 * * *'
 
 # the `concurrency` settings ensure that not too many CI jobs run in parallel
 concurrency:
