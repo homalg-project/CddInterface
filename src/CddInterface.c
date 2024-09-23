@@ -3,9 +3,15 @@
  */
 
 #include "compiled.h" // GAP headers
+#include "config.h"
 
-#include "setoper.h"
-#include "cdd.h"
+#if HAVE_CDDLIB_SETOPER_H == 1
+#include <cddlib/setoper.h>
+#include <cddlib/cdd.h>
+#else
+#include <setoper.h>
+#include <cdd.h>
+#endif
 
 #include "gmp.h"
 

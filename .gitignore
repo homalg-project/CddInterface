@@ -9,6 +9,7 @@ current_cddlib
 *~
 autom4te.cache/
 bin/
+src/config.*
 config.log
 config.status
 configure
