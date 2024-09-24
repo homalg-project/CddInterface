@@ -12,6 +12,7 @@ AC_PREREQ([2.68])
 AC_INIT([CddInterface], [package])
 AC_CONFIG_SRCDIR([src/CddInterface.c])
 AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_HEADERS([src/config.h])
 m4_include([m4/find_gap.m4])
 
 dnl ##
@@ -62,7 +63,15 @@ old_CPPFLAGS="$CPPFLAGS"
 old_LDFLAGS="$LDFLAGS"
 CPPFLAGS="$CPPFLAGS $CDD_CPPFLAGS"
 LDFLAGS="$LDFLAGS $CDD_LDFLAGS"
-AC_CHECK_HEADER([setoper.h], [], [AC_MSG_ERROR([could not use setoper.h])], [])
+
+AC_CHECK_HEADER(
+  [cddlib/setoper.h],
+  [AC_DEFINE([HAVE_CDDLIB_SETOPER_H], [1], [setting HAVE_CDDLIB_SETOPER_H=1])],
+  [AC_CHECK_HEADER(
+    [setoper.h],
+    [AC_DEFINE([HAVE_CDDLIB_SETOPER_H], [0], [setting HAVE_CDDLIB_SETOPER_H=0])],
+    [AC_MSG_ERROR([could not find setoper.h])])])
+
 AC_CHECK_LIB([cddgmp],[dd_SetLinearity])
 CPPFLAGS="$old_CPPFLAGS"
 LDFLAGS="$old_LDFLAGS"
