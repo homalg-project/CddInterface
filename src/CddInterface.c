@@ -2,7 +2,7 @@
  * CddInterface: Gap interface to Cdd package
  */
 
-#include "compiled.h" // GAP headers
+#include "gap_all.h" // GAP headers
 #include "config.h"
 
 #if HAVE_CDDLIB_SETOPER_H == 1
