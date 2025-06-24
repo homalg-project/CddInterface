@@ -119,18 +119,7 @@ The package can be updated using the following commands
 With docker app you can run an image of the newest version of gap && CddInterface via
 the command
 
-    docker run -it kamalsaleh/gap_packages
-
-## Using the package via Binder
-If you want to experiment online with the package you can use `notebook.ipynb` vie the binder link below.
-
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/homalg-project/CddInterface/master)
-
-
-
-Of course you are welcome to e-mail me if there are any questions, remarks, suggestions ;)
-
-Kamal Saleh e-mail: <saleh@mathematik.uni-siegen.de>
+    docker run -it ghcr.io/homalg-project/gap-docker-master:latest
 
 ## License
 
