@@ -10,7 +10,7 @@ fi;
 
 AutoDoc( 
         rec(
-            scaffold := rec( entities := [ "GAP4", "homalg" ] ),
+            scaffold := rec( entities := rec( CAP := "GAP", homalg := "homalg" ) ),
             autodoc := rec( files := [ "doc/intro.autodoc" ] ),
             #extract_examples := rec( units := "Single" )
             ) 
