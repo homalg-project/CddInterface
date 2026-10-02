@@ -74,12 +74,19 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.12",
+  GAP := ">= 4.13",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ] ],
   SuggestedOtherPackages := [ ],
   NeededSystemPackages := rec( Ubuntu := [["libcdd-dev"]], Homebrew := [["cddlib"]] ),
   ExternalConditions := [ ],
 ),
+
+Extensions := [
+  rec(
+    needed := [ [ "JuliaInterface", ">= 0.2" ], [ "ToolsForHomalg", ">= 2020.05.12" ] ],
+    filename := "gap/Julia.g",
+  ),
+],
 
 AvailabilityTest :=
   function()
