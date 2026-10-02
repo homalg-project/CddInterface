@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "CddInterface",
 Subtitle := "Gap interface to Cdd package",
-Version := "2026.03.02",
+Version := "2026.10.01",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -74,12 +74,19 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.12",
+  GAP := ">= 4.13",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ] ],
   SuggestedOtherPackages := [ ],
   NeededSystemPackages := rec( Ubuntu := [["libcdd-dev"]], Homebrew := [["cddlib"]] ),
   ExternalConditions := [ ],
 ),
+
+Extensions := [
+  rec(
+    needed := [ [ "JuliaInterface", ">= 0.2" ], [ "ToolsForHomalg", ">= 2020.05.12" ] ],
+    filename := "gap/Julia.g",
+  ),
+],
 
 AvailabilityTest :=
   function()
