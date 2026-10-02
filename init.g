@@ -10,8 +10,3 @@ fi;
 
 ReadPackage( "CddInterface", "gap/polyhedra.gd");
 ReadPackage( "CddInterface", "gap/tools.gd");
-
-if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) and
-   IsPackageMarkedForLoading( "ToolsForHomalg", ">= 2020.05.12" ) then
-    ReadPackage( "CddInterface", "gap/Julia.gd");
-fi;
